@@ -1,0 +1,136 @@
+package gui;
+
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.border.Border;
+
+/**
+ * Sidebar for RTree generator class.
+ *
+ * @author BenGe47
+ */
+public class SideBarRTree extends ASideBar {
+
+	private static JLabel lblGenerations = new JLabel("Recursion Depth:");
+	private static SpinnerModel smGenerations = new SpinnerNumberModel(7, 0, 15, 1);
+	private static JSpinner jsGenerations = new JSpinner(smGenerations);
+	private static JLabel lblcbPresets = new JLabel("Color Model:");
+	private static String comboBoxList[] = { "Black-White", "RGB", "White Noise", "Atari" };
+	private static JComboBox<Object> cbColorPresets = new JComboBox<Object>(comboBoxList);
+	private JPanel GeneratorPnl;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param e ActionEvent passthrough
+	 */
+	public SideBarRTree(ActionListener e) {
+		super(e);
+	}
+
+	@Override
+	public JPanel initGeneratorPnl() {
+
+		GeneratorPnl = new JPanel();
+
+		GridBagLayout layout = new GridBagLayout();
+		GridBagConstraints gbConstraints = new GridBagConstraints();
+
+		GeneratorPnl.setLayout(layout);
+
+		//
+		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gbConstraints.weightx = 0.2;
+		gbConstraints.gridx = 0;
+		gbConstraints.gridy = 0;
+		gbConstraints.insets = new Insets(10, 10, 10, 10);
+		GeneratorPnl.add(SideBarRTree.lblGenerations, gbConstraints);
+		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gbConstraints.weightx = 0.8;
+		gbConstraints.gridx = 1;
+		gbConstraints.gridy = 0;
+		gbConstraints.insets = new Insets(10, 10, 10, 10);
+		GeneratorPnl.add(SideBarRTree.jsGenerations, gbConstraints);
+		//
+		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gbConstraints.weightx = 0.2;
+		gbConstraints.gridx = 0;
+		gbConstraints.gridy = 1;
+		gbConstraints.insets = new Insets(10, 10, 10, 10);
+		GeneratorPnl.add(SideBarRTree.lblcbPresets, gbConstraints);
+		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gbConstraints.weightx = 0.8;
+		gbConstraints.gridx = 1;
+		gbConstraints.gridy = 1;
+		gbConstraints.insets = new Insets(10, 10, 10, 10);
+		GeneratorPnl.add(SideBarRTree.cbColorPresets, gbConstraints);
+
+		Border border = BorderFactory.createTitledBorder("Generator settings:");
+
+		GeneratorPnl.setBorder(border);
+
+		setStdValues();
+
+		return GeneratorPnl;
+	}
+
+	@Override
+	public void setStdValues() {
+		super.setWidth(640);
+		super.setHeight(480);
+		super.setColor(Color.CYAN);
+		super.setBGColor(Color.BLACK);
+		super.btnBGColor.setVisible(false);
+		super.btnColor.setVisible(false);
+		super.lblColor.setVisible(false);
+		super.lblBGColor.setVisible(false);
+		super.lblWidth.setText("Enter Width:");
+		super.lblHeight.setText("Enter Height");
+		cbColorPresets.setSelectedIndex(3);
+		super.taDescription.setText("OG Random-tree Art Generator");
+		super.taDescription.setText(
+				"<b>Random-tree Art</b>" + "<br><br>" + "Creates a random binary tree. Each node has a math<br>"
+						+ " formula with one or two variables. The variables<br>"
+						+ "get filled with the result of a childrens node math<br>"
+						+ " function or if they are a leave with the xy coordinate."
+						+ "<br>This creates a color value for every xy coordinate.");
+	}
+
+	/**
+	 * Get user input generations value.
+	 *
+	 * @return int of num generations
+	 */
+	public int getGenerations() {
+		return (int) jsGenerations.getValue();
+	}
+
+	/**
+	 * Returns user choosen color model as string.
+	 *
+	 * @return string of color calculation model
+	 */
+	public String getColorModel() {
+		return SideBarRTree.cbColorPresets.getSelectedItem().toString();
+	}
+
+	/**
+	 * Returns user choosen color model as int position in combobox.
+	 *
+	 * @return int of selected index
+	 */
+	public int getColorModelIndex() {
+		return SideBarRTree.cbColorPresets.getSelectedIndex();
+	}
+
+}

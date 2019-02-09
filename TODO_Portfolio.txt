@@ -1,0 +1,36 @@
+*************************
+** TODO Portfolio 2019 **
+*************************
+
+-b- protect double inputs
+-b- make sidebar scrollable for lower res
+-f- GOL make calculations methods top left etc
+-f- time calculations and display in statusbar
+-f- Wolfram show rule number
+-f- Set Mnemonic key in Menus
+-b- make html descriptions wraparound
+-f- RTree load save for repeatable graphics
+- - fill abstract CA generator classes with more vars and methods
+- -
+- - Hashmap L-system
+- - change protected vars in abstract to private with getter/setter
+- - L-system split scale factor into own method
+- - L-system drawing function take 4 inputs
+-f- RTree choose math formula in gui
+-f- custom color panel
+- - MVC split MC further
++ html descriptions
++ xy variables
++ Add seperators(2D automatons/3D automatons) to menu
++ Add Help/? to menu
++ Corner calculation
++ make speed a spinner
+-------------------------------------------------------
+Additional Generators:
+- Game: Tetris
+- Cellular: Langton's loops
+- Cellular: Brian's Brain / Star Wars
+- Cellular: Gas Fluids: FHP-Modell
+- 3D: Toomre Model for Galaxy Collisions 
++ Traffic science: Nagel-Schreckenberg
+
