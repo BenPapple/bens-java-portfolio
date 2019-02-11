@@ -25,8 +25,6 @@ import javax.swing.JPanel;
 public class LSystem extends AGenerator {
 
 	private SideBarLSystem guiSideBar;
-	private Boolean paused = false;
-	private Boolean stopped = false;
 	private int pixelGap = 15;
 	private String formatedString;
 	private String forumulaA;
@@ -78,26 +76,25 @@ public class LSystem extends AGenerator {
 	public void run() {
 		startCalcTime();
 		updateStatus(IGenerator.Status.CALCULATING);
-		paused = false;
-		stopped = false;
 		guiSideBar.setButtonsCalculating();
 
 		formatedString = "";
 		try {
 			formatedString = buildString();
 
-			while (!stopped) {
+			while (!guiSideBar.isStopped()) {
 
 				updateScreenPanel();
 
-				stopped = true;
+				guiSideBar.setStopped();
 
-				while (paused) {
+				while (guiSideBar.isPaused()) {
 					updateStatus(IGenerator.Status.PAUSED);
-					if (stopped) {
+					if (guiSideBar.isStopped()) {
 						break;
 					}
 				}
+				updateStatus(IGenerator.Status.CALCULATING);
 			}
 
 			guiSideBar.setButtonsReady();
@@ -159,6 +156,17 @@ public class LSystem extends AGenerator {
 		}
 
 		for (int i = 0; i < formatedString.length(); i++) {
+			//Stop and pause
+			if (guiSideBar.isStopped()){
+				break;
+			}
+			while (guiSideBar.isPaused()){
+				updateStatus(IGenerator.Status.PAUSED);
+				if (guiSideBar.isStopped()) {
+					break;
+				}				
+			}
+			updateStatus(IGenerator.Status.CALCULATING);
 			oldCurrentY = currentY;
 			oldCurrentX = currentX;
 			if ((formatedString.charAt(i) == 'A') || (formatedString.charAt(i) == 'B')
@@ -392,7 +400,7 @@ public class LSystem extends AGenerator {
 
 	@Override
 	public void stopGenerator() {
-		stopped = true;
+		guiSideBar.setStopped();
 		this.status = IGenerator.Status.STOP;
 	}
 

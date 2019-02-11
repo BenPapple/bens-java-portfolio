@@ -72,6 +72,7 @@ public class GameOfLife extends AGeneratorCellular {
 					break;
 				}
 			}
+			updateStatus(IGenerator.Status.CALCULATING);
 		}
 		guiSideBar.setButtonsReady();
 		endCalcTime();

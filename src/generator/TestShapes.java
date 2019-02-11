@@ -114,6 +114,7 @@ public class TestShapes extends AGenerator {
 
 	@Override
 	public void stopGenerator() {
+		guiSideBar.setStopped();
 		this.status = IGenerator.Status.STOP;
 	}
 

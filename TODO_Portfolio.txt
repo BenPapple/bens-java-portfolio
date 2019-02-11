@@ -2,7 +2,6 @@
 ** TODO Portfolio 2019 **
 *************************
 
--b- not all generators stop after general stop
 -b- protect double inputs
 -f- Wolfram show rule number
 -f- GOL make calculations methods top left etc
@@ -19,6 +18,8 @@
 -f- custom color panel
 - - MVC split MC further
 ///////////////////////////////////////////////////////
++b- not all generators stop after general stop
++b- pause and stop during calculations for all generators
 +b- make sidebar scrollable for lower res
 +f- Set Mnemonic key in Menus
 +f- time calculations and display in statusbar

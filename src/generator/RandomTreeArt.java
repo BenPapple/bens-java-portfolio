@@ -173,6 +173,18 @@ public class RandomTreeArt extends AGenerator {
 		int rgbVal;
 
 		for (int x = 1; x <= maxXPixel; x++) {
+			//Stop and pause
+			if (guiSideBar.isStopped()){
+				break;
+			}
+			while (guiSideBar.isPaused()){
+				updateStatus(IGenerator.Status.PAUSED);
+				if (guiSideBar.isStopped()) {
+					break;
+				}				
+			}
+			updateStatus(IGenerator.Status.CALCULATING);
+			
 			for (int y = 1; y <= maxYPixel; y++) {
 				double xDouble = x;
 				double yDouble = y;
@@ -423,6 +435,7 @@ public class RandomTreeArt extends AGenerator {
 
 	@Override
 	public void stopGenerator() {
+		guiSideBar.setStopped();
 		this.status = IGenerator.Status.STOP;
 	}
 

@@ -81,6 +81,7 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 					break;
 				}
 			}
+			updateStatus(IGenerator.Status.CALCULATING);
 
 		}
 

@@ -79,6 +79,7 @@ public final class Wolfram extends AGeneratorCellular {
 					break;
 				}
 			}
+			updateStatus(IGenerator.Status.CALCULATING);
 
 		}
 
