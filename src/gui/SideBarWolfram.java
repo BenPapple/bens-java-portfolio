@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -21,7 +22,7 @@ import javax.swing.border.Border;
  *
  * @author BenGe47
  */
-public class SideBarWolfram extends ASideBar {
+public class SideBarWolfram extends ASideBar implements ActionListener {
 
 	private static JLabel lblRandomness1 = new JLabel("Enter Randomness:");
 	private static JTextField tfRandomness1 = new JTextField("0.33");
@@ -29,7 +30,7 @@ public class SideBarWolfram extends ASideBar {
 	private static JSlider sliderSpeed1 = new JSlider();
 	private static JCheckBox cbEdgeDead1 = new JCheckBox("Dead Cells Edge", true);
 	private static JCheckBox cbEdgeWrapAround1 = new JCheckBox("Wraparound Edge");
-	private static JCheckBox cb0 = new JCheckBox("", false);
+	private static JCheckBox cb0 = new JCheckBox("", true);
 	private static JCheckBox cb1 = new JCheckBox("", false);
 	private static JCheckBox cb2 = new JCheckBox("", false);
 	private static JCheckBox cb3 = new JCheckBox("", true);
@@ -37,7 +38,9 @@ public class SideBarWolfram extends ASideBar {
 	private static JCheckBox cb5 = new JCheckBox("", true);
 	private static JCheckBox cb6 = new JCheckBox("", true);
 	private static JCheckBox cb7 = new JCheckBox("", false);
-	private JPanel GeneratorPnl;
+	private static JLabel lblRule = new JLabel("");
+	private int rule;
+	private JPanel GeneratorPnl;	
 
 	/**
 	 * Constructor.
@@ -101,9 +104,7 @@ public class SideBarWolfram extends ASideBar {
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarWolfram.cbEdgeDead1, gbConstraints);
 
-		JPanel pnlCbox = new JPanel(new GridLayout(1, 0)); // single column
-		Border border2 = BorderFactory.createTitledBorder("Wolfram Rules:");
-		pnlCbox.setBorder(border2);
+		JPanel pnlCbox = new JPanel();
 		pnlCbox.add(cb0);
 		pnlCbox.add(cb1);
 		pnlCbox.add(cb2);
@@ -112,14 +113,29 @@ public class SideBarWolfram extends ASideBar {
 		pnlCbox.add(cb5);
 		pnlCbox.add(cb6);
 		pnlCbox.add(cb7);
+		cb0.addActionListener(this);
+		cb1.addActionListener(this);
+		cb2.addActionListener(this);
+		cb3.addActionListener(this);
+		cb4.addActionListener(this);
+		cb5.addActionListener(this);
+		cb6.addActionListener(this);
+		cb7.addActionListener(this);
+		
+		JPanel pnlWolframRules = new JPanel(new GridLayout(2, 8)); 
+		Border border2 = BorderFactory.createTitledBorder("Wolfram Rules:");
+		pnlWolframRules.setBorder(border2);
+		pnlWolframRules.add(pnlCbox);
+		pnlWolframRules.add(lblRule);
+		lblRule.setHorizontalAlignment(JLabel.CENTER);
 
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gbConstraints.weightx = 1;
 		gbConstraints.gridx = 0;
 		gbConstraints.gridy = 3;
 		gbConstraints.gridwidth = 2;
-		gbConstraints.insets = new Insets(10, 10, 10, 10);
-		GeneratorPnl.add(pnlCbox, gbConstraints);
+		gbConstraints.insets = new Insets(10, 10, 10, 10);		
+		GeneratorPnl.add(pnlWolframRules, gbConstraints);
 
 		Border border = BorderFactory.createTitledBorder("Generator settings:");
 		GeneratorPnl.setBorder(border);
@@ -135,6 +151,7 @@ public class SideBarWolfram extends ASideBar {
 		super.lblWidth.setText("Enter Pixel Width:");
 		super.lblHeight.setText("Enter Pixel Height");
 		lblRandomness1.setText("Initial randomness:");
+		lblRule.setText("Rule " + rule);
 		cbEdgeWrapAround1.setSelected(true);
 		sliderSpeed1.setMinimum(0);
 		sliderSpeed1.setMaximum(500);
@@ -151,7 +168,7 @@ public class SideBarWolfram extends ASideBar {
 		super.setWidth(850);
 		super.setHeight(450);
 		super.setColor(Color.decode("#9999FF"));
-		super.setBGColor(Color.BLACK);
+		super.setBGColor(Color.BLACK);		
 	}
 
 	/**
@@ -182,7 +199,7 @@ public class SideBarWolfram extends ASideBar {
 	}
 
 	/**
-	 * Determines when neighbours are 111 if it means dead/false or alive/true.
+	 * Determines when neighbors are 111 if it means dead/false or alive/true.
 	 *
 	 * @return true if selected
 	 */
@@ -191,7 +208,7 @@ public class SideBarWolfram extends ASideBar {
 	}
 
 	/**
-	 * Determines when neighbours are 110 if it means dead/false or alive/true.
+	 * Determines when neighbors are 110 if it means dead/false or alive/true.
 	 *
 	 * @return true if selected
 	 */
@@ -200,7 +217,7 @@ public class SideBarWolfram extends ASideBar {
 	}
 
 	/**
-	 * Determines when neighbours are 101 if it means dead/false or alive/true.
+	 * Determines when neighbors are 101 if it means dead/false or alive/true.
 	 *
 	 * @return true if selected
 	 */
@@ -209,7 +226,7 @@ public class SideBarWolfram extends ASideBar {
 	}
 
 	/**
-	 * Determines when neighbours are 100 if it means dead/false or alive/true.
+	 * Determines when neighbors are 100 if it means dead/false or alive/true.
 	 *
 	 * @return true if selected
 	 */
@@ -218,7 +235,7 @@ public class SideBarWolfram extends ASideBar {
 	}
 
 	/**
-	 * Determines when neighbours are 011 if it means dead/false or alive/true.
+	 * Determines when neighbors are 011 if it means dead/false or alive/true.
 	 *
 	 * @return true if selected
 	 */
@@ -227,7 +244,7 @@ public class SideBarWolfram extends ASideBar {
 	}
 
 	/**
-	 * Determines when neighbours are 010 if it means dead/false or alive/true.
+	 * Determines when neighbors are 010 if it means dead/false or alive/true.
 	 *
 	 * @return true if selected
 	 */
@@ -236,7 +253,7 @@ public class SideBarWolfram extends ASideBar {
 	}
 
 	/**
-	 * Determines when neighbours are 001 if it means dead/false or alive/true.
+	 * Determines when neighbors are 001 if it means dead/false or alive/true.
 	 *
 	 * @return true if selected
 	 */
@@ -245,12 +262,51 @@ public class SideBarWolfram extends ASideBar {
 	}
 
 	/**
-	 * Determines when neighbours are 000 if it means dead/false or alive/true.
+	 * Determines when neighbors are 000 if it means dead/false or alive/true.
 	 *
 	 * @return true if selected
 	 */
 	public Boolean isCB7() {
 		return cb7.isSelected();
 	}
+	
+	/**
+	 * Perform click on button to calculate Wolfram rule on generator creation.
+	 */
+	public void clickRules() {
+		cb0.doClick();
+	}
+	
+	/**
+	 * Calculate Wolfram rule from 8 checkboxes representing 8bits.
+	 */
+	public void actionPerformed(ActionEvent e) {
+		 rule = 0;
+		 if (cb7.isSelected()) {
+			 rule += 1 * 1;
+		 }
+		 if (cb6.isSelected()) {
+			 rule += 1 * 2;
+		 }
+		 if (cb5.isSelected()) {
+			 rule += 1 * 4;
+		 }
+		 if (cb4.isSelected()) {
+			 rule += 1 * 8;
+		 }
+		 if (cb3.isSelected()) {
+			 rule += 1 * 16;
+		 }
+		 if (cb2.isSelected()) {
+			 rule += 1 * 32;
+		 }
+		 if (cb1.isSelected()) {
+			 rule += 1 * 64;
+		 }
+		 if (cb0.isSelected()) {
+			 rule += 1 * 128;
+		 }		 
+		 lblRule.setText("Rule " + rule);
+	    }
 
 }

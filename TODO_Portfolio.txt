@@ -3,7 +3,6 @@
 *************************
 
 -b- protect double inputs
--f- Wolfram show rule number
 -f- GOL make calculations methods top left etc
 -f- regex for lsystem alphabet
 -b- make html descriptions wraparound
@@ -18,6 +17,7 @@
 -f- custom color panel
 - - MVC split MC further
 ///////////////////////////////////////////////////////
++f- Wolfram show rule number
 +b- not all generators stop after general stop
 +b- pause and stop during calculations for all generators
 +b- make sidebar scrollable for lower res

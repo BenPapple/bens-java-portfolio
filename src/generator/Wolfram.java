@@ -47,6 +47,8 @@ public final class Wolfram extends AGeneratorCellular {
 		});
 
 		createSideBarGUI();
+		//so current rule gets calculated
+		guiSideBar.clickRules();
 	}
 
 	@Override
