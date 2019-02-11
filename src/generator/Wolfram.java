@@ -32,6 +32,7 @@ public final class Wolfram extends AGeneratorCellular {
 	 */
 	public Wolfram(MainCanvasPanel MainCanvas, String name) {
 		this.generatorName = name;
+		this.myMnemonicKey = 'W';
 		this.myCanvas = MainCanvas;
 		this.PanelSidebar = new JPanel();
 		this.generatorDescr = "Wolfram";

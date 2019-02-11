@@ -58,6 +58,7 @@ public class LSystem extends AGenerator {
 	 */
 	public LSystem(MainCanvasPanel mainCanvas, String name) {
 		this.generatorName = name;
+		this.myMnemonicKey = 'L';
 		this.myCanvas = mainCanvas;
 		this.PanelSidebar = new JPanel();
 		this.generatorDescr = "Lindenmayer system";

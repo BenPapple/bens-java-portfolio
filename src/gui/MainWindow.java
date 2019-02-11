@@ -73,7 +73,7 @@ public class MainWindow extends JFrame implements Observer {
 		statusbarPanel.add(statusLabel);
 
 		JMenu menuFile;
-		JMenu menuSimple;
+		JMenu menuTest;
 		JMenu menuCellular;
 		JMenu menuLSystem;
 		JMenu menuRTree;
@@ -84,9 +84,11 @@ public class MainWindow extends JFrame implements Observer {
 
 		// MenuBar File Entry
 		menuFile = new JMenu("File");
+		menuFile.setMnemonic(KeyEvent.VK_F);
 		menubar.add(menuFile);
 
 		menuItem = new JMenuItem("Save Image as PNG");
+		menuItem.setMnemonic(KeyEvent.VK_S);
 		menuItem.addActionListener((ActionEvent ae) -> {
 			saveMenuItemClicked(ae);
 		});
@@ -95,26 +97,34 @@ public class MainWindow extends JFrame implements Observer {
 		menuFile.add(new JSeparator());
 
 		menuItem = new JMenuItem("Quit");
+		menuItem.setMnemonic(KeyEvent.VK_Q);
 		menuItem.addActionListener((ActionEvent event) -> {
 			System.exit(0);
 		});
 		menuFile.add(menuItem);
 
 		// MenuBar Generators
-		menuSimple = new JMenu("Test");
-		menubar.add(menuSimple);
+		menuTest = new JMenu("Test");
+		menuTest.setMnemonic(KeyEvent.VK_T);
+		menubar.add(menuTest);
 		menuCellular = new JMenu("Cellular Automatons");
+		menuCellular.setMnemonic(KeyEvent.VK_C);
 		menubar.add(menuCellular);
 		menuLSystem = new JMenu("L-Systems");
+		menuLSystem.setMnemonic(KeyEvent.VK_L);
 		menubar.add(menuLSystem);
 		menuRTree = new JMenu("Random-Tree");
+		menuRTree.setMnemonic(KeyEvent.VK_R);
 		menubar.add(menuRTree);
 		menuGames = new JMenu("Games");
+		menuGames.setMnemonic(KeyEvent.VK_G);
 		menubar.add(menuGames);
-		menuHelp = new JMenu("?");
+		menuHelp = new JMenu("Help");
+		menuHelp.setMnemonic(KeyEvent.VK_H);
 		menubar.add(menuHelp);
 
 		menuItem = new JMenuItem("About");
+		menuItem.setMnemonic(KeyEvent.VK_A);
 		menuItem.addActionListener((ActionEvent event) -> {
 			showDialogAbout();
 		});
@@ -138,6 +148,7 @@ public class MainWindow extends JFrame implements Observer {
 		// Add Generator Entries from ArrayList
 		for (IGenerator generator : generators) {
 			menuItem = new JMenuItem(generator.getName());
+			menuItem.setMnemonic(generator.getKey());
 			menuItem.addActionListener((ActionEvent ae) -> {
 
 				generalStop();
@@ -149,13 +160,14 @@ public class MainWindow extends JFrame implements Observer {
 
 			switch (generator.getGenType()) {
 			case TEST:
-				menuSimple.add(menuItem);
+				menuTest.add(menuItem);
+				
 				break;
 			case CELLULAR:
 				menuCellular.add(menuItem);
 				break;
 			case LSYSTEM:
-				menuLSystem.add(menuItem);
+				menuLSystem.add(menuItem);				
 				break;
 			case RTREE:
 				menuRTree.add(menuItem);

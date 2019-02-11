@@ -43,7 +43,7 @@ public class ProgramStart {
 
 		generators.add(new NagelSchreckenberg(centerImagePanel, "Nagel-Schreckenberg"));
 		generators.add(new Wolfram(centerImagePanel, "Wolfram's Rule 30 "));
-		generators.add(new TestShapes(centerImagePanel, "Test Shapes Generator"));
+		generators.add(new TestShapes(centerImagePanel, "Shapes Generator"));
 		generators.add(new TestRandomTreeArt(centerImagePanel, "WiP: Alternative Random-Tree Art (2-Leaf)"));
 		generators.add(new RandomTreeArt(centerImagePanel, "Random-Tree Art (2-Leaf)"));
 		generators.add(new LSystem(centerImagePanel, "Lindenmayer system"));

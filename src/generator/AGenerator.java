@@ -22,6 +22,7 @@ public abstract class AGenerator extends Observable implements IGenerator, Runna
 	JPanel PanelSidebar;
 	MainCanvasPanel myCanvas;
 	GeneratorType generatorType;
+	char myMnemonicKey;
 	private Instant startCalc, endCalc;
 	private long timeBetween = 0;
 
@@ -131,6 +132,12 @@ public abstract class AGenerator extends Observable implements IGenerator, Runna
 	public String getErrorMessage() {
 		return this.errorMsg;
 	}
+	
+	@Override
+	public char getKey() {
+		return this.myMnemonicKey;
+	}
+
 
 	/**
 	 * Initializes the GUI from another class in gui package that implements GUI

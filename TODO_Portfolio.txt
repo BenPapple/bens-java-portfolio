@@ -7,11 +7,10 @@
 -f- GOL make calculations methods top left etc
 -f- Wolfram show rule number
 -f- regex for lsystem alphabet
--f- Set Mnemonic key in Menus
+
 -b- make html descriptions wraparound
 -f- RTree load save for repeatable graphics
 - - fill abstract CA generator classes with more vars and methods
-- -
 - - Hashmap L-system
 - - change protected vars in abstract to private with getter/setter
 - - L-system split scale factor into own method
@@ -19,6 +18,8 @@
 -f- RTree choose math formula in gui
 -f- custom color panel
 - - MVC split MC further
+///////////////////////////////////////////////////////
++f- Set Mnemonic key in Menus
 +f- time calculations and display in statusbar
 + html descriptions
 + xy variables

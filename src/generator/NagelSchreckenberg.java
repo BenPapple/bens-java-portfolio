@@ -34,6 +34,7 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 	 */
 	public NagelSchreckenberg(MainCanvasPanel MainCanvas, String name) {
 		this.generatorName = name;
+		this.myMnemonicKey = 'N';
 		this.myCanvas = MainCanvas;
 		this.PanelSidebar = new JPanel();
 		this.generatorDescr = "Nagel-Schreckenberg";

@@ -119,4 +119,12 @@ public interface IGenerator extends Runnable {
 		 */
 		ERROR
 	}
+
+	
+	/**
+	 * Returns the assigned key for mnemonics.
+	 *
+	 * @return char mnemonic key
+	 */
+	public char getKey();
 }

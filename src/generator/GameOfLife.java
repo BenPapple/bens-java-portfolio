@@ -32,6 +32,7 @@ public class GameOfLife extends AGeneratorCellular {
 	 */
 	public GameOfLife(MainCanvasPanel mainCanvas, String name) {
 		this.generatorName = name;
+		this.myMnemonicKey = 'C';
 		this.myCanvas = mainCanvas;
 		this.PanelSidebar = new JPanel();
 		this.generatorDescr = "Game of Live";

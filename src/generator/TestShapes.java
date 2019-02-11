@@ -31,6 +31,7 @@ public class TestShapes extends AGenerator {
 	 */
 	public TestShapes(MainCanvasPanel mainCanvas, String name) {
 		this.generatorName = name;
+		this.myMnemonicKey = 'S';
 		this.myCanvas = mainCanvas;
 		this.PanelSidebar = new JPanel();
 		this.generatorDescr = "Wolfram";

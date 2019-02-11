@@ -73,6 +73,7 @@ public class RandomTreeArt extends AGenerator {
 	 */
 	public RandomTreeArt(MainCanvasPanel mainCanvas, String name) {
 		this.generatorName = name;
+		this.myMnemonicKey = 'R';
 		this.myCanvas = mainCanvas;
 		this.PanelSidebar = new JPanel();
 		this.generatorDescr = "Lindenmayer system";
