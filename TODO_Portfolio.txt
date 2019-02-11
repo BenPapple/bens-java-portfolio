@@ -2,23 +2,24 @@
 ** TODO Portfolio 2019 **
 *************************
 
+-b- not all generators stop after general stop
 -b- protect double inputs
--b- make sidebar scrollable for lower res
--f- GOL make calculations methods top left etc
 -f- Wolfram show rule number
+-f- GOL make calculations methods top left etc
 -f- regex for lsystem alphabet
-
 -b- make html descriptions wraparound
+-f- RTree choose math formula in gui
+
 -f- RTree load save for repeatable graphics
 - - fill abstract CA generator classes with more vars and methods
 - - Hashmap L-system
 - - change protected vars in abstract to private with getter/setter
 - - L-system split scale factor into own method
 - - L-system drawing function take 4 inputs
--f- RTree choose math formula in gui
 -f- custom color panel
 - - MVC split MC further
 ///////////////////////////////////////////////////////
++b- make sidebar scrollable for lower res
 +f- Set Mnemonic key in Menus
 +f- time calculations and display in statusbar
 + html descriptions

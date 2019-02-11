@@ -133,17 +133,22 @@ public class MainWindow extends JFrame implements Observer {
 		this.setJMenuBar(menubar);
 
 		// Add Left Control Panel
-		JPanel container = new JPanel();
-		container.setLayout(card);
+		JPanel cardContainer = new JPanel();		
+		cardContainer.setLayout(card);
 
-		container.setPreferredSize(new Dimension(350, this.getHeight()));
-		container.setBorder(new BevelBorder(BevelBorder.LOWERED));
+		cardContainer.setPreferredSize(new Dimension(350, this.getHeight()));
+		cardContainer.setBorder(new BevelBorder(BevelBorder.LOWERED));
 
 		generators.forEach((generator) -> {
-			container.add(generator.getSideBarPanel(), generator.getName());
+			cardContainer.add(generator.getSideBarPanel(), generator.getName());
 		});
 
-		this.add(container, BorderLayout.WEST);
+		// make sidebar scrollable
+		JScrollPane spSideBar = new JScrollPane(cardContainer);
+		spSideBar.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		spSideBar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		
+		this.add(spSideBar, BorderLayout.WEST);
 
 		// Add Generator Entries from ArrayList
 		for (IGenerator generator : generators) {
@@ -152,7 +157,7 @@ public class MainWindow extends JFrame implements Observer {
 			menuItem.addActionListener((ActionEvent ae) -> {
 
 				generalStop();
-				card.show(container, generator.getName());
+				card.show(cardContainer, generator.getName());
 				generator.setReady();
 				statusLabel.setText(generator.getName() + " Status: " + generator.getGenStatus());
 
