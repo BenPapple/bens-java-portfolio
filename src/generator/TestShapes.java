@@ -59,7 +59,8 @@ public class TestShapes extends AGenerator {
 
 	@Override
 	public void run() {
-		updateStatus(IGenerator.Status.CALCULATE);
+		startCalcTime();
+		updateStatus(IGenerator.Status.CALCULATING);
 
 		try {
 			Thread.sleep(50);
@@ -79,6 +80,7 @@ public class TestShapes extends AGenerator {
 		g2d.dispose();
 
 		this.myCanvas.setImage(image);
+		endCalcTime();
 		updateStatus(IGenerator.Status.FINISHED);
 	}
 

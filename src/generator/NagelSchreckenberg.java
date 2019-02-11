@@ -51,7 +51,8 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 
 	@Override
 	public void run() {
-		updateStatus(IGenerator.Status.CALCULATE);
+		startCalcTime();
+		updateStatus(IGenerator.Status.CALCULATING);
 		guiSideBar.setButtonsCalculating();
 		init2DField();
 
@@ -83,6 +84,7 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 		}
 
 		guiSideBar.setButtonsReady();
+		endCalcTime();
 		updateStatus(IGenerator.Status.FINISHED);
 	}
 

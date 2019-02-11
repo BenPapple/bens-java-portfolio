@@ -75,7 +75,8 @@ public class LSystem extends AGenerator {
 
 	@Override
 	public void run() {
-		updateStatus(IGenerator.Status.CALCULATE);
+		startCalcTime();
+		updateStatus(IGenerator.Status.CALCULATING);
 		paused = false;
 		stopped = false;
 		guiSideBar.setButtonsCalculating();
@@ -99,6 +100,7 @@ public class LSystem extends AGenerator {
 			}
 
 			guiSideBar.setButtonsReady();
+			endCalcTime();
 			updateStatus(IGenerator.Status.FINISHED);
 
 		} catch (OutOfMemoryError e) {

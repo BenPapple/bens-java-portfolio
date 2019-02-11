@@ -48,6 +48,13 @@ public interface IGenerator extends Runnable {
 	 * @return type of Generator
 	 */
 	public GeneratorType getGenType();
+	
+	/**
+	 * Gives the duration between two Instant variables.
+	 *
+	 * @return long time in seconds
+	 */
+	public long getCalcTime();	
 
 	/**
 	 * Gives you the current status value of the generator.
@@ -94,7 +101,7 @@ public interface IGenerator extends Runnable {
 		/**
 		 * Generator is currently calculating
 		 */
-		CALCULATE,
+		CALCULATING,
 		/**
 		 * Generator is paused
 		 */
@@ -108,7 +115,7 @@ public interface IGenerator extends Runnable {
 		 */
 		STOP,
 		/**
-		 * Error occured
+		 * Error occurred
 		 */
 		ERROR
 	}

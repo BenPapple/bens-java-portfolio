@@ -184,7 +184,7 @@ public class MainWindow extends JFrame implements Observer {
 	}
 
 	/**
-	 * React to menu entry click with saving image to drive.
+	 * React to menu entry click with saving image to disk.
 	 *
 	 * @param aeMenuSaveClick Click event on menu entry
 	 */
@@ -232,7 +232,7 @@ public class MainWindow extends JFrame implements Observer {
 		// Stop all generators, but not active obsGenerator
 		generators.stream().map((gen) -> {
 			if (!gen.equals(obsGenerator)) {
-				boolean bool = gen.getGenStatus() == IGenerator.Status.CALCULATE;
+				boolean bool = gen.getGenStatus() == IGenerator.Status.CALCULATING;
 				gen.stopGenerator();
 				if (bool) {
 					statusLabel
@@ -245,8 +245,13 @@ public class MainWindow extends JFrame implements Observer {
 		});
 
 		// Update status bar with status of observableGenerator
-		statusLabel.setText(observableGenerator.getName() + " Status: " + observableGenerator.getGenStatus());
-
+		//if finished display duration and status
+		if (observableGenerator.getGenStatus() == IGenerator.Status.FINISHED) {
+		statusLabel.setText(observableGenerator.getName() + "'s" + " calculations have " + observableGenerator.getGenStatus() + " in " + observableGenerator.getCalcTime() + " seconds");
+		} else {
+		//display status
+		statusLabel.setText(observableGenerator.getName()  + "'s" + " Status: " + observableGenerator.getGenStatus());
+		}
 		// In ready status start thread to keep the buttons active
 		if (observableGenerator.getGenStatus() == IGenerator.Status.READY) {
 			Thread thread = new Thread(observableGenerator);

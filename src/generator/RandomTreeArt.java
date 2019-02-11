@@ -111,7 +111,8 @@ public class RandomTreeArt extends AGenerator {
 
 	@Override
 	public void run() {
-		updateStatus(IGenerator.Status.CALCULATE);
+		startCalcTime();
+		updateStatus(IGenerator.Status.CALCULATING);
 
 		guiSideBar.setButtonsCalculating();
 
@@ -124,7 +125,6 @@ public class RandomTreeArt extends AGenerator {
 			createRandomKaryTree();
 			System.out.println("randomTree finished");
 			updateScreenPanel();
-			System.out.println("updatescreenpanel finished");
 
 		} catch (OutOfMemoryError e) {
 			errorMsg = "OutOfMemory";
@@ -135,6 +135,7 @@ public class RandomTreeArt extends AGenerator {
 		}
 
 		guiSideBar.setButtonsReady();
+		endCalcTime();
 		updateStatus(IGenerator.Status.FINISHED);
 
 	}
@@ -236,7 +237,7 @@ public class RandomTreeArt extends AGenerator {
 					if (bVal < 0) {
 						bVal = 0.0;
 					}
-					System.out.println("RGB: " + rVal + "  " + gVal + "  " + bVal);
+//					System.out.println("RGB: " + rVal + "  " + gVal + "  " + bVal);
 					rgbCalc = new Color((float) rVal, (float) gVal, (float) bVal);
 				}
 				gc.setColor(rgbCalc);

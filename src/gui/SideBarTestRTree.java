@@ -21,7 +21,7 @@ import javax.swing.border.Border;
  */
 public class SideBarTestRTree extends SideBarRTree {
 
-	private static JLabel lblGenerations = new JLabel("Recursion Depth:");
+	private static JLabel lblGenerations = new JLabel("Tree Depth:");
 	private static SpinnerModel smGenerations = new SpinnerNumberModel(7, 0, 15, 1);
 	private static JSpinner jsGenerations = new JSpinner(smGenerations);
 	private static JLabel lblcbPresets = new JLabel("Color Model:");

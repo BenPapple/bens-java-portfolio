@@ -3,6 +3,9 @@ package generator;
 import data.GlobalSettings;
 import data.GlobalSettings.GeneratorType;
 import gui.MainCanvasPanel;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Observable;
 import javax.swing.JPanel;
 
@@ -19,6 +22,8 @@ public abstract class AGenerator extends Observable implements IGenerator, Runna
 	JPanel PanelSidebar;
 	MainCanvasPanel myCanvas;
 	GeneratorType generatorType;
+	private Instant startCalc, endCalc;
+	private long timeBetween = 0;
 
 	String generatorDescr;
 	IGenerator.Status status;
@@ -36,6 +41,33 @@ public abstract class AGenerator extends Observable implements IGenerator, Runna
 		// Notify Observers
 		setChanged();
 		notifyObservers();
+	}
+
+	/**
+	 * Update variable startCalc with current time.
+	 *
+	 */
+	public void startCalcTime() {
+		startCalc = Instant.now();
+	}
+
+	/**
+	 * Update variable endCalc with current time.
+	 * 
+	 */
+	public void endCalcTime() {
+		endCalc = Instant.now();
+	}
+
+	/**
+	 * Gives the duration between two Instant variables.
+	 *
+	 * @return long time in seconds
+	 */
+	@Override
+	public long getCalcTime() {
+		timeBetween = ChronoUnit.SECONDS.between(startCalc, endCalc);
+		return this.timeBetween;
 	}
 
 	/**

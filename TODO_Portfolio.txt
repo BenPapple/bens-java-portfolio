@@ -5,8 +5,8 @@
 -b- protect double inputs
 -b- make sidebar scrollable for lower res
 -f- GOL make calculations methods top left etc
--f- time calculations and display in statusbar
 -f- Wolfram show rule number
+-f- regex for lsystem alphabet
 -f- Set Mnemonic key in Menus
 -b- make html descriptions wraparound
 -f- RTree load save for repeatable graphics
@@ -19,6 +19,7 @@
 -f- RTree choose math formula in gui
 -f- custom color panel
 - - MVC split MC further
++f- time calculations and display in statusbar
 + html descriptions
 + xy variables
 + Add seperators(2D automatons/3D automatons) to menu
