@@ -25,7 +25,7 @@ public class SideBarTestRTree extends SideBarRTree {
 	private static SpinnerModel smGenerations = new SpinnerNumberModel(7, 0, 15, 1);
 	private static JSpinner jsGenerations = new JSpinner(smGenerations);
 	private static JLabel lblcbPresets = new JLabel("Color Model:");
-	private static String comboBoxList[] = { "Black-White", "RGB", "White Noise", "Atari" };
+	private static String comboBoxList[] = { "Black-White", "RGB", "White Noise"};
 	private static final JComboBox<Object> J_COMBO_BOX = new JComboBox<Object>(comboBoxList);
 	private static JComboBox<Object> cbColorPresets = J_COMBO_BOX;
 	private JPanel GeneratorPnl;
@@ -96,7 +96,7 @@ public class SideBarTestRTree extends SideBarRTree {
 		super.lblBGColor.setVisible(false);
 		super.lblWidth.setText("Enter Width:");
 		super.lblHeight.setText("Enter Height");
-		cbColorPresets.setSelectedIndex(3);
+		cbColorPresets.setSelectedIndex(2);
 		super.taDescription.setText("Alternative Random-tree Art Generator");
 	}
 
