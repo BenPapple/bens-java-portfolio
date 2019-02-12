@@ -47,47 +47,57 @@ public final class Wolfram extends AGeneratorCellular {
 		});
 
 		createSideBarGUI();
-		//so current rule gets calculated
+		// so current rule gets calculated
 		guiSideBar.clickRules();
 	}
 
 	@Override
 	public void run() {
-		startCalcTime();
-		updateStatus(IGenerator.Status.CALCULATING);
-		guiSideBar.setButtonsCalculating();
-		init2DField();
+		try {
+			//check input double range
+			if (Double.parseDouble(guiSideBar.getRandomness()) >= 0.0
+					&& Double.parseDouble(guiSideBar.getRandomness()) <= 1.0) {
+				startCalcTime();
+				updateStatus(IGenerator.Status.CALCULATING);
+				guiSideBar.setButtonsCalculating();
+				init2DField();
 
-		while (!guiSideBar.isStopped()) {
+				while (!guiSideBar.isStopped()) {
 
-			try {
-				Thread.sleep(guiSideBar.getSpeed());
-			} catch (Exception e) {
+					try {
+						Thread.sleep(guiSideBar.getSpeed());
+					} catch (Exception e) {
 
-			}
+					}
 
-			updateScreenPanel();
+					updateScreenPanel();
 
-			if (currentRow < GridWorld[0].length) {
-				nextGenField();
-			} else {
-				break;
+					if (currentRow < GridWorld[0].length) {
+						nextGenField();
+					} else {
+						break;
 
-			}
+					}
 
-			while (guiSideBar.isPaused()) {
-				updateStatus(IGenerator.Status.PAUSED);
-				if (guiSideBar.isStopped()) {
-					break;
+					while (guiSideBar.isPaused()) {
+						updateStatus(IGenerator.Status.PAUSED);
+						if (guiSideBar.isStopped()) {
+							break;
+						}
+					}
+					updateStatus(IGenerator.Status.CALCULATING);
+
 				}
+
+				guiSideBar.setButtonsReady();
+				endCalcTime();
+				updateStatus(IGenerator.Status.FINISHED);
+			} else {
+				showWarning("Randomness has to be in 0.0 to 1.0 range.");
 			}
-			updateStatus(IGenerator.Status.CALCULATING);
-
+		} catch (Exception ne) {
+			showWarning("Randomness has to be in 0.0 to 1.0 range.");
 		}
-
-		guiSideBar.setButtonsReady();
-		endCalcTime();
-		updateStatus(IGenerator.Status.FINISHED);
 	}
 
 	/**

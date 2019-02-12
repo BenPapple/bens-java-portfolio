@@ -7,6 +7,8 @@ import gui.MainCanvasPanel;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Observable;
+
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -132,12 +134,23 @@ public abstract class AGenerator extends Observable implements IGenerator, Runna
 	public String getErrorMessage() {
 		return this.errorMsg;
 	}
-	
+
 	@Override
 	public char getKey() {
 		return this.myMnemonicKey;
 	}
 
+	/**
+	 * Display pop-up with input error message.
+	 * 
+	 * @param inString error message
+	 */
+	public void showWarning(String inString) {
+		JOptionPane.showMessageDialog(null,
+				inString,
+				"Warning",
+				JOptionPane.WARNING_MESSAGE);
+	}
 
 	/**
 	 * Initializes the GUI from another class in gui package that implements GUI

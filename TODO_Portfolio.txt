@@ -2,7 +2,7 @@
 ** TODO Portfolio 2019 **
 *************************
 
--b- protect double inputs
+-f- new/repaired color models for RandomTreeArt
 -f- GOL make calculations methods top left etc
 -f- regex for lsystem alphabet
 -b- make html descriptions wraparound
@@ -17,6 +17,7 @@
 -f- custom color panel
 - - MVC split MC further
 ///////////////////////////////////////////////////////
++b- protect double inputs
 +b- centerPanel scrollpane does not work
 +f- Wolfram show rule number
 +b- not all generators stop after general stop
