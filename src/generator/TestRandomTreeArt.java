@@ -43,26 +43,8 @@ public class TestRandomTreeArt extends RandomTreeArt {
 			}
 		});
 
-		int anzahlFarbModelle = 4;
-		int k = -1; // erhoeht die Bequemlichkeit
-
 		FormulaAll.addAll(FormulaOneVar);
 		FormulaAll.addAll(FormulaTwoVar);
-
-		modelNames = new String[anzahlFarbModelle];
-		// modelle_pause = new long[anzahlFarbModelle];
-
-		k++;
-		modelNames[k] = "SW-Stufen";
-
-		k++;
-		modelNames[k] = "RGB-Stufen";
-
-		k++;
-		modelNames[k] = "White-Noise-RGB (+ 3 Randoms je Farbe)";
-
-		k++;
-		modelNames[k] = "Andre aus Moodle / Atari-Bunt";
 
 		createSideBarGUI();
 

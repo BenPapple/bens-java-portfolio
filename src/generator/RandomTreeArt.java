@@ -36,12 +36,8 @@ public class RandomTreeArt extends AGenerator {
 	 * 
 	 */
 	protected Random rand;
-	private karyTree myRandomTree;
 
-	/**
-	 * 
-	 */
-	protected String[] modelNames;
+	private karyTree myRandomTree;
 	/**
 	 * 
 	 */
@@ -87,25 +83,8 @@ public class RandomTreeArt extends AGenerator {
 			}
 		});
 
-		int numColorCalc = 4;
-		int k = -1;
-
 		FormulaAll.addAll(FormulaOneVar);
 		FormulaAll.addAll(FormulaTwoVar);
-
-		modelNames = new String[numColorCalc];
-
-		k++;
-		modelNames[k] = "BlackWhite";
-
-		k++;
-		modelNames[k] = "RGB";
-
-		k++;
-		modelNames[k] = "White-Noise-RGB (+ 3 Randoms a color)";
-
-		k++;
-		modelNames[k] = "Atari-colorful";
 
 		createSideBarGUI();
 	}
@@ -170,21 +149,22 @@ public class RandomTreeArt extends AGenerator {
 	private void drawPicture(Graphics2D gc) {
 
 		double rVal, gVal, bVal = 0;
+		int averageRGB;
 		int rgbVal;
 
 		for (int x = 1; x <= maxXPixel; x++) {
-			//Stop and pause
-			if (guiSideBar.isStopped()){
+			// Stop and pause
+			if (guiSideBar.isStopped()) {
 				break;
 			}
-			while (guiSideBar.isPaused()){
+			while (guiSideBar.isPaused()) {
 				updateStatus(IGenerator.Status.PAUSED);
 				if (guiSideBar.isStopped()) {
 					break;
-				}				
+				}
 			}
 			updateStatus(IGenerator.Status.CALCULATING);
-			
+
 			for (int y = 1; y <= maxYPixel; y++) {
 				double xDouble = x;
 				double yDouble = y;
@@ -192,67 +172,36 @@ public class RandomTreeArt extends AGenerator {
 
 				double colorDouble = recursiveColorValCalc(xDouble, yDouble, myRandomTree.getFormula(),
 						guiSideBar.getGenerations(), myRandomTree);
-				switch (guiSideBar.getColorModelIndex()) {
-				case 0:
-					rVal = colorDouble;
-					gVal = colorDouble;
-					bVal = colorDouble;
+
+				if (colorDouble > 1.0) {
+					colorDouble = 1.0;
+				}
+				if (colorDouble < 0) {
+					colorDouble = 0.0;
+				}
+
+				rgbVal = (int) (colorDouble * 16777215.0);
+				rgbCalc = new Color(rgbVal);
+
+				switch (guiSideBar.getColorModelName()) {
+				case "Black-White":
+					averageRGB = (rgbCalc.getRed() + rgbCalc.getGreen() + rgbCalc.getBlue()) / 3;
+					rgbCalc = new Color(averageRGB, averageRGB, averageRGB);
 					break;
-				case 1:
-					rVal = colorDouble * 0.75;
-					gVal = colorDouble * 0.5;
-					bVal = colorDouble * 0.25;
+				case "White Noise":
+					double randomNoise = Math.random();
+					rVal = rgbCalc.getRed() * randomNoise;
+					gVal = rgbCalc.getGreen() * randomNoise;
+					bVal = rgbCalc.getBlue() * randomNoise;
+					rgbCalc = new Color((int) rVal, (int) gVal, (int) bVal);
 					break;
-				case 2:
-					rVal = colorDouble * colorDouble * Math.random() + Math.random() * colorDouble + colorDouble;
-					gVal = colorDouble * colorDouble * Math.random() + Math.random() * colorDouble + colorDouble;
-					bVal = colorDouble * colorDouble * Math.random() + Math.random() * colorDouble + colorDouble;
-					break;
-				case 3:
-					rVal = colorDouble * 0.75;
-					gVal = colorDouble * 0.5;
-					bVal = colorDouble * 0.25;
-					if (colorDouble >= 1) {
-						colorDouble = 0.99;
-					}
-					rgbVal = (int) (colorDouble * 16777215.0);
+				case "RGB":
+					// default RGB calculations
 					break;
 				default:
 					throw new AssertionError();
 				}
 
-				if (guiSideBar.getColorModelIndex() == 3) {
-					if (colorDouble > 1.0) {
-						colorDouble = 1.0;
-					}
-					if (colorDouble < 0) {
-						colorDouble = 0.0;
-					}
-					rgbVal = (int) (colorDouble * 16777215.0);
-
-					rgbCalc = new Color(rgbVal);
-				} else {
-					if (rVal > 1) {
-						rVal = 1;
-					}
-					if (gVal > 1) {
-						gVal = 1;
-					}
-					if (bVal > 1) {
-						bVal = 1;
-					}
-					if (rVal < 0) {
-						rVal = 0.0;
-					}
-					if (gVal < 0) {
-						gVal = 0.0;
-					}
-					if (bVal < 0) {
-						bVal = 0.0;
-					}
-//					System.out.println("RGB: " + rVal + "  " + gVal + "  " + bVal);
-					rgbCalc = new Color((float) rVal, (float) gVal, (float) bVal);
-				}
 				gc.setColor(rgbCalc);
 				gc.drawLine(x, y, x, y);
 			}

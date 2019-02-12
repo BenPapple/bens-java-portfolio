@@ -25,7 +25,7 @@ public class SideBarRTree extends ASideBar {
 	private static SpinnerModel smGenerations = new SpinnerNumberModel(7, 0, 15, 1);
 	private static JSpinner jsGenerations = new JSpinner(smGenerations);
 	private static JLabel lblcbPresets = new JLabel("Color Model:");
-	private static String comboBoxList[] = { "Black-White", "RGB", "White Noise", "Atari" };
+	private static String comboBoxList[] = { "Black-White", "White Noise", "RGB" };
 	private static JComboBox<Object> cbColorPresets = new JComboBox<Object>(comboBoxList);
 	private JPanel GeneratorPnl;
 
@@ -96,7 +96,7 @@ public class SideBarRTree extends ASideBar {
 		super.lblBGColor.setVisible(false);
 		super.lblWidth.setText("Enter Width:");
 		super.lblHeight.setText("Enter Height");
-		cbColorPresets.setSelectedIndex(3);
+		cbColorPresets.setSelectedIndex(2);
 		super.taDescription.setText("OG Random-tree Art Generator");
 		super.taDescription.setText(
 				"<b>Random-tree Art</b>" + "<br><br>" + "Creates a random binary tree. Each node has a math<br>"
@@ -120,7 +120,7 @@ public class SideBarRTree extends ASideBar {
 	 *
 	 * @return string of color calculation model
 	 */
-	public String getColorModel() {
+	public String getColorModelName() {
 		return SideBarRTree.cbColorPresets.getSelectedItem().toString();
 	}
 
@@ -132,5 +132,7 @@ public class SideBarRTree extends ASideBar {
 	public int getColorModelIndex() {
 		return SideBarRTree.cbColorPresets.getSelectedIndex();
 	}
+	
+
 
 }

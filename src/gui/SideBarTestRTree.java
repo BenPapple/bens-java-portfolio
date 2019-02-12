@@ -106,7 +106,7 @@ public class SideBarTestRTree extends SideBarRTree {
 	}
 
 	@Override
-	public String getColorModel() {
+	public String getColorModelName() {
 		return SideBarTestRTree.cbColorPresets.getSelectedItem().toString();
 	}
 
