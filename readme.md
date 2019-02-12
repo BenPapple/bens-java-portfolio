@@ -13,20 +13,20 @@ Portfolio java collection of graphical generators in an uniform swing GUI.
 ### Prerequisites
 + JRE 1.8+
 
-##Built With
+## Built With
 + SDK 1.8
 + Netbeans 8.2
 + Eclipse Neon 3
 
-##Authors
+## Authors
 
 BenGe47
 
-##License
+## License
 
 Copyright BenGe47
 
-##Acknowledgments
+## Acknowledgments
 
 My fellow students for the idea with the observable and run() implementation. 
 And the automatic collection of all generator classes in an ArrayList for an 
