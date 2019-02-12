@@ -54,7 +54,7 @@ public class MainWindow extends JFrame implements Observer {
 	 *
 	 */
 	private void initUI() {
-		setTitle("BenÂ´s Portfolio");
+		setTitle("Ben´s Portfolio");
 		setSize(1024, 768);
 		setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
 		setLocationRelativeTo(null);
@@ -146,8 +146,7 @@ public class MainWindow extends JFrame implements Observer {
 		// make sidebar scrollable
 		JScrollPane spSideBar = new JScrollPane(cardContainer);
 		spSideBar.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		spSideBar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		
+		spSideBar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);		
 		this.add(spSideBar, BorderLayout.WEST);
 
 		// Add Generator Entries from ArrayList
@@ -184,9 +183,10 @@ public class MainWindow extends JFrame implements Observer {
 
 		// Add Center Panel
 		JScrollPane spCenter = new JScrollPane(centerImagePanel);
+		centerImagePanel.setLayout(new BoxLayout(centerImagePanel, BoxLayout.PAGE_AXIS));
 		spCenter.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		spCenter.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		this.add(spCenter, BorderLayout.CENTER);
+		this.getContentPane().add(spCenter, BorderLayout.CENTER);
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
@@ -31,9 +32,9 @@ public class MainCanvasPanel extends JPanel {
 	 *
 	 * @param inGraphics2D new mainCanvas to display
 	 */
-	public void setImage(BufferedImage inGraphics2D) {
-		this.mainCanvas = inGraphics2D;
+	public void setImage(BufferedImage inGraphics2D) {		
 		this.setSize(inGraphics2D.getWidth(), inGraphics2D.getHeight());
+		this.mainCanvas = inGraphics2D;
 		super.repaint();
 	}
 
@@ -45,6 +46,11 @@ public class MainCanvasPanel extends JPanel {
 	public BufferedImage getImage() {
 		return this.mainCanvas;
 	}
+	
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(getWidth(), getHeight());
+    }
 
 	@Override
 	public void paintComponent(final Graphics g) {

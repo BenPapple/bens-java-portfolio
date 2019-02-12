@@ -17,6 +17,7 @@
 -f- custom color panel
 - - MVC split MC further
 ///////////////////////////////////////////////////////
++b- centerPanel scrollpane does not work
 +f- Wolfram show rule number
 +b- not all generators stop after general stop
 +b- pause and stop during calculations for all generators
