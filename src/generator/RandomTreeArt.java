@@ -28,6 +28,7 @@ import javax.swing.JPanel;
 public class RandomTreeArt extends AGenerator {
 	private Random mySeededRandom;
 	private int generatedSeed;
+//	private String myLoadedPath = "";
 
 	/**
 	 * 
@@ -407,6 +408,45 @@ public class RandomTreeArt extends AGenerator {
 	public void stopGenerator() {
 		guiSideBar.setStopped();
 		this.status = IGenerator.Status.STOP;
+	}
+	
+	@Override
+	public String getFilePath() {
+		//generate name for image with generator values to save into name
+		String seperator = "_";
+		StringBuilder outPath = new StringBuilder();
+		outPath.append("RTree_");
+		outPath.append("W");
+		outPath.append(guiSideBar.getWidth());
+		outPath.append(seperator);
+		outPath.append("H");
+		outPath.append(guiSideBar.getHeight());
+		outPath.append(seperator);
+		outPath.append("S");
+		outPath.append(guiSideBar.getSeed());
+		outPath.append(seperator);
+		outPath.append("G");
+		outPath.append(guiSideBar.getGenerations());
+//		outPath.append("]");
+		outPath.append(seperator);
+		outPath.append(".png");
+		return outPath.toString();
+	}
+
+	@Override
+	public void setLoadedValues(String inPath) {
+		//get entries from filename
+		String[] twos = inPath.split("_");
+		System.out.println(Arrays.toString(twos));
+		String width = twos[1];
+		guiSideBar.setWidth( Integer.parseInt(width.substring(1)));
+		String height = twos[2];
+		guiSideBar.setHeight(Integer.parseInt(height.substring(1)));
+		String generations = twos[4];
+		guiSideBar.setGenerations(Integer.parseInt(generations.substring(1)));
+		String seed = twos[3];
+		guiSideBar.setSeedText((seed.substring(1)));
+		guiSideBar.setCbSeed();		
 	}
 
 }

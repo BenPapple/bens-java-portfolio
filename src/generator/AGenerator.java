@@ -157,5 +157,15 @@ public abstract class AGenerator extends Observable implements IGenerator, Runna
 	 * elements.
 	 */
 	public abstract void createSideBarGUI();
+	
+	@Override
+	public String getFilePath() {
+		return ".png";
+	}
+	
+	@Override
+	public void setLoadedValues(String inPath) {
+		 //default, overridden when needed
+	}
 
 }

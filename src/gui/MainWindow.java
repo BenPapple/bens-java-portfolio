@@ -4,11 +4,14 @@ import generator.IGenerator;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
 import javax.swing.border.*;
+
+import data.GlobalSettings;
 
 /**
  * Constructs the GUI with menu bars, menu items and panels. Also updates status
@@ -28,6 +31,7 @@ public class MainWindow extends JFrame implements Observer {
 	private MainCanvasPanel centerImagePanel;
 	private JLabel statusLabel;
 	private IGenerator observableGenerator;
+	private JMenuItem menuItemLoad;
 
 	private final SaveMainCanvasToImage imageSaverHelper;
 	private final ArrayList<IGenerator> generators;
@@ -73,6 +77,7 @@ public class MainWindow extends JFrame implements Observer {
 		statusbarPanel.add(statusLabel);
 
 		JMenu menuFile;
+
 		JMenu menuTest;
 		JMenu menuCellular;
 		JMenu menuLSystem;
@@ -90,9 +95,22 @@ public class MainWindow extends JFrame implements Observer {
 		menuItem = new JMenuItem("Save Image as PNG");
 		menuItem.setMnemonic(KeyEvent.VK_S);
 		menuItem.addActionListener((ActionEvent ae) -> {
-			saveMenuItemClicked(ae);
+			saveMenuItemClicked();
 		});
 		menuFile.add(menuItem);
+
+		menuItemLoad = new JMenuItem("Load Image as PNG");
+		menuItemLoad.setMnemonic(KeyEvent.VK_L);
+		menuItemLoad.addActionListener((ActionEvent ae) -> {
+			generators.forEach((generator) -> {
+				// Only load with rtree generators
+				if (generator.getGenType() == GlobalSettings.GeneratorType.RTREE) {
+					generator.setLoadedValues(loadImageRTree());
+				}
+			});
+		});
+		menuItemLoad.setEnabled(false);
+		menuFile.add(menuItemLoad);
 
 		menuFile.add(new JSeparator());
 
@@ -133,7 +151,7 @@ public class MainWindow extends JFrame implements Observer {
 		this.setJMenuBar(menubar);
 
 		// Add Left Control Panel
-		JPanel cardContainer = new JPanel();		
+		JPanel cardContainer = new JPanel();
 		cardContainer.setLayout(card);
 
 		cardContainer.setPreferredSize(new Dimension(350, this.getHeight()));
@@ -146,7 +164,7 @@ public class MainWindow extends JFrame implements Observer {
 		// make sidebar scrollable
 		JScrollPane spSideBar = new JScrollPane(cardContainer);
 		spSideBar.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		spSideBar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);		
+		spSideBar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		this.add(spSideBar, BorderLayout.WEST);
 
 		// Add Generator Entries from ArrayList
@@ -160,18 +178,25 @@ public class MainWindow extends JFrame implements Observer {
 				generator.setReady();
 				statusLabel.setText(generator.getName() + " Status: " + generator.getGenStatus());
 
+				// Enable load menu entry only for RTree generators
+				if (generator.getGenType() == GlobalSettings.GeneratorType.RTREE) {
+					menuItemLoad.setEnabled(true);
+				} else {
+					menuItemLoad.setEnabled(false);
+				}
+
 			});
 
 			switch (generator.getGenType()) {
 			case TEST:
 				menuTest.add(menuItem);
-				
+
 				break;
 			case CELLULAR:
 				menuCellular.add(menuItem);
 				break;
 			case LSYSTEM:
-				menuLSystem.add(menuItem);				
+				menuLSystem.add(menuItem);
 				break;
 			case RTREE:
 				menuRTree.add(menuItem);
@@ -190,6 +215,23 @@ public class MainWindow extends JFrame implements Observer {
 	}
 
 	/**
+	 * Returns file path from filechooser.
+	 * 
+	 * @return String path of file
+	 */
+	private String loadImageRTree() {
+		String path = "";
+		String userhome = System.getProperty("user.home");
+		JFileChooser openFileChooser = new JFileChooser(userhome + "\\Downloads");
+		int returnVal = openFileChooser.showOpenDialog(null);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			path = openFileChooser.getSelectedFile().getAbsolutePath();
+
+		}
+		return path;
+	}
+
+	/**
 	 * Register generators with observer so the status in the status bar can be
 	 * automatically updated.
 	 *
@@ -205,13 +247,24 @@ public class MainWindow extends JFrame implements Observer {
 	 *
 	 * @param aeMenuSaveClick Click event on menu entry
 	 */
-	private void saveMenuItemClicked(ActionEvent aeMenuSaveClick) {
-		String userhome = System.getProperty("user.home");
-		JFileChooser saveFileChooser = new JFileChooser(userhome + "\\Downloads");
-		if (saveFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-			String path = saveFileChooser.getSelectedFile().getAbsolutePath();
-			BufferedImage image = GetBufferedImageFromCenterPanel();
-			imageSaverHelper.writeBufferedImgToDisk(path, image);
+	private void saveMenuItemClicked() {
+
+		if (observableGenerator != null) {
+			String userhome = System.getProperty("user.home");
+			JFileChooser saveFileChooser = new JFileChooser(userhome + "\\Downloads");
+			saveFileChooser.setSelectedFile(new File(observableGenerator.getFilePath()));
+
+			if (saveFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+				String path = saveFileChooser.getSelectedFile().getAbsolutePath();
+				BufferedImage image = GetBufferedImageFromCenterPanel();
+				imageSaverHelper.writeBufferedImgToDisk(path, image);
+			}
+
+		} else {
+			JOptionPane.showMessageDialog(null,
+					"No image to save.",
+					"Warning",
+					JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
@@ -237,8 +290,6 @@ public class MainWindow extends JFrame implements Observer {
 
 		observableGenerator = (IGenerator) obsGenerator;
 
-//		System.out.println(observableGenerator.getName() + ": Status = " + observableGenerator.getGenStatus());
-
 		// Update status bar with error message if status is error
 		if (observableGenerator.getGenStatus() == IGenerator.Status.ERROR) {
 			statusLabel.setText(observableGenerator.getName() + " Status: " + observableGenerator.getGenStatus() + ": "
@@ -251,10 +302,12 @@ public class MainWindow extends JFrame implements Observer {
 			if (!gen.equals(obsGenerator)) {
 				boolean bool = gen.getGenStatus() == IGenerator.Status.CALCULATING;
 				gen.stopGenerator();
+
 				if (bool) {
 					statusLabel
 							.setText(observableGenerator.getName() + " Status: " + observableGenerator.getGenStatus());
 				}
+
 			}
 			return gen;
 		}).forEachOrdered((gen) -> {
@@ -262,12 +315,14 @@ public class MainWindow extends JFrame implements Observer {
 		});
 
 		// Update status bar with status of observableGenerator
-		//if finished display duration and status
+		// if finished display duration and status
 		if (observableGenerator.getGenStatus() == IGenerator.Status.FINISHED) {
-		statusLabel.setText(observableGenerator.getName() + "'s" + " calculations have " + observableGenerator.getGenStatus() + " in " + observableGenerator.getCalcTime() + " seconds");
+			statusLabel.setText(observableGenerator.getName() + "'s" + " calculations have "
+					+ observableGenerator.getGenStatus() + " in " + observableGenerator.getCalcTime() + " seconds");
 		} else {
-		//display status
-		statusLabel.setText(observableGenerator.getName()  + "'s" + " Status: " + observableGenerator.getGenStatus());
+			// display status
+			statusLabel
+					.setText(observableGenerator.getName() + "'s" + " Status: " + observableGenerator.getGenStatus());
 		}
 		// In ready status start thread to keep the buttons active
 		if (observableGenerator.getGenStatus() == IGenerator.Status.READY) {

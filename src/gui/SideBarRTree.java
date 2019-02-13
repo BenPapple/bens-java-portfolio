@@ -32,6 +32,7 @@ public class SideBarRTree extends ASideBar {
 	private static JLabel lblSeed = new JLabel("Random Seed:");
 	private static JTextField tfSeed = new JTextField();
 	private static JCheckBox cbSeed = new JCheckBox("Use above seed", false);
+//	private static JButton btnLoad = new JButton("Load previous image");
 
 	private JPanel GeneratorPnl;
 
@@ -101,6 +102,14 @@ public class SideBarRTree extends ASideBar {
 		gbConstraints.gridwidth = 2;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarRTree.cbSeed, gbConstraints);
+		// //
+		// gbConstraints.fill = GridBagConstraints.HORIZONTAL;
+		// gbConstraints.weightx = 1;
+		// gbConstraints.gridx = 0;
+		// gbConstraints.gridy = 4;
+		// gbConstraints.gridwidth = 2;
+		// gbConstraints.insets = new Insets(10, 10, 10, 10);
+		// GeneratorPnl.add(SideBarRTree.btnLoad, gbConstraints);
 
 		Border border = BorderFactory.createTitledBorder("Generator settings:");
 
@@ -143,6 +152,15 @@ public class SideBarRTree extends ASideBar {
 	}
 
 	/**
+	 * Set user input generations value.
+	 *
+	 * @return int of num generations
+	 */
+	public void setGenerations(int inGen) {
+		jsGenerations.setValue(inGen);
+	}
+
+	/**
 	 * Returns user choosen color model as string.
 	 *
 	 * @return string of color calculation model
@@ -168,6 +186,14 @@ public class SideBarRTree extends ASideBar {
 	public Boolean usingFieldSeed() {
 		return cbSeed.isSelected();
 	}
+	
+	/**
+	 * Make cbSeed true.
+	 *	
+	 */
+	public void setCbSeed() {
+		cbSeed.setSelected(true);
+	}
 
 	/**
 	 * Get the user input seed as int value.
@@ -177,13 +203,13 @@ public class SideBarRTree extends ASideBar {
 	public int getSeed() {
 		return Integer.parseInt(tfSeed.getText());
 	}
-	
+
 	/**
 	 * Sets tfSeed to input string.
 	 *
 	 */
 	public void setSeedText(String inSeed) {
-		 tfSeed.setText(inSeed);
+		tfSeed.setText(inSeed);
 	}
-	
+
 }

@@ -45,16 +45,16 @@ public interface IGenerator extends Runnable {
 	/**
 	 * Gives you the current type of the generator to sort into related menu.
 	 *
-	 * @return type of Generator
+	 * @return GeneratorType type of Generator
 	 */
 	public GeneratorType getGenType();
-	
+
 	/**
 	 * Gives the duration between two Instant variables.
 	 *
 	 * @return long time in seconds
 	 */
-	public long getCalcTime();	
+	public long getCalcTime();
 
 	/**
 	 * Gives you the current status value of the generator.
@@ -120,11 +120,25 @@ public interface IGenerator extends Runnable {
 		ERROR
 	}
 
-	
 	/**
 	 * Returns the assigned key for mnemonics.
 	 *
 	 * @return char mnemonic key
 	 */
 	public char getKey();
+
+	/**
+	 * Returns the assigned key for mnemonics.
+	 *
+	 * @return String file name
+	 */
+	public String getFilePath();
+
+	/**
+	 * Returns the assigned key for mnemonics.
+	 *
+	 * @return String file name
+	 */
+	void setLoadedValues(String inPath);
+
 }
