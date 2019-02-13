@@ -26,6 +26,8 @@ import javax.swing.JPanel;
  * @author BenGe47
  */
 public class RandomTreeArt extends AGenerator {
+	private Random mySeededRandom;
+	private int generatedSeed;
 
 	/**
 	 * 
@@ -94,6 +96,25 @@ public class RandomTreeArt extends AGenerator {
 		startCalcTime();
 		updateStatus(IGenerator.Status.CALCULATING);
 
+		// use user input seed
+		if (guiSideBar.usingFieldSeed()) {
+			//check if user input is integer range
+			try {
+			mySeededRandom = new Random(guiSideBar.getSeed());
+			} catch (Exception ne) {
+				showWarning("Randomness has to be in integer range. Now using random seed.");
+				//use random seed instead of user input one
+				generatedSeed = ThreadLocalRandom.current().nextInt(0, 2147483647);
+				guiSideBar.setSeedText(Integer.toString(generatedSeed));
+				mySeededRandom = new Random(generatedSeed);
+			}
+			
+		} else {// use newly generated random seed		
+			generatedSeed = ThreadLocalRandom.current().nextInt(0, 2147483647);
+			guiSideBar.setSeedText(Integer.toString(generatedSeed));
+			mySeededRandom = new Random(generatedSeed);
+		}
+
 		guiSideBar.setButtonsCalculating();
 
 		try {
@@ -102,8 +123,7 @@ public class RandomTreeArt extends AGenerator {
 			maxXPixel = guiSideBar.getWidth();
 			maxYPixel = guiSideBar.getHeight();
 
-			createRandomKaryTree();
-			System.out.println("randomTree finished");
+			createRandomKaryTree();			
 			updateScreenPanel();
 
 		} catch (OutOfMemoryError e) {
@@ -372,7 +392,8 @@ public class RandomTreeArt extends AGenerator {
 	 * @return String with one random formula
 	 */
 	private String receiveRandomString(List<String> inList) {
-		int randomNum = ThreadLocalRandom.current().nextInt(0, inList.size());
+		int randomNum;
+		randomNum = mySeededRandom.nextInt(inList.size());
 		String randomFormula = inList.get(randomNum);
 		return randomFormula;
 	}

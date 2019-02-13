@@ -237,7 +237,7 @@ public class MainWindow extends JFrame implements Observer {
 
 		observableGenerator = (IGenerator) obsGenerator;
 
-		System.out.println(observableGenerator.getName() + ": Status = " + observableGenerator.getGenStatus());
+//		System.out.println(observableGenerator.getName() + ": Status = " + observableGenerator.getGenStatus());
 
 		// Update status bar with error message if status is error
 		if (observableGenerator.getGenStatus() == IGenerator.Status.ERROR) {
