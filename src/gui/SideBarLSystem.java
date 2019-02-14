@@ -140,7 +140,7 @@ public class SideBarLSystem extends ASideBar {
 		GeneratorPnl.add(SideBarLSystem.cbPresets, gbConstraints);
 		cbPresets.addItemListener(new ItemListener() {
 			@Override
-			public void itemStateChanged(ItemEvent ee) {				
+			public void itemStateChanged(ItemEvent ee) {
 				loadPreset();
 			}
 		});

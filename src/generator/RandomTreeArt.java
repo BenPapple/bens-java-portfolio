@@ -28,7 +28,7 @@ import javax.swing.JPanel;
 public class RandomTreeArt extends AGenerator {
 	private Random mySeededRandom;
 	private int generatedSeed;
-//	private String myLoadedPath = "";
+	// private String myLoadedPath = "";
 
 	/**
 	 * 
@@ -99,18 +99,18 @@ public class RandomTreeArt extends AGenerator {
 
 		// use user input seed
 		if (guiSideBar.usingFieldSeed()) {
-			//check if user input is integer range
+			// check if user input is integer range
 			try {
-			mySeededRandom = new Random(guiSideBar.getSeed());
+				mySeededRandom = new Random(guiSideBar.getSeed());
 			} catch (Exception ne) {
 				showWarning("Randomness has to be in integer range. Now using random seed.");
-				//use random seed instead of user input one
+				// use random seed instead of user input one
 				generatedSeed = ThreadLocalRandom.current().nextInt(0, 2147483647);
 				guiSideBar.setSeedText(Integer.toString(generatedSeed));
 				mySeededRandom = new Random(generatedSeed);
 			}
-			
-		} else {// use newly generated random seed		
+
+		} else {// use newly generated random seed
 			generatedSeed = ThreadLocalRandom.current().nextInt(0, 2147483647);
 			guiSideBar.setSeedText(Integer.toString(generatedSeed));
 			mySeededRandom = new Random(generatedSeed);
@@ -124,7 +124,7 @@ public class RandomTreeArt extends AGenerator {
 			maxXPixel = guiSideBar.getWidth();
 			maxYPixel = guiSideBar.getHeight();
 
-			createRandomKaryTree();			
+			createRandomKaryTree();
 			updateScreenPanel();
 
 		} catch (OutOfMemoryError e) {
@@ -205,15 +205,22 @@ public class RandomTreeArt extends AGenerator {
 				rgbCalc = new Color(rgbVal);
 
 				switch (guiSideBar.getColorModelName()) {
-				case "Black-White":
+				case "Monochrome":
 					averageRGB = (rgbCalc.getRed() + rgbCalc.getGreen() + rgbCalc.getBlue()) / 3;
 					rgbCalc = new Color(averageRGB, averageRGB, averageRGB);
 					break;
-				case "White Noise":
+				case "Monochrome Noise":
 					double randomNoise = Math.random();
-					rVal = rgbCalc.getRed() * randomNoise;
-					gVal = rgbCalc.getGreen() * randomNoise;
-					bVal = rgbCalc.getBlue() * randomNoise;
+					averageRGB = (rgbCalc.getRed() + rgbCalc.getGreen() + rgbCalc.getBlue()) / 3;
+					double newAverageRGB = averageRGB * randomNoise;
+					averageRGB = (int) newAverageRGB;
+					rgbCalc = new Color(averageRGB, averageRGB, averageRGB);
+					break;	
+				case "RGB White Noise":
+					double randomNoise2 = Math.random();
+					rVal = rgbCalc.getRed() * randomNoise2;
+					gVal = rgbCalc.getGreen() * randomNoise2;
+					bVal = rgbCalc.getBlue() * randomNoise2;
 					rgbCalc = new Color((int) rVal, (int) gVal, (int) bVal);
 					break;
 				case "RGB":
@@ -409,10 +416,10 @@ public class RandomTreeArt extends AGenerator {
 		guiSideBar.setStopped();
 		this.status = IGenerator.Status.STOP;
 	}
-	
+
 	@Override
 	public String getFilePath() {
-		//generate name for image with generator values to save into name
+		// generate name for image with generator values to save into name
 		String seperator = "_";
 		StringBuilder outPath = new StringBuilder();
 		outPath.append("RTree_");
@@ -427,7 +434,7 @@ public class RandomTreeArt extends AGenerator {
 		outPath.append(seperator);
 		outPath.append("G");
 		outPath.append(guiSideBar.getGenerations());
-//		outPath.append("]");
+		// outPath.append("]");
 		outPath.append(seperator);
 		outPath.append(".png");
 		return outPath.toString();
@@ -435,18 +442,18 @@ public class RandomTreeArt extends AGenerator {
 
 	@Override
 	public void setLoadedValues(String inPath) {
-		//get entries from filename
+		// get entries from filename
 		String[] twos = inPath.split("_");
 		System.out.println(Arrays.toString(twos));
 		String width = twos[1];
-		guiSideBar.setWidth( Integer.parseInt(width.substring(1)));
+		guiSideBar.setWidth(Integer.parseInt(width.substring(1)));
 		String height = twos[2];
 		guiSideBar.setHeight(Integer.parseInt(height.substring(1)));
 		String generations = twos[4];
 		guiSideBar.setGenerations(Integer.parseInt(generations.substring(1)));
 		String seed = twos[3];
 		guiSideBar.setSeedText((seed.substring(1)));
-		guiSideBar.setCbSeed();		
+		guiSideBar.setCbSeed();
 	}
 
 }

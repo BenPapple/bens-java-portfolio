@@ -54,7 +54,7 @@ public final class Wolfram extends AGeneratorCellular {
 	@Override
 	public void run() {
 		try {
-			//check input double range
+			// check input double range
 			if (Double.parseDouble(guiSideBar.getRandomness()) >= 0.0
 					&& Double.parseDouble(guiSideBar.getRandomness()) <= 1.0) {
 				startCalcTime();

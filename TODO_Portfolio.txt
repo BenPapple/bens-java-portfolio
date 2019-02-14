@@ -18,6 +18,7 @@
 -f- custom color panel
 - - MVC split MC further
 ///////////////////////////////////////////////////////
++f- add monochrome noise color model
 - - time calculations in fractions of seconds
 +f- RTree load save with seed/generations/.. in file name for repeatable graphics
 +f- RandomTreeArt gets an user input seed for random

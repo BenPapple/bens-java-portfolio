@@ -156,15 +156,15 @@ public class LSystem extends AGenerator {
 		}
 
 		for (int i = 0; i < formatedString.length(); i++) {
-			//Stop and pause
-			if (guiSideBar.isStopped()){
+			// Stop and pause
+			if (guiSideBar.isStopped()) {
 				break;
 			}
-			while (guiSideBar.isPaused()){
+			while (guiSideBar.isPaused()) {
 				updateStatus(IGenerator.Status.PAUSED);
 				if (guiSideBar.isStopped()) {
 					break;
-				}				
+				}
 			}
 			updateStatus(IGenerator.Status.CALCULATING);
 			oldCurrentY = currentY;

@@ -27,12 +27,12 @@ public class SideBarRTree extends ASideBar {
 	private static SpinnerModel smGenerations = new SpinnerNumberModel(7, 0, 15, 1);
 	private static JSpinner jsGenerations = new JSpinner(smGenerations);
 	private static JLabel lblcbPresets = new JLabel("Color Model:");
-	private static String comboBoxList[] = { "Black-White", "White Noise", "RGB" };
+	private static String comboBoxList[] = { "Monochrome", "Monochrome Noise", "RGB", "RGB White Noise" };
 	private static JComboBox<Object> cbColorPresets = new JComboBox<Object>(comboBoxList);
 	private static JLabel lblSeed = new JLabel("Random Seed:");
 	private static JTextField tfSeed = new JTextField();
 	private static JCheckBox cbSeed = new JCheckBox("Use above seed", false);
-//	private static JButton btnLoad = new JButton("Load previous image");
+	// private static JButton btnLoad = new JButton("Load previous image");
 
 	private JPanel GeneratorPnl;
 
@@ -186,10 +186,10 @@ public class SideBarRTree extends ASideBar {
 	public Boolean usingFieldSeed() {
 		return cbSeed.isSelected();
 	}
-	
+
 	/**
 	 * Make cbSeed true.
-	 *	
+	 * 
 	 */
 	public void setCbSeed() {
 		cbSeed.setSelected(true);

@@ -25,7 +25,7 @@ public class SideBarTestRTree extends SideBarRTree {
 	private static SpinnerModel smGenerations = new SpinnerNumberModel(7, 0, 15, 1);
 	private static JSpinner jsGenerations = new JSpinner(smGenerations);
 	private static JLabel lblcbPresets = new JLabel("Color Model:");
-	private static String comboBoxList[] = { "Black-White", "RGB", "White Noise"};
+	private static String comboBoxList[] = { "Monochrome", "Monochrome Noise", "RGB", "RGB White Noise" };
 	private static final JComboBox<Object> J_COMBO_BOX = new JComboBox<Object>(comboBoxList);
 	private static JComboBox<Object> cbColorPresets = J_COMBO_BOX;
 	private JPanel GeneratorPnl;

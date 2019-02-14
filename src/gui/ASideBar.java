@@ -288,17 +288,13 @@ public abstract class ASideBar {
 			if (paused) {
 				paused = false;
 				btnPause.setText("Pause");
-				System.out.println("Pause clicked" + btnPause.getActionCommand());
 			} else {
 				paused = true;
 				btnPause.setText("Play");
-				System.out.println("Play clicked" + btnPause.getActionCommand());
-
 			}
 
 		});
 		btnStop.addActionListener((ActionEvent e) -> {
-			System.out.println("Stop clicked" + btnPause.getActionCommand());
 			stopped = true;
 		});
 

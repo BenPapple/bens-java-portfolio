@@ -52,52 +52,54 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 
 	@Override
 	public void run() {
-		//check input double range
+		// check input double range
 		try {
-			if (Double.parseDouble(guiSideBar.getRandomness()) >= 0.0 && Double.parseDouble(guiSideBar.getRandomness()) <= 1.0 
-					&& Double.parseDouble(guiSideBar.getBrakeRandomness()) >= 0.0 && Double.parseDouble(guiSideBar.getBrakeRandomness()) <= 1.0) {
-		startCalcTime();
-		updateStatus(IGenerator.Status.CALCULATING);
-		guiSideBar.setButtonsCalculating();
-		init2DField();
+			if (Double.parseDouble(guiSideBar.getRandomness()) >= 0.0
+					&& Double.parseDouble(guiSideBar.getRandomness()) <= 1.0
+					&& Double.parseDouble(guiSideBar.getBrakeRandomness()) >= 0.0
+					&& Double.parseDouble(guiSideBar.getBrakeRandomness()) <= 1.0) {
+				startCalcTime();
+				updateStatus(IGenerator.Status.CALCULATING);
+				guiSideBar.setButtonsCalculating();
+				init2DField();
 
-		MAXFIELDPIXEL = guiSideBar.getSpeed();
+				MAXFIELDPIXEL = guiSideBar.getSpeed();
 
-		while (!guiSideBar.isStopped()) {
+				while (!guiSideBar.isStopped()) {
 
-			try {
-				// Thread.sleep(guiSideBar.getSpeed());
-			} catch (Exception e) {
+					try {
+						// Thread.sleep(guiSideBar.getSpeed());
+					} catch (Exception e) {
 
-			}
+					}
 
-			updateScreenPanel();
+					updateScreenPanel();
 
-			if (currentRow < GridWorld[0].length) {
-				nextGenField();
-			} else {
-				break;
-			}
+					if (currentRow < GridWorld[0].length) {
+						nextGenField();
+					} else {
+						break;
+					}
 
-			while (guiSideBar.isPaused()) {
-				updateStatus(IGenerator.Status.PAUSED);
-				if (guiSideBar.isStopped()) {
-					break;
+					while (guiSideBar.isPaused()) {
+						updateStatus(IGenerator.Status.PAUSED);
+						if (guiSideBar.isStopped()) {
+							break;
+						}
+					}
+					updateStatus(IGenerator.Status.CALCULATING);
+
 				}
-			}
-			updateStatus(IGenerator.Status.CALCULATING);
 
-		}
-
-		guiSideBar.setButtonsReady();
-		endCalcTime();
-		updateStatus(IGenerator.Status.FINISHED);
+				guiSideBar.setButtonsReady();
+				endCalcTime();
+				updateStatus(IGenerator.Status.FINISHED);
 			} else {
 				showWarning("Randomness has to be in 0.0 to 1.0 range.");
 			}
-				} catch (Exception ne) {
-					showWarning("Randomness has to be in 0.0 to 1.0 range.");
-				}
+		} catch (Exception ne) {
+			showWarning("Randomness has to be in 0.0 to 1.0 range.");
+		}
 	}
 
 	/**

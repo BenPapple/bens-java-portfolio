@@ -320,7 +320,7 @@ public class MainWindow extends JFrame implements Observer {
 			int seconds = (int) observableGenerator.getCalcTime() / 1000;
 			int millis = (int) (observableGenerator.getCalcTime() % 1000);
 			statusLabel.setText(observableGenerator.getName() + "'s" + " calculations have "
-					+ observableGenerator.getGenStatus() + " in " + seconds + "."+ millis + " seconds");
+					+ observableGenerator.getGenStatus() + " in " + seconds + "." + millis + " seconds");
 		} else {
 			// display status
 			statusLabel

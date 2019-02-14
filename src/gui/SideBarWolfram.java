@@ -40,7 +40,7 @@ public class SideBarWolfram extends ASideBar implements ActionListener {
 	private static JCheckBox cb7 = new JCheckBox("", false);
 	private static JLabel lblRule = new JLabel("");
 	private int rule;
-	private JPanel GeneratorPnl;	
+	private JPanel GeneratorPnl;
 
 	/**
 	 * Constructor.
@@ -121,8 +121,8 @@ public class SideBarWolfram extends ASideBar implements ActionListener {
 		cb5.addActionListener(this);
 		cb6.addActionListener(this);
 		cb7.addActionListener(this);
-		
-		JPanel pnlWolframRules = new JPanel(new GridLayout(2, 8)); 
+
+		JPanel pnlWolframRules = new JPanel(new GridLayout(2, 8));
 		Border border2 = BorderFactory.createTitledBorder("Wolfram Rules:");
 		pnlWolframRules.setBorder(border2);
 		pnlWolframRules.add(pnlCbox);
@@ -134,7 +134,7 @@ public class SideBarWolfram extends ASideBar implements ActionListener {
 		gbConstraints.gridx = 0;
 		gbConstraints.gridy = 3;
 		gbConstraints.gridwidth = 2;
-		gbConstraints.insets = new Insets(10, 10, 10, 10);		
+		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(pnlWolframRules, gbConstraints);
 
 		Border border = BorderFactory.createTitledBorder("Generator settings:");
@@ -168,7 +168,7 @@ public class SideBarWolfram extends ASideBar implements ActionListener {
 		super.setWidth(850);
 		super.setHeight(450);
 		super.setColor(Color.decode("#9999FF"));
-		super.setBGColor(Color.BLACK);		
+		super.setBGColor(Color.BLACK);
 	}
 
 	/**
@@ -269,44 +269,44 @@ public class SideBarWolfram extends ASideBar implements ActionListener {
 	public Boolean isCB7() {
 		return cb7.isSelected();
 	}
-	
+
 	/**
 	 * Perform click on button to calculate Wolfram rule on generator creation.
 	 */
 	public void clickRules() {
 		cb0.doClick();
 	}
-	
+
 	/**
 	 * Calculate Wolfram rule from 8 checkboxes representing 8bits.
 	 */
 	public void actionPerformed(ActionEvent e) {
-		 rule = 0;
-		 if (cb7.isSelected()) {
-			 rule += 1 * 1;
-		 }
-		 if (cb6.isSelected()) {
-			 rule += 1 * 2;
-		 }
-		 if (cb5.isSelected()) {
-			 rule += 1 * 4;
-		 }
-		 if (cb4.isSelected()) {
-			 rule += 1 * 8;
-		 }
-		 if (cb3.isSelected()) {
-			 rule += 1 * 16;
-		 }
-		 if (cb2.isSelected()) {
-			 rule += 1 * 32;
-		 }
-		 if (cb1.isSelected()) {
-			 rule += 1 * 64;
-		 }
-		 if (cb0.isSelected()) {
-			 rule += 1 * 128;
-		 }		 
-		 lblRule.setText("Rule " + rule);
-	    }
+		rule = 0;
+		if (cb7.isSelected()) {
+			rule += 1 * 1;
+		}
+		if (cb6.isSelected()) {
+			rule += 1 * 2;
+		}
+		if (cb5.isSelected()) {
+			rule += 1 * 4;
+		}
+		if (cb4.isSelected()) {
+			rule += 1 * 8;
+		}
+		if (cb3.isSelected()) {
+			rule += 1 * 16;
+		}
+		if (cb2.isSelected()) {
+			rule += 1 * 32;
+		}
+		if (cb1.isSelected()) {
+			rule += 1 * 64;
+		}
+		if (cb0.isSelected()) {
+			rule += 1 * 128;
+		}
+		lblRule.setText("Rule " + rule);
+	}
 
 }
