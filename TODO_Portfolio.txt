@@ -2,6 +2,7 @@
 ** TODO Portfolio 2019 **
 *************************
 
+-b- protect load image name input
 -b- make html descriptions wraparound
 -b- check LSystem input alphabet for range
 -f- regex for lsystem alphabet
@@ -17,6 +18,7 @@
 -f- custom color panel
 - - MVC split MC further
 ///////////////////////////////////////////////////////
+- - time calculations in fractions of seconds
 +f- RTree load save with seed/generations/.. in file name for repeatable graphics
 +f- RandomTreeArt gets an user input seed for random
 +f- new/repaired color models for RandomTreeArt

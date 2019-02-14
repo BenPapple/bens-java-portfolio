@@ -69,7 +69,7 @@ public abstract class AGenerator extends Observable implements IGenerator, Runna
 	 */
 	@Override
 	public long getCalcTime() {
-		timeBetween = ChronoUnit.SECONDS.between(startCalc, endCalc);
+		timeBetween = ChronoUnit.MILLIS.between(startCalc, endCalc);
 		return this.timeBetween;
 	}
 

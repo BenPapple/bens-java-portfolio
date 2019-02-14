@@ -99,7 +99,7 @@ public class MainWindow extends JFrame implements Observer {
 		});
 		menuFile.add(menuItem);
 
-		menuItemLoad = new JMenuItem("Load Image as PNG");
+		menuItemLoad = new JMenuItem("Load Image from PNG (Random-Tree)");
 		menuItemLoad.setMnemonic(KeyEvent.VK_L);
 		menuItemLoad.addActionListener((ActionEvent ae) -> {
 			generators.forEach((generator) -> {
@@ -317,8 +317,10 @@ public class MainWindow extends JFrame implements Observer {
 		// Update status bar with status of observableGenerator
 		// if finished display duration and status
 		if (observableGenerator.getGenStatus() == IGenerator.Status.FINISHED) {
+			int seconds = (int) observableGenerator.getCalcTime() / 1000;
+			int millis = (int) (observableGenerator.getCalcTime() % 1000);
 			statusLabel.setText(observableGenerator.getName() + "'s" + " calculations have "
-					+ observableGenerator.getGenStatus() + " in " + observableGenerator.getCalcTime() + " seconds");
+					+ observableGenerator.getGenStatus() + " in " + seconds + "."+ millis + " seconds");
 		} else {
 			// display status
 			statusLabel
