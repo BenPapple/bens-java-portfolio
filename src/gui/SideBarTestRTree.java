@@ -97,7 +97,8 @@ public class SideBarTestRTree extends SideBarRTree {
 		super.lblWidth.setText("Enter Width:");
 		super.lblHeight.setText("Enter Height");
 		cbColorPresets.setSelectedIndex(2);
-		super.taDescription.setText("Alternative Random-tree Art Generator");
+		super.taDescription.setText("<b>Alternative Random-tree Art Generator</b>"
+				+ "<br><br>Has different formulas. ");
 	}
 
 	@Override

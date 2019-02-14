@@ -72,8 +72,9 @@ public class SideBarShapes extends ASideBar {
 		super.lblHeight.setText("Enter Pixel Height");
 		super.taDescription.setText("Conway's Game of Life Generator");
 		super.taDescription.setText(
-				"<b>Simple shape generator</b>" + "<br><br>" + "Most simple generator to easily understand how classes"
-						+ "<br>(generator and gui) interact to create generators.");
+				"<b>Simple shape generator</b>"
+						+ "<br><br>" + "Most simple generator to easily understand how classes "
+						+ "(generator and gui) interact to create generators.");
 
 		super.setWidth(300);
 		super.setHeight(200);

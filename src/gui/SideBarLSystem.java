@@ -231,7 +231,8 @@ public class SideBarLSystem extends ASideBar {
 		super.setColor(Color.YELLOW);
 		super.setBGColor(Color.BLACK);
 		super.taDescription.setText("Lindenmayer-system Generator");
-		super.taDescription.setText("<b>Lindenmayer-system</b>" + "<br><br>" + "Implements a Lindenmayer-system."
+		super.taDescription.setText("<b>Lindenmayer-system</b>"
+				+ "<br><br>Implements a Lindenmayer-system."
 				+ "<br>Allowed symbols: A B C D E F + - [ ]");
 	}
 

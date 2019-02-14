@@ -3,7 +3,6 @@
 *************************
 
 -f- regex for lsystem alphabet
--b- make html descriptions wraparound
 -b- check LSystem input alphabet for range
 -f- RTree choose math formula in gui
 -f- GOL make calculations methods top left etc
@@ -16,7 +15,8 @@
 - - L-system drawing function take 4 inputs
 -f- custom color panel
 - - MVC split MC further
-///////////////////////////////////////////////////////
+/////////////////DONE//////////////////////////////////
++b- make html descriptions wraparound
 +b- protect load image name input
 +f- add monochrome noise color model
 + - time calculations in fractions of seconds
@@ -38,7 +38,8 @@
 + Corner calculation
 + make speed a spinner
 -------------------------------------------------------
-Additional Generators:
+Additional future Generators:
+-------------------------------------------------------
 - Game: Tetris
 - Cellular: Langton's loops
 - Cellular: Brian's Brain / Star Wars

@@ -153,7 +153,7 @@ public class MainWindow extends JFrame implements Observer {
 		// Add Left Control Panel
 		JPanel cardContainer = new JPanel();
 		cardContainer.setLayout(card);
-
+		//siddebar width
 		cardContainer.setPreferredSize(new Dimension(350, this.getHeight()));
 		cardContainer.setBorder(new BevelBorder(BevelBorder.LOWERED));
 

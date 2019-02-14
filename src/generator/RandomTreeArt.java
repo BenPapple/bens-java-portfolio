@@ -446,6 +446,7 @@ public class RandomTreeArt extends AGenerator {
 	@Override
 	public void setLoadedValues(String inPath) {
 		//match filename to allowed regex pattern
+		//Casts are covered with NumberFormatException too
 		try {
 			//example regex RTree_W640_H480_S1142650635_G7_.png
 			String pattern = "\\p{Alpha}*_W\\d*_H\\d*_S\\d*_G\\d*_.png";

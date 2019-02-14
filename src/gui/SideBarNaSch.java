@@ -108,7 +108,8 @@ public class SideBarNaSch extends ASideBar {
 		sliderSpeed1.setPaintLabels(true);
 		sliderSpeed1.setValue(2);
 		sliderSpeed1.setPreferredSize(new Dimension(150, 80));
-		super.taDescription.setText("<b>Nagel-Schreckenberg Cellular Automaton</b>" + "<br><br>"
+		super.taDescription.setText("<b>Nagel-Schreckenberg Cellular Automaton</b>"
+				+ "<br><br>"
 				+ "Implements Nagel-Schreckenberg's cellular automaton.");
 
 		super.setWidth(500);

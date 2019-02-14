@@ -135,11 +135,12 @@ public class SideBarRTree extends ASideBar {
 		cbColorPresets.setSelectedIndex(2);
 		super.taDescription.setText("OG Random-tree Art Generator");
 		super.taDescription.setText(
-				"<b>Random-tree Art</b>" + "<br><br>" + "Creates a random binary tree. Each node has a math<br>"
-						+ " formula with one or two variables. The variables<br>"
-						+ "get filled with the result of a childrens node math<br>"
-						+ " function or if they are a leave with the xy coordinate."
-						+ "<br>This creates a color value for every xy coordinate.");
+				"<b>Random-tree Art</b>"
+						+ "<br><br>Creates a random binary tree. Each node has a math "
+						+ "formula with one or two variables. The variables "
+						+ "get filled with the result of a childrens node math "
+						+ "function or if they are a leave with the xy coordinate. "
+						+ "This creates a color value for every xy coordinate.");
 	}
 
 	/**

@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -12,12 +13,12 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextPane;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
-import javax.swing.text.html.HTMLEditorKit;
 
 /**
  * Abstract class to create unique sidebars for each generator in gui.
@@ -86,6 +87,8 @@ public abstract class ASideBar {
 	 */
 	public ASideBar(ActionListener e) {
 		PanelSidebar = new JPanel();
+//		PanelSidebar.setPreferredSize(new Dimension(this.getWidth(), this.getHeight()));
+		
 		createSideBar(e);
 
 	}
@@ -115,7 +118,7 @@ public abstract class ASideBar {
 		GridBagLayout layout = new GridBagLayout();
 		GridBagConstraints gbConstraints = new GridBagConstraints();
 
-		SideBarPanel.setLayout(layout);
+		SideBarPanel.setLayout(layout);		
 
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gbConstraints.weightx = 1;
@@ -257,12 +260,15 @@ public abstract class ASideBar {
 	private JPanel initDescriptionPnl() {
 		taDescription = new JTextPane();
 		taDescription.setContentType("text/html");
-		taDescription.setEditorKit(new HTMLEditorKit());
+		taDescription.setEditorKit(new WrappedHtmlEditorKit());
 		taDescription.setOpaque(false);
 		taDescription.setEditable(false);
-		taDescription.setText("Lindenmayer system" + "\n" + "\n" + "\n");
-		// taDescription.setLineWrap(true);
-		// taDescription.setWrapStyleWord(true);
+		
+		taDescription.setText("");
+		
+		JScrollPane spDescription = new JScrollPane(taDescription);
+		//height of description panel
+		spDescription.setPreferredSize(new Dimension(310, 120));
 		JPanel SideBarPanelNorth = new JPanel();
 
 		Border border = BorderFactory.createTitledBorder("Description:");
@@ -271,7 +277,7 @@ public abstract class ASideBar {
 		BorderLayout layout = new BorderLayout();
 		SideBarPanelNorth.setLayout(layout);
 
-		SideBarPanelNorth.add(taDescription);
+		SideBarPanelNorth.add(spDescription);
 		return SideBarPanelNorth;
 	}
 
