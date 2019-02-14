@@ -34,7 +34,7 @@ public class SideBarLSystem extends ASideBar {
 	private static JSpinner jsAngle = new JSpinner(smAngle);
 	private static JTextField tfAlphabet = new JTextField("A,B,+,-");
 	private static JTextField tfStartingSequence = new JTextField("A+A+B");
-	private static JLabel lblProductionRules = new JLabel("Enter Porduction Rules:");
+	private static JLabel lblProductionRules = new JLabel("Enter Production Rules:");
 	private static JTextField tfProductionRules = new JTextField("(A,AA),(B,B+A-B-A+B)");
 	private static JLabel lblcbPresets = new JLabel("Load Preset:");
 	private static String comboBoxList[] = { "*** choose preset ***", "Koch edge", "Koch snowflake",

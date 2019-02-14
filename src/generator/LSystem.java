@@ -80,21 +80,23 @@ public class LSystem extends AGenerator {
 
 		formatedString = "";
 		try {
-			formatedString = buildString();
 
-			while (!guiSideBar.isStopped()) {
+			if (isInputCorrect()) {
+				formatedString = buildString();
+				while (!guiSideBar.isStopped()) {
 
-				updateScreenPanel();
+					updateScreenPanel();
 
-				guiSideBar.setStopped();
+					guiSideBar.setStopped();
 
-				while (guiSideBar.isPaused()) {
-					updateStatus(IGenerator.Status.PAUSED);
-					if (guiSideBar.isStopped()) {
-						break;
+					while (guiSideBar.isPaused()) {
+						updateStatus(IGenerator.Status.PAUSED);
+						if (guiSideBar.isStopped()) {
+							break;
+						}
 					}
+					updateStatus(IGenerator.Status.CALCULATING);
 				}
-				updateStatus(IGenerator.Status.CALCULATING);
 			}
 
 			guiSideBar.setButtonsReady();
@@ -105,6 +107,45 @@ public class LSystem extends AGenerator {
 			errorMsg = "OutOfMemory";
 			updateStatus(IGenerator.Status.ERROR);
 			guiSideBar.setButtonsReady();
+		}
+
+	}
+
+	/**
+	 * Check all the texfields if they are correctly formatted and return true
+	 * if they are.
+	 * 
+	 * @return true when input is ok
+	 */
+	private boolean isInputCorrect() {
+
+		Boolean abcCorrect = false;
+		Boolean rulesCorrect = false;
+
+		String inPath = guiSideBar.getStartingSequence();
+		String pattern = "[A-Z+-]*";
+		boolean matches = inPath.matches(pattern);
+		if (matches) {
+			abcCorrect = true;
+		} else {
+			showWarning("Starting Sequence wrong."
+					+ "\nA-Z,+,- allowed.");
+		}
+
+		inPath = guiSideBar.getProductionRules();
+		pattern = "(\\([A-Z],[A-Z\\+\\-\\[\\]]*\\),{0,1})*";
+		matches = inPath.matches(pattern);
+		if (matches) {
+			rulesCorrect = true;
+		} else {
+			showWarning("Production rules wrong."
+					+ "\n(A,AAA+-[]),(B,CDF+-[]) allowed.");
+		}
+
+		if (abcCorrect & rulesCorrect) {
+			return true;
+		} else {
+			return false;
 		}
 
 	}
@@ -360,7 +401,7 @@ public class LSystem extends AGenerator {
 			forumulaF = guiSideBar.getProductionRules().substring(indexStart + 3, indexEnd);
 		}
 
-		// in case a letter only occures in the production rules and not in the
+		// in case a letter only occurs in the production rules and not in the
 		// starting sequence. So it can replace itself with itself.
 		for (String itemInList : ALPHABETLIST) {
 			String compare = "(";

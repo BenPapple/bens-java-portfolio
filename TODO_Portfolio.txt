@@ -2,8 +2,7 @@
 ** TODO Portfolio 2019 **
 *************************
 
--f- regex for lsystem alphabet
--b- check LSystem input alphabet for range
+-b- LSystem check "[]" order and even number for productionRules
 -f- RTree choose math formula in gui
 -f- GOL make calculations methods top left etc
 -f- class with math formulas for RandomTreeArt
@@ -16,6 +15,8 @@
 -f- custom color panel
 - - MVC split MC further
 /////////////////DONE//////////////////////////////////
++f- regex for lsystem alphabet
++b- check LSystem input alphabet for range
 +b- make html descriptions wraparound
 +b- protect load image name input
 +f- add monochrome noise color model
