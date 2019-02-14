@@ -17,6 +17,9 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.swing.JPanel;
 
 /**
@@ -215,7 +218,7 @@ public class RandomTreeArt extends AGenerator {
 					double newAverageRGB = averageRGB * randomNoise;
 					averageRGB = (int) newAverageRGB;
 					rgbCalc = new Color(averageRGB, averageRGB, averageRGB);
-					break;	
+					break;
 				case "RGB White Noise":
 					double randomNoise2 = Math.random();
 					rVal = rgbCalc.getRed() * randomNoise2;
@@ -442,18 +445,60 @@ public class RandomTreeArt extends AGenerator {
 
 	@Override
 	public void setLoadedValues(String inPath) {
-		// get entries from filename
-		String[] twos = inPath.split("_");
-		System.out.println(Arrays.toString(twos));
-		String width = twos[1];
-		guiSideBar.setWidth(Integer.parseInt(width.substring(1)));
-		String height = twos[2];
-		guiSideBar.setHeight(Integer.parseInt(height.substring(1)));
-		String generations = twos[4];
-		guiSideBar.setGenerations(Integer.parseInt(generations.substring(1)));
-		String seed = twos[3];
-		guiSideBar.setSeedText((seed.substring(1)));
-		guiSideBar.setCbSeed();
+		//match filename to allowed regex pattern
+		try {
+			//example regex RTree_W640_H480_S1142650635_G7_.png
+			String pattern = "\\p{Alpha}*_W\\d*_H\\d*_S\\d*_G\\d*_.png";
+			Pattern p = Pattern.compile(pattern);
+			Matcher m = p.matcher(inPath);
+			if (!m.find()) {
+				throw new IllegalArgumentException();
+			}
+			String[] twos = inPath.split("_");
+			System.out.println(Arrays.toString(twos));
+			String width = twos[1];
+			guiSideBar.setWidth(Integer.parseInt(width.substring(1)));
+			String height = twos[2];
+			guiSideBar.setHeight(Integer.parseInt(height.substring(1)));
+			String generations = twos[4];
+			guiSideBar.setGenerations(Integer.parseInt(generations.substring(1)));
+			String seed = twos[3];
+			guiSideBar.setSeedText(Integer.toString((Integer.parseInt(seed.substring(1)))));
+			guiSideBar.setCbSeed();
+		} catch (IllegalArgumentException exception) {
+			System.out.println(exception);
+			showWarning("  File name not correctly formatted." 
+					+ "\n"
+					+ "\n  Correct Example:"
+					+ "\n"
+					+ "\n  RTree_W640_H480_S1142650635_G7_.png  " 
+					+ "\n ");
+		}
+
+		// check split value for correctness
+//		try {
+//			// get entries from filename
+//			String[] twos = inPath.split("_");
+//			if (twos.length != 6) {
+//				throw new ArrayIndexOutOfBoundsException();
+//			}
+//			System.out.println(Arrays.toString(twos));
+//			String width = twos[1];
+//			guiSideBar.setWidth(Integer.parseInt(width.substring(1)));
+//			String height = twos[2];
+//			guiSideBar.setHeight(Integer.parseInt(height.substring(1)));
+//			String generations = twos[4];
+//			guiSideBar.setGenerations(Integer.parseInt(generations.substring(1)));
+//			String seed = twos[3];
+//			guiSideBar.setSeedText(Integer.toString((Integer.parseInt(seed.substring(1)))));
+//			guiSideBar.setCbSeed();
+//		} catch (ArrayIndexOutOfBoundsException | NumberFormatException exception) {
+//			showWarning("File name not correctly formatted."
+//					+ "\nCorrect Example:"
+//					+ "\nRTree_W640_H480_S1142650635_G7_.png"
+//					+ "\n" + exception);
+//		}
+
 	}
 
 }

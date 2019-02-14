@@ -149,7 +149,7 @@ public abstract class AGenerator extends Observable implements IGenerator, Runna
 		JOptionPane.showMessageDialog(null,
 				inString,
 				"Warning",
-				JOptionPane.WARNING_MESSAGE);
+				JOptionPane.ERROR_MESSAGE);
 	}
 
 	/**
