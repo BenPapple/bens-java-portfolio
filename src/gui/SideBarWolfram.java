@@ -165,9 +165,7 @@ public class SideBarWolfram extends ASideBar implements ActionListener {
 		// taDescription.setPreferredSize(new Dimension(310, 150));
 		super.taDescription.setText("<b>Wolfram Cellular Automaton</b>"
 				+ "<br><br>"
-				+ "Implements Stephen Wolfram's cellular automaton<br> with all 256 rules. "
-				+ "Rule 30 is a one-dimensional binary cellular automaton rule introduced by Stephen Wolfram in 1983. "
-				+ "Using Wolfram's classification scheme, Rule 30 is a Class III rule, displaying aperiodic, chaotic behaviour.");
+				+ "Implements Stephen Wolfram's cellular automaton<br> with all 256 rules." );
 
 		super.setWidth(850);
 		super.setHeight(450);

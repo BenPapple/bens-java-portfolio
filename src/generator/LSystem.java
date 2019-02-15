@@ -210,9 +210,7 @@ public class LSystem extends AGenerator {
 			updateStatus(IGenerator.Status.CALCULATING);
 			oldCurrentY = currentY;
 			oldCurrentX = currentX;
-			if ((formatedString.charAt(i) == 'A') || (formatedString.charAt(i) == 'B')
-					|| (formatedString.charAt(i) == 'C') || (formatedString.charAt(i) == 'D')
-					|| (formatedString.charAt(i) == 'E') || (formatedString.charAt(i) == 'F')) {
+			if (Character.isLetter(formatedString.charAt(i))) {
 				currentX += cos(Math.toRadians(currentAngle)) * (STEP * scaleX);
 				currentY += sin(Math.toRadians(currentAngle)) * (STEP * scaleY);
 				if (virtual) {

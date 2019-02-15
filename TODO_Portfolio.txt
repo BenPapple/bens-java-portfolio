@@ -2,12 +2,13 @@
 ** TODO Portfolio 2019 **
 *************************
 
--b- LSystem check "[]" order and even number for productionRules
+-b- LSystem check "[]" order and even number for productionRules; A double problem?
 - - Hashmap L-system
 -f- RTree choose math formula in gui
 -f- class with math formulas for RandomTreeArt
 -f- GOL make calculations methods top left etc
 
+-f- multi-threaded calculations
 - - fill abstract CA generator classes with more vars and methods
 - - change protected vars in abstract to private with getter/setter
 - - L-system split scale factor into own method

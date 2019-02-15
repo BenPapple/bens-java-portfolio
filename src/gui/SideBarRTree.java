@@ -122,8 +122,8 @@ public class SideBarRTree extends ASideBar {
 
 	@Override
 	public void setStdValues() {
-		super.setWidth(640);
-		super.setHeight(480);
+		super.setWidth(1080);
+		super.setHeight(720);
 		super.setColor(Color.CYAN);
 		super.setBGColor(Color.BLACK);
 		super.btnBGColor.setVisible(false);

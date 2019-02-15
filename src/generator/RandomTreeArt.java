@@ -503,31 +503,6 @@ public class RandomTreeArt extends AGenerator {
 					+ "\n ");
 		}
 
-		// check split value for correctness
-		// try {
-		// // get entries from filename
-		// String[] twos = inPath.split("_");
-		// if (twos.length != 6) {
-		// throw new ArrayIndexOutOfBoundsException();
-		// }
-		// System.out.println(Arrays.toString(twos));
-		// String width = twos[1];
-		// guiSideBar.setWidth(Integer.parseInt(width.substring(1)));
-		// String height = twos[2];
-		// guiSideBar.setHeight(Integer.parseInt(height.substring(1)));
-		// String generations = twos[4];
-		// guiSideBar.setGenerations(Integer.parseInt(generations.substring(1)));
-		// String seed = twos[3];
-		// guiSideBar.setSeedText(Integer.toString((Integer.parseInt(seed.substring(1)))));
-		// guiSideBar.setCbSeed();
-		// } catch (ArrayIndexOutOfBoundsException | NumberFormatException
-		// exception) {
-		// showWarning("File name not correctly formatted."
-		// + "\nCorrect Example:"
-		// + "\nRTree_W640_H480_S1142650635_G7_.png"
-		// + "\n" + exception);
-		// }
-
 	}
 
 }
