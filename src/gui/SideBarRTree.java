@@ -27,7 +27,7 @@ public class SideBarRTree extends ASideBar {
 	private static SpinnerModel smGenerations = new SpinnerNumberModel(7, 0, 15, 1);
 	private static JSpinner jsGenerations = new JSpinner(smGenerations);
 	private static JLabel lblcbPresets = new JLabel("Color Model:");
-	private static String comboBoxList[] = { "Monochrome", "Monochrome Noise", "RGB", "RGB White Noise" };
+	private static String comboBoxList[] = { "Preview All", "Monochrome", "Monochrome Noise", "RGB", "RGB White Noise" };
 	private static JComboBox<Object> cbColorPresets = new JComboBox<Object>(comboBoxList);
 	private static JLabel lblSeed = new JLabel("Random Seed:");
 	private static JTextField tfSeed = new JTextField();

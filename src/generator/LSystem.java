@@ -122,20 +122,20 @@ public class LSystem extends AGenerator {
 		Boolean abcCorrect = false;
 		Boolean rulesCorrect = false;
 
-		String inPath = guiSideBar.getStartingSequence();
-		String pattern = "[A-Z+-]*";
-		boolean matches = inPath.matches(pattern);
-		if (matches) {
+		String inTfCompare = guiSideBar.getStartingSequence();
+		String regexPattern = "[A-Z+-]*";
+		boolean matchesRegex = inTfCompare.matches(regexPattern);
+		if (matchesRegex) {
 			abcCorrect = true;
 		} else {
 			showWarning("Starting Sequence wrong."
 					+ "\nA-Z,+,- allowed.");
 		}
 
-		inPath = guiSideBar.getProductionRules();
-		pattern = "(\\([A-Z],[A-Z\\+\\-\\[\\]]*\\),{0,1})*";
-		matches = inPath.matches(pattern);
-		if (matches) {
+		inTfCompare = guiSideBar.getProductionRules();
+		regexPattern = "(\\([A-Z],[A-Z\\+\\-\\[\\]]*\\),{0,1})*";
+		matchesRegex = inTfCompare.matches(regexPattern);
+		if (matchesRegex) {
 			rulesCorrect = true;
 		} else {
 			showWarning("Production rules wrong."

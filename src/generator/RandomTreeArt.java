@@ -176,7 +176,7 @@ public class RandomTreeArt extends AGenerator {
 		int averageRGB;
 		int rgbVal;
 
-		for (int x = 1; x <= maxXPixel; x++) {
+		for (int x = 0; x < maxXPixel; x++) {
 			// Stop and pause
 			if (guiSideBar.isStopped()) {
 				break;
@@ -189,7 +189,7 @@ public class RandomTreeArt extends AGenerator {
 			}
 			updateStatus(IGenerator.Status.CALCULATING);
 
-			for (int y = 1; y <= maxYPixel; y++) {
+			for (int y = 0; y < maxYPixel; y++) {
 				double xDouble = x;
 				double yDouble = y;
 				Color rgbCalc;
@@ -208,6 +208,33 @@ public class RandomTreeArt extends AGenerator {
 				rgbCalc = new Color(rgbVal);
 
 				switch (guiSideBar.getColorModelName()) {
+				case "Preview All":
+					while (x <= (guiSideBar.getWidth() * 0.25)) {
+						averageRGB = (rgbCalc.getRed() + rgbCalc.getGreen() + rgbCalc.getBlue()) / 3;
+						rgbCalc = new Color(averageRGB, averageRGB, averageRGB);
+						break;
+					}
+					while (x > (guiSideBar.getWidth() * 0.25) && x <= (guiSideBar.getWidth() * 0.5)) {
+						double randomNoise = Math.random();
+						averageRGB = (rgbCalc.getRed() + rgbCalc.getGreen() + rgbCalc.getBlue()) / 3;
+						double newAverageRGB = averageRGB * randomNoise;
+						averageRGB = (int) newAverageRGB;
+						rgbCalc = new Color(averageRGB, averageRGB, averageRGB);
+						break;
+					}
+					while (x > (guiSideBar.getWidth() * 0.5) && x <= (guiSideBar.getWidth() * 0.75)) {
+						break;
+					}
+					while (x > (guiSideBar.getWidth() * 0.75) && x <= (guiSideBar.getWidth())) {
+						double randomNoise2 = Math.random();
+						rVal = rgbCalc.getRed() * randomNoise2;
+						gVal = rgbCalc.getGreen() * randomNoise2;
+						bVal = rgbCalc.getBlue() * randomNoise2;
+						rgbCalc = new Color((int) rVal, (int) gVal, (int) bVal);
+						break;
+					}
+
+					break;
 				case "Monochrome":
 					averageRGB = (rgbCalc.getRed() + rgbCalc.getGreen() + rgbCalc.getBlue()) / 3;
 					rgbCalc = new Color(averageRGB, averageRGB, averageRGB);
@@ -445,10 +472,10 @@ public class RandomTreeArt extends AGenerator {
 
 	@Override
 	public void setLoadedValues(String inPath) {
-		//match filename to allowed regex pattern
-		//Casts are covered with NumberFormatException too
+		// match filename to allowed regex pattern
+		// Casts are covered with NumberFormatException too
 		try {
-			//example regex RTree_W640_H480_S1142650635_G7_.png
+			// example regex RTree_W640_H480_S1142650635_G7_.png
 			String pattern = "\\p{Alpha}*_W\\d*_H\\d*_S\\d*_G\\d*_.png";
 			Pattern p = Pattern.compile(pattern);
 			Matcher m = p.matcher(inPath);
@@ -468,37 +495,38 @@ public class RandomTreeArt extends AGenerator {
 			guiSideBar.setCbSeed();
 		} catch (IllegalArgumentException exception) {
 			System.out.println(exception);
-			showWarning("  File name not correctly formatted." 
+			showWarning("  File name not correctly formatted."
 					+ "\n"
 					+ "\n  Correct Example:"
 					+ "\n"
-					+ "\n  RTree_W640_H480_S1142650635_G7_.png  " 
+					+ "\n  RTree_W640_H480_S1142650635_G7_.png  "
 					+ "\n ");
 		}
 
 		// check split value for correctness
-//		try {
-//			// get entries from filename
-//			String[] twos = inPath.split("_");
-//			if (twos.length != 6) {
-//				throw new ArrayIndexOutOfBoundsException();
-//			}
-//			System.out.println(Arrays.toString(twos));
-//			String width = twos[1];
-//			guiSideBar.setWidth(Integer.parseInt(width.substring(1)));
-//			String height = twos[2];
-//			guiSideBar.setHeight(Integer.parseInt(height.substring(1)));
-//			String generations = twos[4];
-//			guiSideBar.setGenerations(Integer.parseInt(generations.substring(1)));
-//			String seed = twos[3];
-//			guiSideBar.setSeedText(Integer.toString((Integer.parseInt(seed.substring(1)))));
-//			guiSideBar.setCbSeed();
-//		} catch (ArrayIndexOutOfBoundsException | NumberFormatException exception) {
-//			showWarning("File name not correctly formatted."
-//					+ "\nCorrect Example:"
-//					+ "\nRTree_W640_H480_S1142650635_G7_.png"
-//					+ "\n" + exception);
-//		}
+		// try {
+		// // get entries from filename
+		// String[] twos = inPath.split("_");
+		// if (twos.length != 6) {
+		// throw new ArrayIndexOutOfBoundsException();
+		// }
+		// System.out.println(Arrays.toString(twos));
+		// String width = twos[1];
+		// guiSideBar.setWidth(Integer.parseInt(width.substring(1)));
+		// String height = twos[2];
+		// guiSideBar.setHeight(Integer.parseInt(height.substring(1)));
+		// String generations = twos[4];
+		// guiSideBar.setGenerations(Integer.parseInt(generations.substring(1)));
+		// String seed = twos[3];
+		// guiSideBar.setSeedText(Integer.toString((Integer.parseInt(seed.substring(1)))));
+		// guiSideBar.setCbSeed();
+		// } catch (ArrayIndexOutOfBoundsException | NumberFormatException
+		// exception) {
+		// showWarning("File name not correctly formatted."
+		// + "\nCorrect Example:"
+		// + "\nRTree_W640_H480_S1142650635_G7_.png"
+		// + "\n" + exception);
+		// }
 
 	}
 
