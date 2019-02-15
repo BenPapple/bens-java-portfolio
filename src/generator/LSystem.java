@@ -12,6 +12,7 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Stack;
@@ -27,12 +28,6 @@ public class LSystem extends AGenerator {
 	private SideBarLSystem guiSideBar;
 	private int pixelGap = 15;
 	private String formatedString;
-	private String forumulaA;
-	private String forumulaB;
-	private String forumulaC;
-	private String forumulaD;
-	private String forumulaE;
-	private String forumulaF;
 	private final int STEP = 10;
 	private Stack<Double> drawingSymbolStack = new Stack<Double>();
 	private double currentAngle = -90;
@@ -46,7 +41,9 @@ public class LSystem extends AGenerator {
 	private double maxY = 0;
 	private double scaleX;
 	private double scaleY;
-	private final List<String> ALPHABETLIST = new ArrayList<>(Arrays.asList("A", "B", "C", "D", "E", "F"));
+	private final List<String> ALPHABETLIST = new ArrayList<>(Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I",
+			"J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"));
+	private HashMap<String, String> formulaMap = new HashMap<String, String>();
 
 	/**
 	 * Constructor for an L-system.
@@ -79,6 +76,7 @@ public class LSystem extends AGenerator {
 		guiSideBar.setButtonsCalculating();
 
 		formatedString = "";
+		formulaMap.clear();
 		try {
 
 			if (isInputCorrect()) {
@@ -275,50 +273,36 @@ public class LSystem extends AGenerator {
 	 * @return String for the drawing turtle
 	 */
 	private String buildString() {
-		String temp = guiSideBar.getStartingSequence();
-		temp = temp.replace(",", "");
+		String tempStartingSeq = guiSideBar.getStartingSequence();
+		tempStartingSeq = tempStartingSeq.replace(",", "");
 		int tempGenerations = guiSideBar.getGenerations();
 		StringBuilder b = new StringBuilder();
-		b.append(temp);
+		b.append(tempStartingSeq);
 
-		// Split ProductionRules into corresponding variable forumulaA to F
+		// Split ProductionRules into corresponding variable forumula A to Z
 		fillFormulaStrings();
 
-		// with stringbuilder replace original string with user input
-		// generations
-		// and productionrules * startingsequence
+		// create string usable by drawing turtle
 		for (int i = 0; i < tempGenerations; i++) {
-			temp = b.toString();
+			tempStartingSeq = b.toString();
 			b = new StringBuilder();
-			for (int j = 0; j < temp.length(); j++) {
-				if (temp.charAt(j) == 'A') {
-					b.append(forumulaA);
+			for (int j = 0; j < tempStartingSeq.length(); j++) {
+
+				for (String itemInList : ALPHABETLIST) {
+					if (tempStartingSeq.charAt(j) == itemInList.charAt(0)) {
+						b.append(formulaMap.get(itemInList));
+					}
 				}
-				if (temp.charAt(j) == 'B') {
-					b.append(forumulaB);
-				}
-				if (temp.charAt(j) == 'C') {
-					b.append(forumulaC);
-				}
-				if (temp.charAt(j) == 'D') {
-					b.append(forumulaD);
-				}
-				if (temp.charAt(j) == 'E') {
-					b.append(forumulaE);
-				}
-				if (temp.charAt(j) == 'F') {
-					b.append(forumulaF);
-				}
-				if (temp.charAt(j) == '+') {
+				if (tempStartingSeq.charAt(j) == '+') {
 					b.append("+");
 				}
-				if (temp.charAt(j) == '-') {
+				if (tempStartingSeq.charAt(j) == '-') {
 					b.append("-");
 				}
-				if (temp.charAt(j) == '[') {
+				if (tempStartingSeq.charAt(j) == '[') {
 					b.append("[");
 				}
-				if (temp.charAt(j) == ']') {
+				if (tempStartingSeq.charAt(j) == ']') {
 					b.append("]");
 				}
 			}
@@ -327,106 +311,39 @@ public class LSystem extends AGenerator {
 	}
 
 	/**
-	 * Helper Method to parse variables forumulaA to forumulaF with the
-	 * corresponding values from the textfield tfProductionRules.
+	 * Helper Method to parse formulas into hashmap with the corresponding
+	 * values from the textfield tfProductionRules.
 	 */
 	private void fillFormulaStrings() {
 		Integer indexStart;
 		Integer indexEnd = 0;
 		Integer indexCount = 1;
-		forumulaA = "";
-		forumulaB = "";
-		forumulaC = "";
-		forumulaD = "";
-		forumulaE = "";
-		forumulaF = "";
 		String tempProductionRules = guiSideBar.getProductionRules();
 		String tempStartingSequence = guiSideBar.getStartingSequence();
 
 		// Search for strings in productionrules that indicate a rule for a
-		// letter A to F and put them in a seperate variable.
-		if (tempProductionRules.contains("(A,")) {
-			indexStart = tempProductionRules.indexOf("(A,");
-			indexCount += 1;
-			for (int i = indexStart; i < tempProductionRules.length(); i++) {
-				indexEnd = tempProductionRules.indexOf(")", tempProductionRules.indexOf("(A,") + indexCount);
+		// letter A to Z and put them into hashmap.
+		for (String itemInList : ALPHABETLIST) {
+			String compare = "(";
+			compare += itemInList;
+			compare += ",";
+			if (tempProductionRules.contains(itemInList)) {
+				indexStart = tempProductionRules.indexOf(compare);
+				indexCount += 1;
+				for (int i = indexStart; i < tempProductionRules.length(); i++) {
+					indexEnd = tempProductionRules.indexOf(")", tempProductionRules.indexOf(compare) + indexCount);
+				}
+				formulaMap.put(itemInList, guiSideBar.getProductionRules().substring(indexStart + 3, indexEnd));
 			}
-			forumulaA = guiSideBar.getProductionRules().substring(indexStart + 3, indexEnd);
 		}
 
-		if (tempProductionRules.contains("(B,")) {
-			indexStart = tempProductionRules.indexOf("(B,");
-			indexCount += 1;
-			for (int i = indexStart; i < tempProductionRules.length(); i++) {
-				indexEnd = tempProductionRules.indexOf(")", tempProductionRules.indexOf("(B,") + indexCount);
-			}
-			forumulaB = guiSideBar.getProductionRules().substring(indexStart + 3, indexEnd);
-		}
-
-		if (tempProductionRules.contains("(C,")) {
-			indexStart = tempProductionRules.indexOf("(C,");
-			indexCount += 1;
-			for (int i = indexStart; i < tempProductionRules.length(); i++) {
-				indexEnd = tempProductionRules.indexOf(")", tempProductionRules.indexOf("(C,") + indexCount);
-			}
-			forumulaC = guiSideBar.getProductionRules().substring(indexStart + 3, indexEnd);
-		}
-
-		if (tempProductionRules.contains("(D,")) {
-			indexStart = tempProductionRules.indexOf("(D,");
-			indexCount += 1;
-			for (int i = indexStart; i < tempProductionRules.length(); i++) {
-				indexEnd = tempProductionRules.indexOf(")", tempProductionRules.indexOf("(D,") + indexCount);
-			}
-			forumulaD = guiSideBar.getProductionRules().substring(indexStart + 3, indexEnd);
-		}
-
-		if (tempProductionRules.contains("(E,")) {
-			indexStart = tempProductionRules.indexOf("(E,");
-			indexCount += 1;
-			for (int i = indexStart; i < tempProductionRules.length(); i++) {
-				indexEnd = tempProductionRules.indexOf(")", tempProductionRules.indexOf("(E,") + indexCount);
-			}
-			forumulaE = guiSideBar.getProductionRules().substring(indexStart + 3, indexEnd);
-		}
-
-		if (tempProductionRules.contains("(F,")) {
-			indexStart = tempProductionRules.indexOf("(F,");
-			indexCount += 1;
-			for (int i = indexStart; i < tempProductionRules.length(); i++) {
-				indexEnd = tempProductionRules.indexOf(")", tempProductionRules.indexOf("(F,") + indexCount);
-			}
-			forumulaF = guiSideBar.getProductionRules().substring(indexStart + 3, indexEnd);
-		}
-
-		// in case a letter only occurs in the production rules and not in the
-		// starting sequence. So it can replace itself with itself.
+		// in case a letter only occurs in the starting sequence and not in the
+		// production rules. So it can replace itself with itself.
 		for (String itemInList : ALPHABETLIST) {
 			String compare = "(";
 			compare += itemInList;
 			if (tempStartingSequence.contains(itemInList) && (!tempProductionRules.contains(compare))) {
-				switch (itemInList) {
-				case "A":
-					forumulaA = "A";
-					break;
-				case "B":
-					forumulaB = "B";
-					break;
-				case "C":
-					forumulaC = "C";
-					break;
-				case "D":
-					forumulaD = "D";
-					break;
-				case "E":
-					forumulaE = "E";
-					break;
-				case "F":
-					forumulaF = "F";
-					break;
-				default:
-					throw new AssertionError();
-				}
+				formulaMap.put(itemInList, itemInList);
 			}
 		}
 

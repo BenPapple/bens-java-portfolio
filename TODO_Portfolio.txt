@@ -3,7 +3,6 @@
 *************************
 
 -b- LSystem check "[]" order and even number for productionRules; A double problem?
-- - Hashmap L-system
 -f- RTree choose math formula in gui
 -f- class with math formulas for RandomTreeArt
 -f- GOL make calculations methods top left etc
@@ -16,6 +15,7 @@
 -f- custom color panel
 - - MVC split MC further
 /////////////////DONE//////////////////////////////////
++ - Hashmap L-system
 +f- regex for lsystem alphabet
 +b- check LSystem input alphabet for range
 +b- make html descriptions wraparound
