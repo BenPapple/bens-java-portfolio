@@ -2,7 +2,7 @@ package program;
 
 import generator.GameOfLife;
 import generator.IGenerator;
-import generator.LSystem;
+import generator.GenLSystem;
 import generator.NagelSchreckenberg;
 import generator.RandomTreeArt;
 import generator.TestRandomTreeArt;
@@ -46,7 +46,7 @@ public class ProgramStart {
 		generators.add(new TestShapes(centerImagePanel, "Shapes Generator"));
 		generators.add(new TestRandomTreeArt(centerImagePanel, "WiP: Alternative Random-Tree Art (2-Leaf)"));
 		generators.add(new RandomTreeArt(centerImagePanel, "Random-Tree Art (2-Leaf)"));
-		generators.add(new LSystem(centerImagePanel, "Lindenmayer system"));
+		generators.add(new GenLSystem(centerImagePanel, "Lindenmayer system"));
 		generators.add(new GameOfLife(centerImagePanel, "Conway's Game of Life"));
 
 		// Show GUI and construct it with ArrayList generators

@@ -1,6 +1,7 @@
 package generator;
 
 import data.GlobalSettings;
+import data.LSystem;
 import gui.MainCanvasPanel;
 import gui.SideBarLSystem;
 import java.awt.Graphics2D;
@@ -11,7 +12,6 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Stack;
@@ -21,7 +21,7 @@ import java.util.Stack;
  *
  * @author BenGe47
  */
-public class LSystem extends AGenerator {
+public class GenLSystem extends AGenerator {
 
 	private SideBarLSystem guiSideBar;
 	private int pixelGap = 15;
@@ -41,7 +41,7 @@ public class LSystem extends AGenerator {
 	private double scaleY;
 	private final List<String> ALPHABETLIST = new ArrayList<>(Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I",
 			"J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"));
-	private HashMap<String, String> formulaMap = new HashMap<String, String>();
+	private LSystem myLSystem;
 
 	/**
 	 * Constructor for an L-system.
@@ -49,7 +49,7 @@ public class LSystem extends AGenerator {
 	 * @param mainCanvas Inject MainCanvasPanel
 	 * @param name Name of this generator
 	 */
-	public LSystem(MainCanvasPanel mainCanvas, String name) {
+	public GenLSystem(MainCanvasPanel mainCanvas, String name) {
 		this.setName(name);
 		this.setMnemonicChar('L');
 		this.setMainCanvas(mainCanvas);
@@ -60,53 +60,10 @@ public class LSystem extends AGenerator {
 		guiSideBar = new SideBarLSystem(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				updateStatus(IGenerator.Status.READY);
+				updateStatus(GlobalSettings.Status.READY);
 			}
 		});
 		createSideBarGUI();
-	}
-
-	/**
-	 * Helper Method to build the long string for the drawing turtle method.
-	 *
-	 * @return String for the drawing turtle
-	 */
-	private String buildString() {
-		String tempStartingSeq = guiSideBar.getStartingSequence();
-		tempStartingSeq = tempStartingSeq.replace(",", "");
-		int tempGenerations = guiSideBar.getGenerations();
-		StringBuilder b = new StringBuilder();
-		b.append(tempStartingSeq);
-
-		// Split ProductionRules into corresponding variable forumula A to Z
-		fillFormulaStrings();
-
-		// create string usable by drawing turtle
-		for (int i = 0; i < tempGenerations; i++) {
-			tempStartingSeq = b.toString();
-			b = new StringBuilder();
-			for (int j = 0; j < tempStartingSeq.length(); j++) {
-
-				for (String itemInList : ALPHABETLIST) {
-					if (tempStartingSeq.charAt(j) == itemInList.charAt(0)) {
-						b.append(formulaMap.get(itemInList));
-					}
-				}
-				if (tempStartingSeq.charAt(j) == '+') {
-					b.append("+");
-				}
-				if (tempStartingSeq.charAt(j) == '-') {
-					b.append("-");
-				}
-				if (tempStartingSeq.charAt(j) == '[') {
-					b.append("[");
-				}
-				if (tempStartingSeq.charAt(j) == ']') {
-					b.append("]");
-				}
-			}
-		}
-		return b.toString();
 	}
 
 	@Override
@@ -145,12 +102,12 @@ public class LSystem extends AGenerator {
 				break;
 			}
 			while (guiSideBar.isPaused()) {
-				updateStatus(IGenerator.Status.PAUSED);
+				updateStatus(GlobalSettings.Status.PAUSED);
 				if (guiSideBar.isStopped()) {
 					break;
 				}
 			}
-			updateStatus(IGenerator.Status.CALCULATING);
+			updateStatus(GlobalSettings.Status.CALCULATING);
 			oldCurrentY = currentY;
 			oldCurrentX = currentX;
 			if (Character.isLetter(formatedString.charAt(i))) {
@@ -210,45 +167,6 @@ public class LSystem extends AGenerator {
 	 */
 	private void drawSingleLine(Graphics2D gc) {
 		gc.drawLine((int) currentX, (int) currentY, (int) oldCurrentX, (int) oldCurrentY);
-	}
-
-	/**
-	 * Helper Method to parse formulas into hashmap with the corresponding
-	 * values from the textfield tfProductionRules.
-	 */
-	private void fillFormulaStrings() {
-		Integer indexStart;
-		Integer indexEnd = 0;
-		Integer indexCount = 1;
-		String tempProductionRules = guiSideBar.getProductionRules();
-		String tempStartingSequence = guiSideBar.getStartingSequence();
-
-		// Search for strings in productionrules that indicate a rule for a
-		// letter A to Z and put them into hashmap.
-		for (String itemInList : ALPHABETLIST) {
-			String compare = "(";
-			compare += itemInList;
-			compare += ",";
-			if (tempProductionRules.contains(itemInList)) {
-				indexStart = tempProductionRules.indexOf(compare);
-				indexCount += 1;
-				for (int i = indexStart; i < tempProductionRules.length(); i++) {
-					indexEnd = tempProductionRules.indexOf(")", tempProductionRules.indexOf(compare) + indexCount);
-				}
-				formulaMap.put(itemInList, guiSideBar.getProductionRules().substring(indexStart + 3, indexEnd));
-			}
-		}
-
-		// in case a letter only occurs in the starting sequence and not in the
-		// production rules. So it can replace itself with itself.
-		for (String itemInList : ALPHABETLIST) {
-			String compare = "(";
-			compare += itemInList;
-			if (tempStartingSequence.contains(itemInList) && (!tempProductionRules.contains(compare))) {
-				formulaMap.put(itemInList, itemInList);
-			}
-		}
-
 	}
 
 	/**
@@ -338,15 +256,16 @@ public class LSystem extends AGenerator {
 	@Override
 	public void run() {
 		startCalcTime();
-		updateStatus(IGenerator.Status.CALCULATING);
+		updateStatus(GlobalSettings.Status.CALCULATING);
 		guiSideBar.setButtonsCalculating();
 
 		formatedString = "";
-		formulaMap.clear();
 		try {
 
 			if (isInputCorrect()) {
-				formatedString = buildString();
+				myLSystem = new LSystem(guiSideBar.getStartingSequence(), guiSideBar.getProductionRules(),
+						guiSideBar.getGenerations());
+				formatedString = myLSystem.getTurtleData();
 				while (!guiSideBar.isStopped()) {
 
 					updateScreenPanel();
@@ -354,22 +273,22 @@ public class LSystem extends AGenerator {
 					guiSideBar.setStopped();
 
 					while (guiSideBar.isPaused()) {
-						updateStatus(IGenerator.Status.PAUSED);
+						updateStatus(GlobalSettings.Status.PAUSED);
 						if (guiSideBar.isStopped()) {
 							break;
 						}
 					}
-					updateStatus(IGenerator.Status.CALCULATING);
+					updateStatus(GlobalSettings.Status.CALCULATING);
 				}
 			}
 
 			guiSideBar.setButtonsReady();
 			endCalcTime();
-			updateStatus(IGenerator.Status.FINISHED);
+			updateStatus(GlobalSettings.Status.FINISHED);
 
 		} catch (OutOfMemoryError e) {
 			setErrorMsgText("OutOfMemory");
-			updateStatus(IGenerator.Status.ERROR);
+			updateStatus(GlobalSettings.Status.ERROR);
 			guiSideBar.setButtonsReady();
 		}
 
@@ -378,7 +297,7 @@ public class LSystem extends AGenerator {
 	@Override
 	public void stopGenerator() {
 		guiSideBar.setStopped();
-		setGenStatus(IGenerator.Status.STOP);
+		setGenStatus(GlobalSettings.Status.STOP);
 	}
 
 	/**

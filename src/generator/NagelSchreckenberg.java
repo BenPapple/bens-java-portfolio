@@ -39,7 +39,7 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 		guiSideBar = new SideBarNaSch(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				updateStatus(IGenerator.Status.READY);
+				updateStatus(GlobalSettings.Status.READY);
 			}
 		});
 
@@ -96,7 +96,7 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 
 		} catch (NumberFormatException ne) {
 			setErrorMsgText("InputError");
-			updateStatus(IGenerator.Status.ERROR);
+			updateStatus(GlobalSettings.Status.ERROR);
 			// guiSideBar.setButtonsReady();
 
 		}
@@ -158,7 +158,7 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 					&& Double.parseDouble(guiSideBar.getBrakeRandomness()) >= 0.0
 					&& Double.parseDouble(guiSideBar.getBrakeRandomness()) <= 1.0) {
 				startCalcTime();
-				updateStatus(IGenerator.Status.CALCULATING);
+				updateStatus(GlobalSettings.Status.CALCULATING);
 				guiSideBar.setButtonsCalculating();
 				init2DField();
 
@@ -181,18 +181,18 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 					}
 
 					while (guiSideBar.isPaused()) {
-						updateStatus(IGenerator.Status.PAUSED);
+						updateStatus(GlobalSettings.Status.PAUSED);
 						if (guiSideBar.isStopped()) {
 							break;
 						}
 					}
-					updateStatus(IGenerator.Status.CALCULATING);
+					updateStatus(GlobalSettings.Status.CALCULATING);
 
 				}
 
 				guiSideBar.setButtonsReady();
 				endCalcTime();
-				updateStatus(IGenerator.Status.FINISHED);
+				updateStatus(GlobalSettings.Status.FINISHED);
 			} else {
 				showWarning("Randomness has to be in 0.0 to 1.0 range.");
 			}
@@ -204,7 +204,7 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 	@Override
 	public void stopGenerator() {
 		guiSideBar.setStopped();
-		setGenStatus(IGenerator.Status.STOP);
+		setGenStatus(GlobalSettings.Status.STOP);
 	}
 
 	/**

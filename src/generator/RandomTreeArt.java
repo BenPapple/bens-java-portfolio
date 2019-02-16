@@ -81,7 +81,7 @@ public class RandomTreeArt extends AGenerator {
 		guiSideBar = new SideBarRTree(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				updateStatus(IGenerator.Status.READY);
+				updateStatus(GlobalSettings.Status.READY);
 			}
 		});
 
@@ -126,12 +126,12 @@ public class RandomTreeArt extends AGenerator {
 				break;
 			}
 			while (guiSideBar.isPaused()) {
-				updateStatus(IGenerator.Status.PAUSED);
+				updateStatus(GlobalSettings.Status.PAUSED);
 				if (guiSideBar.isStopped()) {
 					break;
 				}
 			}
-			updateStatus(IGenerator.Status.CALCULATING);
+			updateStatus(GlobalSettings.Status.CALCULATING);
 
 			for (int y = 0; y < maxYPixel; y++) {
 				double xDouble = x;
@@ -394,7 +394,7 @@ public class RandomTreeArt extends AGenerator {
 	@Override
 	public void run() {
 		startCalcTime();
-		updateStatus(IGenerator.Status.CALCULATING);
+		updateStatus(GlobalSettings.Status.CALCULATING);
 
 		// use user input seed
 		if (guiSideBar.usingFieldSeed()) {
@@ -428,7 +428,7 @@ public class RandomTreeArt extends AGenerator {
 
 		} catch (OutOfMemoryError e) {
 			setErrorMsgText("OutOfMemory");
-			updateStatus(IGenerator.Status.ERROR);
+			updateStatus(GlobalSettings.Status.ERROR);
 			guiSideBar.setButtonsReady();
 		} catch (InterruptedException ex) {
 			Logger.getLogger(RandomTreeArt.class.getName()).log(Level.SEVERE, null, ex);
@@ -436,7 +436,7 @@ public class RandomTreeArt extends AGenerator {
 
 		guiSideBar.setButtonsReady();
 		endCalcTime();
-		updateStatus(IGenerator.Status.FINISHED);
+		updateStatus(GlobalSettings.Status.FINISHED);
 
 	}
 
@@ -478,7 +478,7 @@ public class RandomTreeArt extends AGenerator {
 	@Override
 	public void stopGenerator() {
 		guiSideBar.setStopped();
-		setGenStatus(IGenerator.Status.STOP);
+		setGenStatus(GlobalSettings.Status.STOP);
 	}
 
 	/**
