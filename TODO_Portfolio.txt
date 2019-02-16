@@ -2,7 +2,6 @@
 ** TODO Portfolio 2019 **
 *************************
 
--b- LSystem What if letter occurs more than 1 time rules?
 - - change protected vars in abstract to private with getter/setter
 
 -f- RTree choose math formula in gui
@@ -16,6 +15,7 @@
 -f- custom color panel
 - - MVC split MC further
 /////////////////DONE//////////////////////////////////
++b- LSystem What if letter occurs more than 1 time rules?
 +b- LSystem check "[]" order and even number for productionRules
 + - Hashmap L-system
 +f- regex for lsystem alphabet

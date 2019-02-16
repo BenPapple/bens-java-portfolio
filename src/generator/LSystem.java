@@ -128,6 +128,7 @@ public class LSystem extends AGenerator {
 			int splitClose = splitRules[i].split("\\]", -1).length - 1;
 			if (splitOpen != splitClose) {
 				rulesBrackets = false;
+				showWarning("Production rules wrong bracket number. Must be even.");
 				break;
 			}
 			int count = 0;
@@ -141,6 +142,7 @@ public class LSystem extends AGenerator {
 				}
 				if (count < 0) {
 					rulesBrackets = false;
+					showWarning("Production rules wrong bracket order.");
 					break;
 				}
 
@@ -148,6 +150,7 @@ public class LSystem extends AGenerator {
 
 		}
 
+		// check patterns
 		String inTfCompare = guiSideBar.getStartingSequence();
 		String regexPattern = "[A-Z+-]*";
 		boolean matchesRegex = inTfCompare.matches(regexPattern);
@@ -166,6 +169,20 @@ public class LSystem extends AGenerator {
 		} else {
 			showWarning("Production rules wrong."
 					+ "\n(A,AAA+-[]),(B,CDF+-[]) allowed.");
+		}
+
+		// proof every letter has only one rule
+		for (String itemInList : ALPHABETLIST) {
+			String compareLetter = "\\(";
+			compareLetter += itemInList;
+			compareLetter += ",";
+			int splitLetter = guiSideBar.getProductionRules().split(compareLetter, -1).length - 1;
+			if (splitLetter > 1) {
+				rulesCorrect = false;
+				showWarning("Production rules wrong."
+						+ "\nA letter can't have more than 1 rule.");
+				break;
+			}
 		}
 
 		if (abcCorrect & rulesCorrect & rulesBrackets) {
