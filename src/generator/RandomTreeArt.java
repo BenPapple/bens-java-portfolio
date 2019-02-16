@@ -482,15 +482,15 @@ public class RandomTreeArt extends AGenerator {
 			if (!m.find()) {
 				throw new IllegalArgumentException();
 			}
-			String[] twos = inPath.split("_");
-			System.out.println(Arrays.toString(twos));
-			String width = twos[1];
+			String[] splitIn = inPath.split("_");
+			System.out.println(Arrays.toString(splitIn));
+			String width = splitIn[1];
 			guiSideBar.setWidth(Integer.parseInt(width.substring(1)));
-			String height = twos[2];
+			String height = splitIn[2];
 			guiSideBar.setHeight(Integer.parseInt(height.substring(1)));
-			String generations = twos[4];
+			String generations = splitIn[4];
 			guiSideBar.setGenerations(Integer.parseInt(generations.substring(1)));
-			String seed = twos[3];
+			String seed = splitIn[3];
 			guiSideBar.setSeedText(Integer.toString((Integer.parseInt(seed.substring(1)))));
 			guiSideBar.setCbSeed();
 		} catch (IllegalArgumentException exception) {

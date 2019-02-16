@@ -119,6 +119,34 @@ public class LSystem extends AGenerator {
 
 		Boolean abcCorrect = false;
 		Boolean rulesCorrect = false;
+		Boolean rulesBrackets = true;
+
+		// Proof even numbers and correct order of [ and ]
+		String[] splitRules = guiSideBar.getProductionRules().split("\\),");
+		for (int i = 0; i < splitRules.length; i++) {
+			int splitOpen = splitRules[i].split("\\[", -1).length - 1;
+			int splitClose = splitRules[i].split("\\]", -1).length - 1;
+			if (splitOpen != splitClose) {
+				rulesBrackets = false;
+				break;
+			}
+			int count = 0;
+			for (int j = 0; j < splitRules[i].length(); j++) {
+
+				if (splitRules[i].charAt(j) == '[') {
+					count += 1;
+				}
+				if (splitRules[i].charAt(j) == ']') {
+					count -= 1;
+				}
+				if (count < 0) {
+					rulesBrackets = false;
+					break;
+				}
+
+			}
+
+		}
 
 		String inTfCompare = guiSideBar.getStartingSequence();
 		String regexPattern = "[A-Z+-]*";
@@ -140,7 +168,7 @@ public class LSystem extends AGenerator {
 					+ "\n(A,AAA+-[]),(B,CDF+-[]) allowed.");
 		}
 
-		if (abcCorrect & rulesCorrect) {
+		if (abcCorrect & rulesCorrect & rulesBrackets) {
 			return true;
 		} else {
 			return false;
