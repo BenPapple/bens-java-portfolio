@@ -340,7 +340,7 @@ public class MainWindow extends JFrame implements Observer {
 		observableGenerator = (IGenerator) obsGenerator;
 
 		// Update status bar with error message if status is error
-		if (observableGenerator.getGenStatus() == IGenerator.Status.ERROR) {
+		if (observableGenerator.getGenStatus() == GlobalSettings.Status.ERROR) {
 			statusLabel.setText(observableGenerator.getName() + " Status: " + observableGenerator.getGenStatus() + ": "
 					+ observableGenerator.getErrorMessage());
 			return;
@@ -349,7 +349,7 @@ public class MainWindow extends JFrame implements Observer {
 		// Stop all generators, but not active obsGenerator
 		generators.stream().map((gen) -> {
 			if (!gen.equals(obsGenerator)) {
-				boolean bool = gen.getGenStatus() == IGenerator.Status.CALCULATING;
+				boolean bool = gen.getGenStatus() == GlobalSettings.Status.CALCULATING;
 				gen.stopGenerator();
 
 				if (bool) {
@@ -365,7 +365,7 @@ public class MainWindow extends JFrame implements Observer {
 
 		// Update status bar with status of observableGenerator
 		// if finished display duration and status
-		if (observableGenerator.getGenStatus() == IGenerator.Status.FINISHED) {
+		if (observableGenerator.getGenStatus() == GlobalSettings.Status.FINISHED) {
 			int seconds = (int) observableGenerator.getCalcTime() / 1000;
 			int millis = (int) (observableGenerator.getCalcTime() % 1000);
 			statusLabel.setText(observableGenerator.getName() + "'s" + " calculations have "
@@ -376,7 +376,7 @@ public class MainWindow extends JFrame implements Observer {
 					.setText(observableGenerator.getName() + "'s" + " Status: " + observableGenerator.getGenStatus());
 		}
 		// In ready status start thread to keep the buttons active
-		if (observableGenerator.getGenStatus() == IGenerator.Status.READY) {
+		if (observableGenerator.getGenStatus() == GlobalSettings.Status.READY) {
 			Thread thread = new Thread(observableGenerator);
 			thread.start();
 		}

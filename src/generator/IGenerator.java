@@ -1,5 +1,6 @@
 package generator;
 
+import data.GlobalSettings;
 import data.GlobalSettings.GeneratorType;
 
 import java.util.Observer;
@@ -13,37 +14,6 @@ import javax.swing.JPanel;
  * @author BenGe47
  */
 public interface IGenerator extends Runnable {
-
-	/**
-	 * Collection of generator status values.
-	 */
-	public enum Status {
-
-		/**
-		 * Generator is ready
-		 */
-		READY,
-		/**
-		 * Generator is currently calculating
-		 */
-		CALCULATING,
-		/**
-		 * Generator is paused
-		 */
-		PAUSED,
-		/**
-		 * Generator is finished with calculating the image
-		 */
-		FINISHED,
-		/**
-		 * Generator stopped
-		 */
-		STOP,
-		/**
-		 * Error occurred
-		 */
-		ERROR
-	}
 
 	/**
 	 * Add input Observer to the list of registered observers.
@@ -85,7 +55,7 @@ public interface IGenerator extends Runnable {
 	 *
 	 * @return current Generator Status
 	 */
-	public Status getGenStatus();
+	public GlobalSettings.Status getGenStatus();
 
 	/**
 	 * Gives you the current type of the generator to sort into related menu.

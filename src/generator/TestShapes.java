@@ -37,7 +37,7 @@ public class TestShapes extends AGenerator {
 		guiSideBar = new SideBarShapes(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				updateStatus(IGenerator.Status.READY);
+				updateStatus(GlobalSettings.Status.READY);
 			}
 		});
 
@@ -83,7 +83,7 @@ public class TestShapes extends AGenerator {
 	@Override
 	public void run() {
 		startCalcTime();
-		updateStatus(IGenerator.Status.CALCULATING);
+		updateStatus(GlobalSettings.Status.CALCULATING);
 
 		try {
 			Thread.sleep(50);
@@ -104,13 +104,13 @@ public class TestShapes extends AGenerator {
 
 		this.setMainCanvasToImage(image);
 		endCalcTime();
-		updateStatus(IGenerator.Status.FINISHED);
+		updateStatus(GlobalSettings.Status.FINISHED);
 	}
 
 	@Override
 	public void stopGenerator() {
 		guiSideBar.setStopped();
-		setGenStatus(IGenerator.Status.STOP);
+		setGenStatus(GlobalSettings.Status.STOP);
 	}
 
 }

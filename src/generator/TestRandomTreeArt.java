@@ -37,7 +37,7 @@ public class TestRandomTreeArt extends RandomTreeArt {
 		guiSideBar = new SideBarTestRTree(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				updateStatus(IGenerator.Status.READY);
+				updateStatus(GlobalSettings.Status.READY);
 			}
 		});
 

@@ -60,7 +60,7 @@ public class LSystem extends AGenerator {
 		guiSideBar = new SideBarLSystem(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				updateStatus(IGenerator.Status.READY);
+				updateStatus(GlobalSettings.Status.READY);
 			}
 		});
 		createSideBarGUI();
@@ -145,12 +145,12 @@ public class LSystem extends AGenerator {
 				break;
 			}
 			while (guiSideBar.isPaused()) {
-				updateStatus(IGenerator.Status.PAUSED);
+				updateStatus(GlobalSettings.Status.PAUSED);
 				if (guiSideBar.isStopped()) {
 					break;
 				}
 			}
-			updateStatus(IGenerator.Status.CALCULATING);
+			updateStatus(GlobalSettings.Status.CALCULATING);
 			oldCurrentY = currentY;
 			oldCurrentX = currentX;
 			if (Character.isLetter(formatedString.charAt(i))) {
@@ -338,7 +338,7 @@ public class LSystem extends AGenerator {
 	@Override
 	public void run() {
 		startCalcTime();
-		updateStatus(IGenerator.Status.CALCULATING);
+		updateStatus(GlobalSettings.Status.CALCULATING);
 		guiSideBar.setButtonsCalculating();
 
 		formatedString = "";
@@ -354,22 +354,22 @@ public class LSystem extends AGenerator {
 					guiSideBar.setStopped();
 
 					while (guiSideBar.isPaused()) {
-						updateStatus(IGenerator.Status.PAUSED);
+						updateStatus(GlobalSettings.Status.PAUSED);
 						if (guiSideBar.isStopped()) {
 							break;
 						}
 					}
-					updateStatus(IGenerator.Status.CALCULATING);
+					updateStatus(GlobalSettings.Status.CALCULATING);
 				}
 			}
 
 			guiSideBar.setButtonsReady();
 			endCalcTime();
-			updateStatus(IGenerator.Status.FINISHED);
+			updateStatus(GlobalSettings.Status.FINISHED);
 
 		} catch (OutOfMemoryError e) {
 			setErrorMsgText("OutOfMemory");
-			updateStatus(IGenerator.Status.ERROR);
+			updateStatus(GlobalSettings.Status.ERROR);
 			guiSideBar.setButtonsReady();
 		}
 
@@ -378,7 +378,7 @@ public class LSystem extends AGenerator {
 	@Override
 	public void stopGenerator() {
 		guiSideBar.setStopped();
-		setGenStatus(IGenerator.Status.STOP);
+		setGenStatus(GlobalSettings.Status.STOP);
 	}
 
 	/**

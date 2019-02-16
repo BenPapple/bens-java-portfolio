@@ -29,7 +29,7 @@ public abstract class AGenerator extends Observable implements IGenerator, Runna
 	private char myMnemonicKey;
 	private Instant startCalc, endCalc;
 	private long timeBetween = 0;
-	private IGenerator.Status status;
+	private GlobalSettings.Status status;
 	private String errorMsg;
 	
 	/**
@@ -92,7 +92,7 @@ public abstract class AGenerator extends Observable implements IGenerator, Runna
 	 * @return current Generator Status
 	 */
 	@Override
-	public IGenerator.Status getGenStatus() {
+	public GlobalSettings.Status getGenStatus() {
 		return this.status;
 	}
 
@@ -143,7 +143,7 @@ public abstract class AGenerator extends Observable implements IGenerator, Runna
 	 *
 	 * @param inStatus new Generator Status
 	 */
-	public void setGenStatus(IGenerator.Status inStatus) {
+	public void setGenStatus(GlobalSettings.Status inStatus) {
 		this.status = inStatus;
 	}
 
@@ -199,7 +199,7 @@ public abstract class AGenerator extends Observable implements IGenerator, Runna
 
 	@Override
 	public void setReady() {
-		this.status = IGenerator.Status.READY;
+		this.status = GlobalSettings.Status.READY;
 	}
 
 	/**
@@ -231,7 +231,7 @@ public abstract class AGenerator extends Observable implements IGenerator, Runna
 	 *
 	 * @param newGeneratorStatusValue new status of generator
 	 */
-	public void updateStatus(IGenerator.Status newGeneratorStatusValue) {
+	public void updateStatus(GlobalSettings.Status newGeneratorStatusValue) {
 		this.status = newGeneratorStatusValue;
 
 		// Notify Observers
