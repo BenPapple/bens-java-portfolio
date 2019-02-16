@@ -148,8 +148,8 @@ public class SideBarWolfram extends ASideBar implements ActionListener {
 
 	@Override
 	public void setStdValues() {
-		super.lblWidth.setText("Enter Pixel Width:");
-		super.lblHeight.setText("Enter Pixel Height");
+		super.setLblWidthText("Enter Pixel Width:");
+		super.setLblHeightText("Enter Pixel Height");
 		lblRandomness1.setText("Initial randomness:");
 		lblRule.setText("Rule " + rule);
 		cbEdgeWrapAround1.setSelected(true);
@@ -163,7 +163,7 @@ public class SideBarWolfram extends ASideBar implements ActionListener {
 		sliderSpeed1.setValue(0);
 		sliderSpeed1.setPreferredSize(new Dimension(150, 80));
 		// taDescription.setPreferredSize(new Dimension(310, 150));
-		super.taDescription.setText("<b>Wolfram Cellular Automaton</b>"
+		super.setTaDescriptionText("<b>Wolfram Cellular Automaton</b>"
 				+ "<br><br>"
 				+ "Implements Stephen Wolfram's cellular automaton<br> with all 256 rules." );
 

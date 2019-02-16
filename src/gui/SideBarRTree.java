@@ -126,15 +126,14 @@ public class SideBarRTree extends ASideBar {
 		super.setHeight(720);
 		super.setColor(Color.CYAN);
 		super.setBGColor(Color.BLACK);
-		super.btnBGColor.setVisible(false);
-		super.btnColor.setVisible(false);
-		super.lblColor.setVisible(false);
-		super.lblBGColor.setVisible(false);
-		super.lblWidth.setText("Enter Width:");
-		super.lblHeight.setText("Enter Height");
-		cbColorPresets.setSelectedIndex(2);
-		super.taDescription.setText("OG Random-tree Art Generator");
-		super.taDescription.setText(
+		super.setbtnBGColorVisible(false);
+		super.setbtnColorVisible(false);
+		super.setlblColorVisible(false);
+		super.setLblBGColorVisible(false);
+		super.setLblWidthText("Enter Width:");
+		super.setLblHeightText("Enter Height");
+		cbColorPresets.setSelectedIndex(2);		
+		super.setTaDescriptionText(
 				"<b>Random-tree Art</b>"
 						+ "<br><br>Creates a random binary tree. Each node has a math "
 						+ "formula with one or two variables. The variables "

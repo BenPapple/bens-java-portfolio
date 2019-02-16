@@ -112,7 +112,7 @@ public class SideBarGOL extends ASideBar {
 		sliderSpeed.setPaintLabels(true);
 		sliderSpeed.setValue(100);
 		sliderSpeed.setPreferredSize(new Dimension(150, 80));
-		super.taDescription.setText(
+		super.setTaDescriptionText(
 				"<b>Conway's Game of Life</b>"
 						+ "<br><br>Implements Conway's Game of Life cellular automaton.");
 		super.setWidth(150);

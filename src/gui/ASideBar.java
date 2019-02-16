@@ -27,47 +27,20 @@ import javax.swing.border.Border;
  */
 public abstract class ASideBar {
 
+	private JPanel PanelSidebar;
+
+	private JButton btnColor = new JButton("Choose Color");
+	private JButton btnBGColor = new JButton("Choose BG Color");
+	private JTextPane taDescription;
 	private JButton btnGenerate = new JButton("Generate");
 	private JButton btnPause = new JButton("Pause");
 	private JButton btnStop = new JButton("Stop");
-
-	/**
-	 *
-	 */
-	protected JPanel PanelSidebar;
 	private Boolean paused = false;
 	private Boolean stopped = false;
-
-	/**
-	 *
-	 */
-	protected JLabel lblWidth = new JLabel("Horizontal # Cells (4x4 px):");
-
-	/**
-	 *
-	 */
-	protected JLabel lblHeight = new JLabel("Vertical # Cells (4x4 px):");
-
-	/**
-	 *
-	 */
-	protected JLabel lblColor = new JLabel("Color Cells");
-
-	/**
-	 *
-	 */
-	protected JButton btnColor = new JButton("Choose Color");
-
-	/**
-	 *
-	 */
-	protected JLabel lblBGColor = new JLabel("BGColor");
-
-	/**
-	 *
-	 */
-	protected JButton btnBGColor = new JButton("Choose BG Color");
-
+	private JLabel lblWidth = new JLabel("Horizontal # Cells (4x4 px):");
+	private JLabel lblHeight = new JLabel("Vertical # Cells (4x4 px):");
+	private JLabel lblColor = new JLabel("Color Cells");
+	private JLabel lblBGColor = new JLabel("BGColor");
 	private SpinnerModel smWidth = new SpinnerNumberModel(300, 0, 3840, 1);
 	private SpinnerModel smHeight = new SpinnerNumberModel(300, 0, 2160, 1);
 	private JSpinner jsWidth = new JSpinner(smWidth);
@@ -76,31 +49,17 @@ public abstract class ASideBar {
 	private Color BGColor = Color.BLACK;
 
 	/**
-	 * 
-	 */
-	protected JTextPane taDescription;
-
-	/**
 	 * Constructor with event pass through.
 	 *
 	 * @param e ActionListener event buttons
 	 */
 	public ASideBar(ActionListener e) {
 		PanelSidebar = new JPanel();
-//		PanelSidebar.setPreferredSize(new Dimension(this.getWidth(), this.getHeight()));
-		
+		// PanelSidebar.setPreferredSize(new Dimension(this.getWidth(),
+		// this.getHeight()));
+
 		createSideBar(e);
 
-	}
-
-	/**
-	 * Get complete sidebar panel for specific generator.
-	 * 
-	 *
-	 * @return PanelSidebar complete Sidebar Panel
-	 */
-	public JPanel getSideBarPnl() {
-		return PanelSidebar;
 	}
 
 	/**
@@ -118,7 +77,7 @@ public abstract class ASideBar {
 		GridBagLayout layout = new GridBagLayout();
 		GridBagConstraints gbConstraints = new GridBagConstraints();
 
-		SideBarPanel.setLayout(layout);		
+		SideBarPanel.setLayout(layout);
 
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gbConstraints.weightx = 1;
@@ -155,6 +114,121 @@ public abstract class ASideBar {
 		PanelSidebar.add(SideBarPanel, BorderLayout.WEST);
 
 	}
+
+	/**
+	 * Get color for backround in mainCanvas.
+	 *
+	 * @return BGColor current color for background
+	 */
+	public Color getBGColor() {
+		return BGColor;
+	}
+
+	/**
+	 * Get color for foreground elements in gui.
+	 *
+	 * @return chosenColor Color of foreground elements.
+	 */
+	public Color getColor() {
+		return chosenColor;
+	}
+
+	/**
+	 * Get current height value.
+	 *
+	 * @return int height value user input
+	 */
+	public int getHeight() {
+		return (int) jsHeight.getValue();
+	}
+
+	/**
+	 * Get complete sidebar panel for specific generator.
+	 * 
+	 *
+	 * @return PanelSidebar complete Sidebar Panel
+	 */
+	public JPanel getSideBarPnl() {
+		return PanelSidebar;
+	}
+
+	/**
+	 * Get current width value.
+	 *
+	 * @return int new width value from user input
+	 */
+	public int getWidth() {
+		return (int) jsWidth.getValue();
+	}
+
+	/**
+	 * Create bottom panel in sidebar with buttons.
+	 * 
+	 * @return SideBarPanelSouth bottom panel
+	 */
+	private JPanel initButtonPnl() {
+
+		// IGenerator observableGenerator;
+
+		btnPause.addActionListener((ActionEvent e) -> {
+			if (paused) {
+				paused = false;
+				btnPause.setText("Pause");
+			} else {
+				paused = true;
+				btnPause.setText("Play");
+			}
+
+		});
+		btnStop.addActionListener((ActionEvent e) -> {
+			stopped = true;
+		});
+
+		btnPause.setEnabled(false);
+		btnStop.setEnabled(false);
+
+		JPanel SideBarPanelSouth = new JPanel();
+		SideBarPanelSouth.add(btnGenerate);
+		SideBarPanelSouth.add(btnPause);
+		SideBarPanelSouth.add(btnStop);
+		return SideBarPanelSouth;
+	}
+
+	/**
+	 * Create top panel in sidebar with description of generator.
+	 * 
+	 * @return SideBarPanelNorth Topmost panel
+	 */
+	private JPanel initDescriptionPnl() {
+		taDescription = new JTextPane();
+		taDescription.setContentType("text/html");
+		taDescription.setEditorKit(new WrappedHtmlEditorKit());
+		taDescription.setOpaque(false);
+		taDescription.setEditable(false);
+
+		taDescription.setText("");
+
+		JScrollPane spDescription = new JScrollPane(taDescription);
+		// height of description panel
+		spDescription.setPreferredSize(new Dimension(310, 120));
+		JPanel SideBarPanelNorth = new JPanel();
+
+		Border border = BorderFactory.createTitledBorder("Description:");
+		SideBarPanelNorth.setBorder(border);
+
+		BorderLayout layout = new BorderLayout();
+		SideBarPanelNorth.setLayout(layout);
+
+		SideBarPanelNorth.add(spDescription);
+		return SideBarPanelNorth;
+	}
+
+	/**
+	 * Create generator specific JPanel with generator specific gui controls.
+	 *
+	 * @return JPanel Panel of generator specific gui elements in sidebar. *
+	 */
+	public abstract JPanel initGeneratorPnl();
 
 	/**
 	 * Create center panel in sidebar with graphic controls for mainCanvas.
@@ -253,133 +327,6 @@ public abstract class ASideBar {
 	}
 
 	/**
-	 * Create top panel in sidebar with description of generator.
-	 * 
-	 * @return SideBarPanelNorth Topmost panel
-	 */
-	private JPanel initDescriptionPnl() {
-		taDescription = new JTextPane();
-		taDescription.setContentType("text/html");
-		taDescription.setEditorKit(new WrappedHtmlEditorKit());
-		taDescription.setOpaque(false);
-		taDescription.setEditable(false);
-		
-		taDescription.setText("");
-		
-		JScrollPane spDescription = new JScrollPane(taDescription);
-		//height of description panel
-		spDescription.setPreferredSize(new Dimension(310, 120));
-		JPanel SideBarPanelNorth = new JPanel();
-
-		Border border = BorderFactory.createTitledBorder("Description:");
-		SideBarPanelNorth.setBorder(border);
-
-		BorderLayout layout = new BorderLayout();
-		SideBarPanelNorth.setLayout(layout);
-
-		SideBarPanelNorth.add(spDescription);
-		return SideBarPanelNorth;
-	}
-
-	/**
-	 * Create bottom panel in sidebar with buttons.
-	 * 
-	 * @return SideBarPanelSouth bottom panel
-	 */
-	private JPanel initButtonPnl() {
-
-		// IGenerator observableGenerator;
-
-		btnPause.addActionListener((ActionEvent e) -> {
-			if (paused) {
-				paused = false;
-				btnPause.setText("Pause");
-			} else {
-				paused = true;
-				btnPause.setText("Play");
-			}
-
-		});
-		btnStop.addActionListener((ActionEvent e) -> {
-			stopped = true;
-		});
-
-		btnPause.setEnabled(false);
-		btnStop.setEnabled(false);
-
-		JPanel SideBarPanelSouth = new JPanel();
-		SideBarPanelSouth.add(btnGenerate);
-		SideBarPanelSouth.add(btnPause);
-		SideBarPanelSouth.add(btnStop);
-		return SideBarPanelSouth;
-	}
-
-	/**
-	 * Get current width value.
-	 *
-	 * @return int new width value from user input
-	 */
-	public int getWidth() {
-		return (int) jsWidth.getValue();
-	}
-
-	/**
-	 * Set width to new value.
-	 *
-	 * @param x new width value
-	 */
-	public void setWidth(int x) {
-		jsWidth.setValue(x);
-	}
-
-	/**
-	 * Get current height value.
-	 *
-	 * @return int height value user input
-	 */
-	public int getHeight() {
-		return (int) jsHeight.getValue();
-	}
-
-	/**
-	 * Set height to new value.
-	 *
-	 * @param x new height value
-	 */
-	public void setHeight(int x) {
-		jsHeight.setValue(x);
-	}
-
-	/**
-	 * Get color for backround in mainCanvas.
-	 *
-	 * @return BGColor current color for background
-	 */
-	public Color getBGColor() {
-		return BGColor;
-	}
-
-	/**
-	 * Set color for background in color examples.
-	 *
-	 * @param x new color value
-	 */
-	public void setBGColor(Color x) {
-		BGColor = x;
-		lblBGColor.setForeground(BGColor);
-		lblBGColor.setBackground(BGColor);
-	}
-
-	/**
-	 * Get color for foreground elements in gui.
-	 *
-	 * @return chosenColor Color of foreground elements.
-	 */
-	public Color getColor() {
-		return chosenColor;
-	}
-
-	/**
 	 * Returns true if generator is paused.
 	 *
 	 * @return paused is true when paused
@@ -398,22 +345,32 @@ public abstract class ASideBar {
 	}
 
 	/**
-	 * Generator calculations will be stopped.
+	 * Set color for background in color examples.
 	 *
+	 * @param x new color value
 	 */
-	public void setStopped() {
-		stopped = true;
+	public void setBGColor(Color x) {
+		BGColor = x;
+		lblBGColor.setForeground(BGColor);
+		lblBGColor.setBackground(BGColor);
 	}
 
 	/**
-	 * Sets label to color chosen from colorchooser.
-	 *
-	 * @param x color to set
+	 * Setter to toggle visibility.
+	 * 
+	 * @param inBool the Boolean to set
 	 */
-	public void setColor(Color x) {
-		chosenColor = x;
-		lblColor.setForeground(chosenColor);
-		lblColor.setBackground(chosenColor);
+	public void setbtnBGColorVisible(Boolean inBool) {
+		this.btnBGColor.setVisible(inBool);
+	}
+
+	/**
+	 * Setter to toggle visibility.
+	 * 
+	 * @param inBool the Boolean to set
+	 */
+	public void setbtnColorVisible(Boolean inBool) {
+		this.btnColor.setVisible(inBool);
 	}
 
 	/**
@@ -441,16 +398,91 @@ public abstract class ASideBar {
 	}
 
 	/**
+	 * Sets label to color chosen from colorchooser.
+	 *
+	 * @param x color to set
+	 */
+	public void setColor(Color x) {
+		chosenColor = x;
+		lblColor.setForeground(chosenColor);
+		lblColor.setBackground(chosenColor);
+	}
+
+	/**
+	 * Set height to new value.
+	 *
+	 * @param x new height value
+	 */
+	public void setHeight(int x) {
+		jsHeight.setValue(x);
+	}
+
+	/**
+	 * Setter to toggle visibility.
+	 * 
+	 * @param inBool the Boolean to set
+	 */
+	public void setLblBGColorVisible(Boolean inBool) {
+		this.lblBGColor.setVisible(inBool);
+	}
+
+	/**
+	 * Setter to toggle visibility.
+	 * 
+	 * @param inBool the Boolean to set
+	 */
+	public void setlblColorVisible(Boolean inBool) {
+		this.lblColor.setVisible(inBool);
+	}
+
+	/**
+	 * Setter text on lblHeight.
+	 * 
+	 * @param inString the text to set
+	 */
+	public void setLblHeightText(String inString) {
+		this.lblHeight.setText(inString);
+	}
+
+	/**
+	 * Setter text on lblWidth.
+	 * 
+	 * @param inString the text to set
+	 */
+	public void setLblWidthText(String inString) {
+		this.lblWidth.setText(inString);
+	}
+
+	/**
 	 * Init all gui elements with standard values for this generator.
 	 *
 	 */
 	public abstract void setStdValues();
 
 	/**
-	 * Create generator specific JPanel with generator specific gui controls.
+	 * Generator calculations will be stopped.
 	 *
-	 * @return JPanel Panel of generator specific gui elements in sidebar. *
 	 */
-	public abstract JPanel initGeneratorPnl();
+	public void setStopped() {
+		stopped = true;
+	}
+
+	/**
+	 * Setter for text.
+	 * 
+	 * @param inString the text to set
+	 */
+	public void setTaDescriptionText(String inString) {
+		this.taDescription.setText(inString);
+	}
+
+	/**
+	 * Set width to new value.
+	 *
+	 * @param x new width value
+	 */
+	public void setWidth(int x) {
+		jsWidth.setValue(x);
+	}
 
 }

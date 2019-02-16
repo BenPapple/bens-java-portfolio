@@ -224,14 +224,13 @@ public class SideBarLSystem extends ASideBar {
 
 	@Override
 	public void setStdValues() {
-		super.lblWidth.setText("Enter Width:");
-		super.lblHeight.setText("Enter Height");
+		super.setLblWidthText("Enter Width:");
+		super.setLblHeightText("Enter Height");
 		super.setWidth(1280);
 		super.setHeight(720);
 		super.setColor(Color.YELLOW);
 		super.setBGColor(Color.BLACK);
-		super.taDescription.setText("Lindenmayer-system Generator");
-		super.taDescription.setText("<b>Lindenmayer-system</b>"
+		super.setTaDescriptionText("<b>Lindenmayer-system</b>"
 				+ "<br><br>Implements a Lindenmayer-system."
 				+ "<br>Allowed symbols: A B C D E F + - [ ]");
 	}

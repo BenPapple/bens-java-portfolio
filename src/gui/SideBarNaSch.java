@@ -98,8 +98,8 @@ public class SideBarNaSch extends ASideBar {
 
 	@Override
 	public void setStdValues() {
-		super.lblWidth.setText("Enter Width:");
-		super.lblHeight.setText("Enter Height");
+		super.setLblWidthText("Enter Width:");
+		super.setLblHeightText("Enter Height");
 		sliderSpeed1.setMinimum(1);
 		sliderSpeed1.setMaximum(4);
 		sliderSpeed1.setMajorTickSpacing(1);
@@ -108,14 +108,14 @@ public class SideBarNaSch extends ASideBar {
 		sliderSpeed1.setPaintLabels(true);
 		sliderSpeed1.setValue(2);
 		sliderSpeed1.setPreferredSize(new Dimension(150, 80));
-		super.taDescription.setText("<b>Nagel-Schreckenberg Cellular Automaton</b>"
+		super.setTaDescriptionText("<b>Nagel-Schreckenberg Cellular Automaton</b>"
 				+ "<br><br>"
 				+ "Implements Nagel-Schreckenberg's cellular automaton.");
 
 		super.setWidth(500);
 		super.setHeight(300);
-		super.btnColor.setVisible(false);
-		super.lblColor.setVisible(false);
+		super.setbtnColorVisible(false);
+		super.setlblColorVisible(false);
 		super.setColor(Color.decode("#9999FF"));
 		super.setBGColor(Color.BLACK);
 	}

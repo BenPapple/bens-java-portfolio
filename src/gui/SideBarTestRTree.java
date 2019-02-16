@@ -90,14 +90,14 @@ public class SideBarTestRTree extends SideBarRTree {
 		super.setHeight(1080);
 		super.setColor(Color.CYAN);
 		super.setBGColor(Color.BLACK);
-		super.btnBGColor.setVisible(false);
-		super.btnColor.setVisible(false);
-		super.lblColor.setVisible(false);
-		super.lblBGColor.setVisible(false);
-		super.lblWidth.setText("Enter Width:");
-		super.lblHeight.setText("Enter Height");
+		super.setbtnBGColorVisible(false);
+		super.setbtnColorVisible(false);
+		super.setlblColorVisible(false);
+		super.setLblBGColorVisible(false);
+		super.setLblWidthText("Enter Width:");
+		super.setLblHeightText("Enter Height");
 		cbColorPresets.setSelectedIndex(2);
-		super.taDescription.setText("<b>Alternative Random-tree Art Generator</b>"
+		super.setTaDescriptionText("<b>Alternative Random-tree Art Generator</b>"
 				+ "<br><br>Has different formulas. ");
 	}
 

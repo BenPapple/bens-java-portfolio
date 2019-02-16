@@ -2,6 +2,8 @@
 ** TODO Portfolio 2019 **
 *************************
 
+- - LSystem Alphabet textfield unnecessary
+- - Update all html description text of generators
 - - change protected vars in abstract to private with getter/setter
 
 -f- RTree choose math formula in gui
