@@ -19,11 +19,11 @@ import javax.swing.border.Border;
 public class SideBarShapes extends ASideBar {
 
 	private static JLabel lblPresets = new JLabel("Shape:");
-	private JPanel GeneratorPnl;
-
 	private static String comboBoxList[] = { "Circle", "Ellipse", "Rectangle", "RoundRectangle" };
+
 	private static final JComboBox<Object> J_COMBO_BOX = new JComboBox<Object>(comboBoxList);
 	private static JComboBox<Object> cbPresets = J_COMBO_BOX;
+	private JPanel GeneratorPnl;
 
 	/**
 	 * Constructor.
@@ -32,6 +32,15 @@ public class SideBarShapes extends ASideBar {
 	 */
 	public SideBarShapes(ActionListener e) {
 		super(e);
+	}
+
+	/**
+	 * Gets the name of a shape as string.
+	 *
+	 * @return string name of shape
+	 */
+	public String getShape() {
+		return SideBarShapes.cbPresets.getSelectedItem().toString();
 	}
 
 	@Override
@@ -79,15 +88,6 @@ public class SideBarShapes extends ASideBar {
 		super.setHeight(200);
 		super.setColor(Color.decode("#CCF0CC"));
 		super.setBGColor(Color.BLACK);
-	}
-
-	/**
-	 * Gets the name of a shape as string.
-	 *
-	 * @return string name of shape
-	 */
-	public String getShape() {
-		return SideBarShapes.cbPresets.getSelectedItem().toString();
 	}
 
 }

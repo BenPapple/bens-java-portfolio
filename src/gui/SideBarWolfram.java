@@ -51,6 +51,63 @@ public class SideBarWolfram extends ASideBar implements ActionListener {
 		super(e);
 	}
 
+	/**
+	 * Calculate Wolfram rule from 8 checkboxes representing 8bits.
+	 */
+	public void actionPerformed(ActionEvent e) {
+		rule = 0;
+		if (cb7.isSelected()) {
+			rule += 1 * 1;
+		}
+		if (cb6.isSelected()) {
+			rule += 1 * 2;
+		}
+		if (cb5.isSelected()) {
+			rule += 1 * 4;
+		}
+		if (cb4.isSelected()) {
+			rule += 1 * 8;
+		}
+		if (cb3.isSelected()) {
+			rule += 1 * 16;
+		}
+		if (cb2.isSelected()) {
+			rule += 1 * 32;
+		}
+		if (cb1.isSelected()) {
+			rule += 1 * 64;
+		}
+		if (cb0.isSelected()) {
+			rule += 1 * 128;
+		}
+		lblRule.setText("Rule " + rule);
+	}
+
+	/**
+	 * Perform click on button to calculate Wolfram rule on generator creation.
+	 */
+	public void clickRules() {
+		cb0.doClick();
+	}
+
+	/**
+	 * Gets randomness as string from user input.
+	 *
+	 * @return string of randomness user input
+	 */
+	public String getRandomness() {
+		return tfRandomness1.getText();
+	}
+
+	/**
+	 * Returns user input speed value(pause between screen updates) as int.
+	 *
+	 * @return int of speed value
+	 */
+	public int getSpeed() {
+		return (int) sliderSpeed1.getValue();
+	}
+
 	@Override
 	public JPanel initGeneratorPnl() {
 
@@ -146,60 +203,6 @@ public class SideBarWolfram extends ASideBar implements ActionListener {
 
 	}
 
-	@Override
-	public void setStdValues() {
-		super.setLblWidthText("Enter Pixel Width:");
-		super.setLblHeightText("Enter Pixel Height");
-		lblRandomness1.setText("Initial randomness:");
-		lblRule.setText("Rule " + rule);
-		cbEdgeWrapAround1.setSelected(true);
-		sliderSpeed1.setMinimum(0);
-		sliderSpeed1.setMaximum(500);
-		sliderSpeed1.setMajorTickSpacing(100);
-		sliderSpeed1.setMinorTickSpacing(50);
-		sliderSpeed1.createStandardLabels(50);
-		sliderSpeed1.setPaintTicks(true);
-		sliderSpeed1.setPaintLabels(true);
-		sliderSpeed1.setValue(0);
-		sliderSpeed1.setPreferredSize(new Dimension(150, 80));
-		// taDescription.setPreferredSize(new Dimension(310, 150));
-		super.setTaDescriptionText("<b>Wolfram Cellular Automaton</b>"
-				+ "<br><br>"
-				+ "Implements Stephen Wolfram's cellular automaton<br> with all 256 rules." );
-
-		super.setWidth(850);
-		super.setHeight(450);
-		super.setColor(Color.decode("#9999FF"));
-		super.setBGColor(Color.BLACK);
-	}
-
-	/**
-	 * Returns user input speed value(pause between screen updates) as int.
-	 *
-	 * @return int of speed value
-	 */
-	public int getSpeed() {
-		return (int) sliderSpeed1.getValue();
-	}
-
-	/**
-	 * True if cellular automaton calculations should calculate edge cases.
-	 *
-	 * @return true if selected
-	 */
-	public Boolean isEdgeWrapAround() {
-		return cbEdgeWrapAround1.isSelected();
-	}
-
-	/**
-	 * Gets randomness as string from user input.
-	 *
-	 * @return string of randomness user input
-	 */
-	public String getRandomness() {
-		return tfRandomness1.getText();
-	}
-
 	/**
 	 * Determines when neighbors are 111 if it means dead/false or alive/true.
 	 *
@@ -273,42 +276,39 @@ public class SideBarWolfram extends ASideBar implements ActionListener {
 	}
 
 	/**
-	 * Perform click on button to calculate Wolfram rule on generator creation.
+	 * True if cellular automaton calculations should calculate edge cases.
+	 *
+	 * @return true if selected
 	 */
-	public void clickRules() {
-		cb0.doClick();
+	public Boolean isEdgeWrapAround() {
+		return cbEdgeWrapAround1.isSelected();
 	}
 
-	/**
-	 * Calculate Wolfram rule from 8 checkboxes representing 8bits.
-	 */
-	public void actionPerformed(ActionEvent e) {
-		rule = 0;
-		if (cb7.isSelected()) {
-			rule += 1 * 1;
-		}
-		if (cb6.isSelected()) {
-			rule += 1 * 2;
-		}
-		if (cb5.isSelected()) {
-			rule += 1 * 4;
-		}
-		if (cb4.isSelected()) {
-			rule += 1 * 8;
-		}
-		if (cb3.isSelected()) {
-			rule += 1 * 16;
-		}
-		if (cb2.isSelected()) {
-			rule += 1 * 32;
-		}
-		if (cb1.isSelected()) {
-			rule += 1 * 64;
-		}
-		if (cb0.isSelected()) {
-			rule += 1 * 128;
-		}
+	@Override
+	public void setStdValues() {
+		super.setLblWidthText("Enter Pixel Width:");
+		super.setLblHeightText("Enter Pixel Height");
+		lblRandomness1.setText("Initial randomness:");
 		lblRule.setText("Rule " + rule);
+		cbEdgeWrapAround1.setSelected(true);
+		sliderSpeed1.setMinimum(0);
+		sliderSpeed1.setMaximum(500);
+		sliderSpeed1.setMajorTickSpacing(100);
+		sliderSpeed1.setMinorTickSpacing(50);
+		sliderSpeed1.createStandardLabels(50);
+		sliderSpeed1.setPaintTicks(true);
+		sliderSpeed1.setPaintLabels(true);
+		sliderSpeed1.setValue(0);
+		sliderSpeed1.setPreferredSize(new Dimension(150, 80));
+		// taDescription.setPreferredSize(new Dimension(310, 150));
+		super.setTaDescriptionText("<b>Wolfram Cellular Automaton</b>"
+				+ "<br><br>"
+				+ "Implements Stephen Wolfram's cellular automaton<br> with all 256 rules.");
+
+		super.setWidth(850);
+		super.setHeight(450);
+		super.setColor(Color.decode("#9999FF"));
+		super.setBGColor(Color.BLACK);
 	}
 
 }

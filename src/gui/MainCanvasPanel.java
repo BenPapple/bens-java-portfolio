@@ -27,18 +27,6 @@ public class MainCanvasPanel extends JPanel {
 	}
 
 	/**
-	 * Draw mainCanvas with input mainCanvas.
-	 * 
-	 *
-	 * @param inGraphics2D new mainCanvas to display
-	 */
-	public void setImage(BufferedImage inGraphics2D) {
-		this.setSize(inGraphics2D.getWidth(), inGraphics2D.getHeight());
-		this.mainCanvas = inGraphics2D;
-		super.repaint();
-	}
-
-	/**
 	 * Get mainCanvas JPanel.
 	 *
 	 * @return mainCanvas main Panel
@@ -58,5 +46,17 @@ public class MainCanvasPanel extends JPanel {
 		if (mainCanvas != null) {
 			g.drawImage(mainCanvas, 0, 0, mainCanvas.getWidth(), mainCanvas.getHeight(), null);
 		}
+	}
+
+	/**
+	 * Draw mainCanvas with input mainCanvas.
+	 * 
+	 *
+	 * @param inGraphics2D new mainCanvas to display
+	 */
+	public void setImage(BufferedImage inGraphics2D) {
+		this.setSize(inGraphics2D.getWidth(), inGraphics2D.getHeight());
+		this.mainCanvas = inGraphics2D;
+		super.repaint();
 	}
 }

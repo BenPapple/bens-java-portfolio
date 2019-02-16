@@ -3,15 +3,12 @@ package generator;
 import data.GlobalSettings;
 import gui.MainCanvasPanel;
 import gui.SideBarNaSch;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ThreadLocalRandom;
-
-import javax.swing.JPanel;
 
 /**
  * Implements cellular automaton by Stephen Wolfram with all 256 rules.
@@ -32,13 +29,12 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 	 * @param MainCanvas Inject MainCanvasPanel
 	 * @param name Name for this generator
 	 */
-	public NagelSchreckenberg(MainCanvasPanel MainCanvas, String name) {
-		this.generatorName = name;
-		this.myMnemonicKey = 'N';
-		this.myCanvas = MainCanvas;
-		this.PanelSidebar = new JPanel();
-		this.generatorDescr = "Nagel-Schreckenberg";
-		this.generatorType = GlobalSettings.GeneratorType.CELLULAR;
+	public NagelSchreckenberg(MainCanvasPanel mainCanvas, String name) {
+		this.setName(name);
+		this.setMnemonicChar('N');
+		this.setMainCanvas(mainCanvas);
+		initSideBarPanel();
+		this.setGenType(GlobalSettings.GeneratorType.CELLULAR);
 
 		guiSideBar = new SideBarNaSch(new ActionListener() {
 			@Override
@@ -51,100 +47,8 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 	}
 
 	@Override
-	public void run() {
-		// check input double range
-		try {
-			if (Double.parseDouble(guiSideBar.getRandomness()) >= 0.0
-					&& Double.parseDouble(guiSideBar.getRandomness()) <= 1.0
-					&& Double.parseDouble(guiSideBar.getBrakeRandomness()) >= 0.0
-					&& Double.parseDouble(guiSideBar.getBrakeRandomness()) <= 1.0) {
-				startCalcTime();
-				updateStatus(IGenerator.Status.CALCULATING);
-				guiSideBar.setButtonsCalculating();
-				init2DField();
-
-				MAXFIELDPIXEL = guiSideBar.getSpeed();
-
-				while (!guiSideBar.isStopped()) {
-
-					try {
-						// Thread.sleep(guiSideBar.getSpeed());
-					} catch (Exception e) {
-
-					}
-
-					updateScreenPanel();
-
-					if (currentRow < GridWorld[0].length) {
-						nextGenField();
-					} else {
-						break;
-					}
-
-					while (guiSideBar.isPaused()) {
-						updateStatus(IGenerator.Status.PAUSED);
-						if (guiSideBar.isStopped()) {
-							break;
-						}
-					}
-					updateStatus(IGenerator.Status.CALCULATING);
-
-				}
-
-				guiSideBar.setButtonsReady();
-				endCalcTime();
-				updateStatus(IGenerator.Status.FINISHED);
-			} else {
-				showWarning("Randomness has to be in 0.0 to 1.0 range.");
-			}
-		} catch (Exception ne) {
-			showWarning("Randomness has to be in 0.0 to 1.0 range.");
-		}
-	}
-
-	/**
-	 * Draw dead/alive values from array into color squares on myCanvas.
-	 */
-	private void updateScreenPanel() {
-		BufferedImage image = new BufferedImage((guiSideBar.getWidth() * (MAXFIELDPIXEL + pixelGap)),
-				(guiSideBar.getHeight() * (MAXFIELDPIXEL + pixelGap)), BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g2d = image.createGraphics();
-		g2d.setColor(guiSideBar.getColor());
-		for (int y = 0; y < GridWorld[0].length; y++) {
-			for (int x = 0; x < GridWorld.length; x++) {
-
-				switch (GridWorld[x][y]) {
-
-				case 0:
-					g2d.setColor(Color.RED);
-					break;
-				case 1:
-					g2d.setColor(Color.ORANGE);
-					break;
-				case 2:
-					g2d.setColor(Color.YELLOW);
-					break;
-				case 3:
-					g2d.setColor(Color.GREEN);
-					break;
-				case 4:
-					g2d.setColor(Color.BLUE);
-					break;
-				case 5:
-					g2d.setColor(new Color(102, 0, 153)); // Purple
-					break;
-				case 6:
-					g2d.setColor(guiSideBar.getBGColor());
-					break;
-				}
-
-				g2d.fillRect((MAXFIELDPIXEL + pixelGap) * x, (MAXFIELDPIXEL + pixelGap) * y, MAXFIELDPIXEL,
-						MAXFIELDPIXEL);
-
-			}
-		}
-		g2d.dispose();
-		this.myCanvas.setImage(image);
+	public void createSideBarGUI() {
+		this.addToSidebar(guiSideBar.getSideBarPnl());
 	}
 
 	@Override
@@ -191,7 +95,7 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 			}
 
 		} catch (NumberFormatException ne) {
-			errorMsg = "InputError";
+			setErrorMsgText("InputError");
 			updateStatus(IGenerator.Status.ERROR);
 			// guiSideBar.setButtonsReady();
 
@@ -246,14 +150,106 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 	}
 
 	@Override
-	public void createSideBarGUI() {
-		PanelSidebar.add(guiSideBar.getSideBarPnl(), BorderLayout.CENTER);
+	public void run() {
+		// check input double range
+		try {
+			if (Double.parseDouble(guiSideBar.getRandomness()) >= 0.0
+					&& Double.parseDouble(guiSideBar.getRandomness()) <= 1.0
+					&& Double.parseDouble(guiSideBar.getBrakeRandomness()) >= 0.0
+					&& Double.parseDouble(guiSideBar.getBrakeRandomness()) <= 1.0) {
+				startCalcTime();
+				updateStatus(IGenerator.Status.CALCULATING);
+				guiSideBar.setButtonsCalculating();
+				init2DField();
+
+				MAXFIELDPIXEL = guiSideBar.getSpeed();
+
+				while (!guiSideBar.isStopped()) {
+
+					try {
+						// Thread.sleep(guiSideBar.getSpeed());
+					} catch (Exception e) {
+
+					}
+
+					updateScreenPanel();
+
+					if (currentRow < GridWorld[0].length) {
+						nextGenField();
+					} else {
+						break;
+					}
+
+					while (guiSideBar.isPaused()) {
+						updateStatus(IGenerator.Status.PAUSED);
+						if (guiSideBar.isStopped()) {
+							break;
+						}
+					}
+					updateStatus(IGenerator.Status.CALCULATING);
+
+				}
+
+				guiSideBar.setButtonsReady();
+				endCalcTime();
+				updateStatus(IGenerator.Status.FINISHED);
+			} else {
+				showWarning("Randomness has to be in 0.0 to 1.0 range.");
+			}
+		} catch (Exception ne) {
+			showWarning("Randomness has to be in 0.0 to 1.0 range.");
+		}
 	}
 
 	@Override
 	public void stopGenerator() {
 		guiSideBar.setStopped();
-		this.status = IGenerator.Status.STOP;
+		setGenStatus(IGenerator.Status.STOP);
+	}
+
+	/**
+	 * Draw dead/alive values from array into color squares on myCanvas.
+	 */
+	private void updateScreenPanel() {
+		BufferedImage image = new BufferedImage((guiSideBar.getWidth() * (MAXFIELDPIXEL + pixelGap)),
+				(guiSideBar.getHeight() * (MAXFIELDPIXEL + pixelGap)), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2d = image.createGraphics();
+		g2d.setColor(guiSideBar.getColor());
+		for (int y = 0; y < GridWorld[0].length; y++) {
+			for (int x = 0; x < GridWorld.length; x++) {
+
+				switch (GridWorld[x][y]) {
+
+				case 0:
+					g2d.setColor(Color.RED);
+					break;
+				case 1:
+					g2d.setColor(Color.ORANGE);
+					break;
+				case 2:
+					g2d.setColor(Color.YELLOW);
+					break;
+				case 3:
+					g2d.setColor(Color.GREEN);
+					break;
+				case 4:
+					g2d.setColor(Color.BLUE);
+					break;
+				case 5:
+					g2d.setColor(new Color(102, 0, 153)); // Purple
+					break;
+				case 6:
+					g2d.setColor(guiSideBar.getBGColor());
+					break;
+				}
+
+				g2d.fillRect((MAXFIELDPIXEL + pixelGap) * x, (MAXFIELDPIXEL + pixelGap) * y, MAXFIELDPIXEL,
+						MAXFIELDPIXEL);
+
+			}
+		}
+		g2d.dispose();
+		this.setMainCanvasToImage(image);
 	}
 
 }

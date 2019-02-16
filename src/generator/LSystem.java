@@ -3,7 +3,6 @@ package generator;
 import data.GlobalSettings;
 import gui.MainCanvasPanel;
 import gui.SideBarLSystem;
-import java.awt.BorderLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Stack;
-import javax.swing.JPanel;
 
 /**
  * Lindenmayer system
@@ -52,13 +50,12 @@ public class LSystem extends AGenerator {
 	 * @param name Name of this generator
 	 */
 	public LSystem(MainCanvasPanel mainCanvas, String name) {
-		this.generatorName = name;
-		this.myMnemonicKey = 'L';
-		this.myCanvas = mainCanvas;
-		this.PanelSidebar = new JPanel();
-		this.generatorDescr = "Lindenmayer system";
+		this.setName(name);
+		this.setMnemonicChar('L');
+		this.setMainCanvas(mainCanvas);
+		initSideBarPanel();
 		new Random();
-		this.generatorType = GlobalSettings.GeneratorType.LSYSTEM;
+		this.setGenType(GlobalSettings.GeneratorType.LSYSTEM);
 
 		guiSideBar = new SideBarLSystem(new ActionListener() {
 			@Override
@@ -69,149 +66,52 @@ public class LSystem extends AGenerator {
 		createSideBarGUI();
 	}
 
-	@Override
-	public void run() {
-		startCalcTime();
-		updateStatus(IGenerator.Status.CALCULATING);
-		guiSideBar.setButtonsCalculating();
-
-		formatedString = "";
-		formulaMap.clear();
-		try {
-
-			if (isInputCorrect()) {
-				formatedString = buildString();
-				while (!guiSideBar.isStopped()) {
-
-					updateScreenPanel();
-
-					guiSideBar.setStopped();
-
-					while (guiSideBar.isPaused()) {
-						updateStatus(IGenerator.Status.PAUSED);
-						if (guiSideBar.isStopped()) {
-							break;
-						}
-					}
-					updateStatus(IGenerator.Status.CALCULATING);
-				}
-			}
-
-			guiSideBar.setButtonsReady();
-			endCalcTime();
-			updateStatus(IGenerator.Status.FINISHED);
-
-		} catch (OutOfMemoryError e) {
-			errorMsg = "OutOfMemory";
-			updateStatus(IGenerator.Status.ERROR);
-			guiSideBar.setButtonsReady();
-		}
-
-	}
-
 	/**
-	 * Check all the texfields if they are correctly formatted and return true
-	 * if they are.
-	 * 
-	 * @return true when input is ok
-	 */
-	private boolean isInputCorrect() {
-
-		Boolean abcCorrect = false;
-		Boolean rulesCorrect = false;
-		Boolean rulesBrackets = true;
-
-		// Proof even numbers and correct order of [ and ]
-		String[] splitRules = guiSideBar.getProductionRules().split("\\),");
-		for (int i = 0; i < splitRules.length; i++) {
-			int splitOpen = splitRules[i].split("\\[", -1).length - 1;
-			int splitClose = splitRules[i].split("\\]", -1).length - 1;
-			if (splitOpen != splitClose) {
-				rulesBrackets = false;
-				showWarning("Production rules wrong bracket number. Must be even.");
-				break;
-			}
-			int count = 0;
-			for (int j = 0; j < splitRules[i].length(); j++) {
-
-				if (splitRules[i].charAt(j) == '[') {
-					count += 1;
-				}
-				if (splitRules[i].charAt(j) == ']') {
-					count -= 1;
-				}
-				if (count < 0) {
-					rulesBrackets = false;
-					showWarning("Production rules wrong bracket order.");
-					break;
-				}
-
-			}
-
-		}
-
-		// check patterns
-		String inTfCompare = guiSideBar.getStartingSequence();
-		String regexPattern = "[A-Z+-]*";
-		boolean matchesRegex = inTfCompare.matches(regexPattern);
-		if (matchesRegex) {
-			abcCorrect = true;
-		} else {
-			showWarning("Starting Sequence wrong."
-					+ "\nA-Z,+,- allowed.");
-		}
-
-		inTfCompare = guiSideBar.getProductionRules();
-		regexPattern = "(\\([A-Z],[A-Z\\+\\-\\[\\]]*\\),{0,1})*";
-		matchesRegex = inTfCompare.matches(regexPattern);
-		if (matchesRegex) {
-			rulesCorrect = true;
-		} else {
-			showWarning("Production rules wrong."
-					+ "\n(A,AAA+-[]),(B,CDF+-[]) allowed.");
-		}
-
-		// proof every letter has only one rule
-		for (String itemInList : ALPHABETLIST) {
-			String compareLetter = "\\(";
-			compareLetter += itemInList;
-			compareLetter += ",";
-			int splitLetter = guiSideBar.getProductionRules().split(compareLetter, -1).length - 1;
-			if (splitLetter > 1) {
-				rulesCorrect = false;
-				showWarning("Production rules wrong."
-						+ "\nA letter can't have more than 1 rule.");
-				break;
-			}
-		}
-
-		if (abcCorrect & rulesCorrect & rulesBrackets) {
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-
-	/**
-	 * Draws a L-system onto mainCanvas with a turtle drawer.
+	 * Helper Method to build the long string for the drawing turtle method.
 	 *
+	 * @return String for the drawing turtle
 	 */
-	private void updateScreenPanel() {
+	private String buildString() {
+		String tempStartingSeq = guiSideBar.getStartingSequence();
+		tempStartingSeq = tempStartingSeq.replace(",", "");
+		int tempGenerations = guiSideBar.getGenerations();
+		StringBuilder b = new StringBuilder();
+		b.append(tempStartingSeq);
 
-		BufferedImage image = new BufferedImage(guiSideBar.getWidth(), guiSideBar.getHeight(),
-				BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g2d = image.createGraphics();
-		g2d.setColor(guiSideBar.getBGColor());
-		g2d.fillRect(0, 0, guiSideBar.getWidth(), guiSideBar.getHeight());
-		g2d.setColor(guiSideBar.getColor());
+		// Split ProductionRules into corresponding variable forumula A to Z
+		fillFormulaStrings();
 
-		drawLinesFromProductionString(g2d, true);
+		// create string usable by drawing turtle
+		for (int i = 0; i < tempGenerations; i++) {
+			tempStartingSeq = b.toString();
+			b = new StringBuilder();
+			for (int j = 0; j < tempStartingSeq.length(); j++) {
 
-		drawLinesFromProductionString(g2d, false);
+				for (String itemInList : ALPHABETLIST) {
+					if (tempStartingSeq.charAt(j) == itemInList.charAt(0)) {
+						b.append(formulaMap.get(itemInList));
+					}
+				}
+				if (tempStartingSeq.charAt(j) == '+') {
+					b.append("+");
+				}
+				if (tempStartingSeq.charAt(j) == '-') {
+					b.append("-");
+				}
+				if (tempStartingSeq.charAt(j) == '[') {
+					b.append("[");
+				}
+				if (tempStartingSeq.charAt(j) == ']') {
+					b.append("]");
+				}
+			}
+		}
+		return b.toString();
+	}
 
-		g2d.dispose();
-		this.myCanvas.setImage(image);
+	@Override
+	public void createSideBarGUI() {
+		this.addToSidebar(guiSideBar.getSideBarPnl());
 	}
 
 	/**
@@ -313,49 +213,6 @@ public class LSystem extends AGenerator {
 	}
 
 	/**
-	 * Helper Method to build the long string for the drawing turtle method.
-	 *
-	 * @return String for the drawing turtle
-	 */
-	private String buildString() {
-		String tempStartingSeq = guiSideBar.getStartingSequence();
-		tempStartingSeq = tempStartingSeq.replace(",", "");
-		int tempGenerations = guiSideBar.getGenerations();
-		StringBuilder b = new StringBuilder();
-		b.append(tempStartingSeq);
-
-		// Split ProductionRules into corresponding variable forumula A to Z
-		fillFormulaStrings();
-
-		// create string usable by drawing turtle
-		for (int i = 0; i < tempGenerations; i++) {
-			tempStartingSeq = b.toString();
-			b = new StringBuilder();
-			for (int j = 0; j < tempStartingSeq.length(); j++) {
-
-				for (String itemInList : ALPHABETLIST) {
-					if (tempStartingSeq.charAt(j) == itemInList.charAt(0)) {
-						b.append(formulaMap.get(itemInList));
-					}
-				}
-				if (tempStartingSeq.charAt(j) == '+') {
-					b.append("+");
-				}
-				if (tempStartingSeq.charAt(j) == '-') {
-					b.append("-");
-				}
-				if (tempStartingSeq.charAt(j) == '[') {
-					b.append("[");
-				}
-				if (tempStartingSeq.charAt(j) == ']') {
-					b.append("]");
-				}
-			}
-		}
-		return b.toString();
-	}
-
-	/**
 	 * Helper Method to parse formulas into hashmap with the corresponding
 	 * values from the textfield tfProductionRules.
 	 */
@@ -394,15 +251,155 @@ public class LSystem extends AGenerator {
 
 	}
 
+	/**
+	 * Check all the texfields if they are correctly formatted and return true
+	 * if they are.
+	 * 
+	 * @return true when input is ok
+	 */
+	private boolean isInputCorrect() {
+
+		Boolean abcCorrect = false;
+		Boolean rulesCorrect = false;
+		Boolean rulesBrackets = true;
+
+		// Proof even numbers and correct order of [ and ]
+		String[] splitRules = guiSideBar.getProductionRules().split("\\),");
+		for (int i = 0; i < splitRules.length; i++) {
+			int splitOpen = splitRules[i].split("\\[", -1).length - 1;
+			int splitClose = splitRules[i].split("\\]", -1).length - 1;
+			if (splitOpen != splitClose) {
+				rulesBrackets = false;
+				showWarning("Production rules wrong bracket number. Must be even.");
+				break;
+			}
+			int count = 0;
+			for (int j = 0; j < splitRules[i].length(); j++) {
+
+				if (splitRules[i].charAt(j) == '[') {
+					count += 1;
+				}
+				if (splitRules[i].charAt(j) == ']') {
+					count -= 1;
+				}
+				if (count < 0) {
+					rulesBrackets = false;
+					showWarning("Production rules wrong bracket order.");
+					break;
+				}
+
+			}
+
+		}
+
+		// check patterns
+		String inTfCompare = guiSideBar.getStartingSequence();
+		String regexPattern = "[A-Z+-]*";
+		boolean matchesRegex = inTfCompare.matches(regexPattern);
+		if (matchesRegex) {
+			abcCorrect = true;
+		} else {
+			showWarning("Starting Sequence wrong."
+					+ "\nA-Z,+,- allowed.");
+		}
+
+		inTfCompare = guiSideBar.getProductionRules();
+		regexPattern = "(\\([A-Z],[A-Z\\+\\-\\[\\]]*\\),{0,1})*";
+		matchesRegex = inTfCompare.matches(regexPattern);
+		if (matchesRegex) {
+			rulesCorrect = true;
+		} else {
+			showWarning("Production rules wrong."
+					+ "\n(A,AAA+-[]),(B,CDF+-[]) allowed.");
+		}
+
+		// proof every letter has only one rule
+		for (String itemInList : ALPHABETLIST) {
+			String compareLetter = "\\(";
+			compareLetter += itemInList;
+			compareLetter += ",";
+			int splitLetter = guiSideBar.getProductionRules().split(compareLetter, -1).length - 1;
+			if (splitLetter > 1) {
+				rulesCorrect = false;
+				showWarning("Production rules wrong."
+						+ "\nA letter can't have more than 1 rule.");
+				break;
+			}
+		}
+
+		if (abcCorrect & rulesCorrect & rulesBrackets) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 	@Override
-	public void createSideBarGUI() {
-		PanelSidebar.add(guiSideBar.getSideBarPnl(), BorderLayout.CENTER);
+	public void run() {
+		startCalcTime();
+		updateStatus(IGenerator.Status.CALCULATING);
+		guiSideBar.setButtonsCalculating();
+
+		formatedString = "";
+		formulaMap.clear();
+		try {
+
+			if (isInputCorrect()) {
+				formatedString = buildString();
+				while (!guiSideBar.isStopped()) {
+
+					updateScreenPanel();
+
+					guiSideBar.setStopped();
+
+					while (guiSideBar.isPaused()) {
+						updateStatus(IGenerator.Status.PAUSED);
+						if (guiSideBar.isStopped()) {
+							break;
+						}
+					}
+					updateStatus(IGenerator.Status.CALCULATING);
+				}
+			}
+
+			guiSideBar.setButtonsReady();
+			endCalcTime();
+			updateStatus(IGenerator.Status.FINISHED);
+
+		} catch (OutOfMemoryError e) {
+			setErrorMsgText("OutOfMemory");
+			updateStatus(IGenerator.Status.ERROR);
+			guiSideBar.setButtonsReady();
+		}
+
 	}
 
 	@Override
 	public void stopGenerator() {
 		guiSideBar.setStopped();
-		this.status = IGenerator.Status.STOP;
+		setGenStatus(IGenerator.Status.STOP);
+	}
+
+	/**
+	 * Draws a L-system onto mainCanvas with a turtle drawer.
+	 *
+	 */
+	private void updateScreenPanel() {
+
+		BufferedImage image = new BufferedImage(guiSideBar.getWidth(), guiSideBar.getHeight(),
+				BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2d = image.createGraphics();
+		g2d.setColor(guiSideBar.getBGColor());
+		g2d.fillRect(0, 0, guiSideBar.getWidth(), guiSideBar.getHeight());
+		g2d.setColor(guiSideBar.getColor());
+
+		drawLinesFromProductionString(g2d, true);
+
+		drawLinesFromProductionString(g2d, false);
+
+		g2d.dispose();
+		this.setMainCanvasToImage(image);
 	}
 
 }

@@ -3,8 +3,7 @@
 *************************
 
 - - LSystem Alphabet textfield unnecessary
-- - Update all html description text of generators
-- - change protected vars in abstract to private with getter/setter
+- - Update all html description text of generators with helpful howto
 
 -f- RTree choose math formula in gui
 -f- class with math formulas for RandomTreeArt
@@ -17,6 +16,7 @@
 -f- custom color panel
 - - MVC split MC further
 /////////////////DONE//////////////////////////////////
++ - change protected vars in abstract to private with getter/setter
 +b- LSystem What if letter occurs more than 1 time rules?
 +b- LSystem check "[]" order and even number for productionRules
 + - Hashmap L-system

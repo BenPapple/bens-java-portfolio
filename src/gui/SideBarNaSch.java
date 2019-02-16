@@ -38,6 +38,33 @@ public class SideBarNaSch extends ASideBar {
 		super(e);
 	}
 
+	/**
+	 * Gets brake randomness as string from user input.
+	 *
+	 * @return string of randomness user input
+	 */
+	public String getBrakeRandomness() {
+		return tfBrakeRandomness.getText();
+	}
+
+	/**
+	 * Gets spawn randomness as string from user input.
+	 *
+	 * @return string of randomness user input
+	 */
+	public String getRandomness() {
+		return tfSpawnRand.getText();
+	}
+
+	/**
+	 * Returns user input speed value(pause between screen updates) as int.
+	 *
+	 * @return int of speed value
+	 */
+	public int getSpeed() {
+		return (int) sliderSpeed1.getValue();
+	}
+
 	@Override
 	public JPanel initGeneratorPnl() {
 
@@ -118,33 +145,6 @@ public class SideBarNaSch extends ASideBar {
 		super.setlblColorVisible(false);
 		super.setColor(Color.decode("#9999FF"));
 		super.setBGColor(Color.BLACK);
-	}
-
-	/**
-	 * Returns user input speed value(pause between screen updates) as int.
-	 *
-	 * @return int of speed value
-	 */
-	public int getSpeed() {
-		return (int) sliderSpeed1.getValue();
-	}
-
-	/**
-	 * Gets spawn randomness as string from user input.
-	 *
-	 * @return string of randomness user input
-	 */
-	public String getRandomness() {
-		return tfSpawnRand.getText();
-	}
-
-	/**
-	 * Gets brake randomness as string from user input.
-	 *
-	 * @return string of randomness user input
-	 */
-	public String getBrakeRandomness() {
-		return tfBrakeRandomness.getText();
 	}
 
 }

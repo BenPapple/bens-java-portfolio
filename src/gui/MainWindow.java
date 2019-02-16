@@ -54,6 +54,25 @@ public class MainWindow extends JFrame implements Observer {
 	}
 
 	/**
+	 * Stops all generators.
+	 */
+	private void generalStop() {
+		generators.forEach((generator) -> {
+			generator.stopGenerator();
+		});
+	}
+
+	/**
+	 * Returns the center panel as an image. Helper method for
+	 * saveMenuItemClicked to save an image to a drive.
+	 *
+	 * @return a buffered image of the center panel
+	 */
+	private BufferedImage GetBufferedImageFromCenterPanel() {
+		return centerImagePanel.getImage();
+	}
+
+	/**
 	 * Initialize GUI with menu bar, panels status and center.
 	 *
 	 */
@@ -153,7 +172,7 @@ public class MainWindow extends JFrame implements Observer {
 		// Add Left Control Panel
 		JPanel cardContainer = new JPanel();
 		cardContainer.setLayout(card);
-		//siddebar width
+		// siddebar width
 		cardContainer.setPreferredSize(new Dimension(350, this.getHeight()));
 		cardContainer.setBorder(new BevelBorder(BevelBorder.LOWERED));
 
@@ -269,13 +288,43 @@ public class MainWindow extends JFrame implements Observer {
 	}
 
 	/**
-	 * Returns the center panel as an image. Helper method for
-	 * saveMenuItemClicked to save an image to a drive.
-	 *
-	 * @return a buffered image of the center panel
+	 * Show credits/help pop-up window.
 	 */
-	private BufferedImage GetBufferedImageFromCenterPanel() {
-		return centerImagePanel.getImage();
+	private void showDialogAbout() {
+
+		JDialog meinJDialog = new JDialog();
+		meinJDialog.setLayout(new GridBagLayout());
+		meinJDialog.setTitle("About Ben's Portfolio");
+		meinJDialog.setSize(400, 250);
+		meinJDialog.setModal(true);
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.insets = new Insets(10, 10, 10, 10);
+
+		JTextPane taAbout = new JTextPane();
+		taAbout.setContentType("text/html");
+		taAbout.setText("\n <b>Version 19.037</b> " + "<br><br>Author: BenGe47" + "<br>E-Mail: @googlemail.com"
+				+ "<br><br>Copyright 2019");
+		taAbout.setOpaque(false);
+		taAbout.setEditable(false);
+		meinJDialog.add(taAbout, gbc);
+
+		JButton btnClose = new JButton("OK");
+		btnClose.setPreferredSize(new Dimension(60, 25));
+
+		btnClose.addActionListener((ActionEvent e) -> {
+			meinJDialog.dispose();
+
+		});
+		gbc.insets = new Insets(10, 10, 10, 10);
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		meinJDialog.add(btnClose, gbc);
+
+		meinJDialog.setLocationRelativeTo(null);
+		meinJDialog.setVisible(true);
 	}
 
 	/**
@@ -332,54 +381,5 @@ public class MainWindow extends JFrame implements Observer {
 			thread.start();
 		}
 
-	}
-
-	/**
-	 * Stops all generators.
-	 */
-	private void generalStop() {
-		generators.forEach((generator) -> {
-			generator.stopGenerator();
-		});
-	}
-
-	/**
-	 * Show credits/help pop-up window.
-	 */
-	private void showDialogAbout() {
-
-		JDialog meinJDialog = new JDialog();
-		meinJDialog.setLayout(new GridBagLayout());
-		meinJDialog.setTitle("About Ben's Portfolio");
-		meinJDialog.setSize(400, 250);
-		meinJDialog.setModal(true);
-
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		gbc.insets = new Insets(10, 10, 10, 10);
-
-		JTextPane taAbout = new JTextPane();
-		taAbout.setContentType("text/html");
-		taAbout.setText("\n <b>Version 19.037</b> " + "<br><br>Author: BenGe47" + "<br>E-Mail: @googlemail.com"
-				+ "<br><br>Copyright 2019");
-		taAbout.setOpaque(false);
-		taAbout.setEditable(false);
-		meinJDialog.add(taAbout, gbc);
-
-		JButton btnClose = new JButton("OK");
-		btnClose.setPreferredSize(new Dimension(60, 25));
-
-		btnClose.addActionListener((ActionEvent e) -> {
-			meinJDialog.dispose();
-
-		});
-		gbc.insets = new Insets(10, 10, 10, 10);
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		meinJDialog.add(btnClose, gbc);
-
-		meinJDialog.setLocationRelativeTo(null);
-		meinJDialog.setVisible(true);
 	}
 }

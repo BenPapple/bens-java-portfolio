@@ -4,7 +4,6 @@ import data.GlobalSettings;
 import data.karyTree;
 import gui.MainCanvasPanel;
 import gui.SideBarRTree;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -20,8 +19,6 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JPanel;
-
 /**
  * Implements a random tree art generator by putting math formulas into a random
  * tree structure, this tree then calculates color values for xy coordinates.
@@ -31,7 +28,7 @@ import javax.swing.JPanel;
 public class RandomTreeArt extends AGenerator {
 	private Random mySeededRandom;
 	private int generatedSeed;
-	// private String myLoadedPath = "";
+	private karyTree myRandomTree;
 
 	/**
 	 * 
@@ -43,7 +40,7 @@ public class RandomTreeArt extends AGenerator {
 	 */
 	protected Random rand;
 
-	private karyTree myRandomTree;
+	
 	/**
 	 * 
 	 */
@@ -74,13 +71,12 @@ public class RandomTreeArt extends AGenerator {
 	 * @param name Name of this generator
 	 */
 	public RandomTreeArt(MainCanvasPanel mainCanvas, String name) {
-		this.generatorName = name;
-		this.myMnemonicKey = 'R';
-		this.myCanvas = mainCanvas;
-		this.PanelSidebar = new JPanel();
-		this.generatorDescr = "Lindenmayer system";
+		this.setName(name);
+		this.setMnemonicChar('R');
+		this.setMainCanvas(mainCanvas);
+		initSideBarPanel();
 		this.rand = new Random();
-		this.generatorType = GlobalSettings.GeneratorType.RTREE;
+		this.setGenType(GlobalSettings.GeneratorType.RTREE);
 
 		guiSideBar = new SideBarRTree(new ActionListener() {
 			@Override
@@ -95,73 +91,21 @@ public class RandomTreeArt extends AGenerator {
 		createSideBarGUI();
 	}
 
-	@Override
-	public void run() {
-		startCalcTime();
-		updateStatus(IGenerator.Status.CALCULATING);
-
-		// use user input seed
-		if (guiSideBar.usingFieldSeed()) {
-			// check if user input is integer range
-			try {
-				mySeededRandom = new Random(guiSideBar.getSeed());
-			} catch (Exception ne) {
-				showWarning("Randomness has to be in integer range. Now using random seed.");
-				// use random seed instead of user input one
-				generatedSeed = ThreadLocalRandom.current().nextInt(0, 2147483647);
-				guiSideBar.setSeedText(Integer.toString(generatedSeed));
-				mySeededRandom = new Random(generatedSeed);
-			}
-
-		} else {// use newly generated random seed
-			generatedSeed = ThreadLocalRandom.current().nextInt(0, 2147483647);
-			guiSideBar.setSeedText(Integer.toString(generatedSeed));
-			mySeededRandom = new Random(generatedSeed);
-		}
-
-		guiSideBar.setButtonsCalculating();
-
-		try {
-			Thread.sleep(50);
-
-			maxXPixel = guiSideBar.getWidth();
-			maxYPixel = guiSideBar.getHeight();
-
-			createRandomKaryTree();
-			updateScreenPanel();
-
-		} catch (OutOfMemoryError e) {
-			errorMsg = "OutOfMemory";
-			updateStatus(IGenerator.Status.ERROR);
-			guiSideBar.setButtonsReady();
-		} catch (InterruptedException ex) {
-			Logger.getLogger(RandomTreeArt.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		guiSideBar.setButtonsReady();
-		endCalcTime();
-		updateStatus(IGenerator.Status.FINISHED);
-
-	}
-
 	/**
-	 * Prepares and updates mainCanvas with calculated color value for each xy
-	 * coordinate.
+	 * Create kary tree with random formula in tree root, then call method to
+	 * fill tree.
 	 *
 	 */
-	private void updateScreenPanel() {
+	private void createRandomKaryTree() {
+		int treeDepth = guiSideBar.getGenerations();
+		String randomFormula = receiveRandomString(FormulaAll);
+		myRandomTree = new karyTree(randomFormula, null, null);
+		fillRandomTree(myRandomTree, treeDepth - 1);
+	}
 
-		BufferedImage image = new BufferedImage(guiSideBar.getWidth(), guiSideBar.getHeight(),
-				BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g2d = image.createGraphics();
-		g2d.setColor(new Color(0, 0, 0));
-		g2d.fillRect(0, 0, guiSideBar.getWidth(), guiSideBar.getHeight());
-		g2d.setColor(guiSideBar.getColor());
-
-		drawPicture(g2d);
-
-		g2d.dispose();
-		this.myCanvas.setImage(image);
+	@Override
+	public void createSideBarGUI() {
+		this.addToSidebar(guiSideBar.getSideBarPnl());
 	}
 
 	/**
@@ -268,6 +212,93 @@ public class RandomTreeArt extends AGenerator {
 	}
 
 	/**
+	 * Fill kary tree nodes with math formulas or make leave according to
+	 * root/node formula and input tree depth.
+	 *
+	 * @param inRoot Node which will be added to or becomes leave
+	 * @param inDepth tree depth from user input
+	 */
+	private void fillRandomTree(karyTree inRoot, int inDepth) {
+
+		karyTree child;
+		karyTree child2;
+
+		if (inDepth >= 0) {
+			String wahlFormel;
+
+			if (FormulaOneVar.contains(inRoot.getFormula()) && inDepth > 0) {
+				wahlFormel = receiveRandomString(FormulaAll);
+				child = new karyTree(wahlFormel, null, null);
+				inRoot.setBothChilds(child, null);
+
+				fillRandomTree(child, inDepth - 1);
+			} else if (FormulaOneVar.contains(inRoot.getFormula()) && inDepth == 0) {
+				wahlFormel = receiveRandomString(FormulaOneVar);
+				child = new karyTree(wahlFormel, null, null);
+				inRoot.setBothChilds(child, null);
+
+				fillRandomTree(child, inDepth - 1);
+			}
+
+			if (FormulaTwoVar.contains(inRoot.getFormula()) && inDepth > 0) {
+				wahlFormel = receiveRandomString(FormulaAll);
+				child = new karyTree(wahlFormel, null, null);
+
+				wahlFormel = receiveRandomString(FormulaAll);
+				child2 = new karyTree(wahlFormel, null, null);
+				inRoot.setBothChilds(child, child2);
+
+				fillRandomTree(child, inDepth - 1);
+				fillRandomTree(child2, inDepth - 1);
+			} else if (FormulaTwoVar.contains(inRoot.getFormula()) && inDepth == 0) {
+				wahlFormel = receiveRandomString(FormulaOneVar);
+
+				child = new karyTree(wahlFormel, null, null);
+				wahlFormel = receiveRandomString(FormulaOneVar);
+
+				child2 = new karyTree(wahlFormel, null, null);
+				inRoot.setBothChilds(child, child2);
+			}
+		}
+	}
+
+	@Override
+	public String getFilePath() {
+		// generate name for image with generator values to save into name
+		String seperator = "_";
+		StringBuilder outPath = new StringBuilder();
+		outPath.append("RTree_");
+		outPath.append("W");
+		outPath.append(guiSideBar.getWidth());
+		outPath.append(seperator);
+		outPath.append("H");
+		outPath.append(guiSideBar.getHeight());
+		outPath.append(seperator);
+		outPath.append("S");
+		outPath.append(guiSideBar.getSeed());
+		outPath.append(seperator);
+		outPath.append("G");
+		outPath.append(guiSideBar.getGenerations());
+		// outPath.append("]");
+		outPath.append(seperator);
+		outPath.append(".png");
+		return outPath.toString();
+	}
+
+	/**
+	 * Choose a random entry in a list and return.
+	 *
+	 * @param inList
+	 * @return String with one random formula
+	 */
+	private String receiveRandomString(List<String> inList) {
+		int randomNum;
+		randomNum = mySeededRandom.nextInt(inList.size());
+		String randomFormula = inList.get(randomNum);
+		return randomFormula;
+	}
+
+	/**
 	 * Calculation of pixel color by recursive RTree traversal.
 	 *
 	 * @param x x-pixel coordinate
@@ -360,114 +391,53 @@ public class RandomTreeArt extends AGenerator {
 
 	}
 
-	/**
-	 * Create kary tree with random formula in tree root, then call method to
-	 * fill tree.
-	 *
-	 */
-	private void createRandomKaryTree() {
-		int treeDepth = guiSideBar.getGenerations();
-		String randomFormula = receiveRandomString(FormulaAll);
-		myRandomTree = new karyTree(randomFormula, null, null);
-		fillRandomTree(myRandomTree, treeDepth - 1);
-	}
+	@Override
+	public void run() {
+		startCalcTime();
+		updateStatus(IGenerator.Status.CALCULATING);
 
-	/**
-	 * Fill kary tree nodes with math formulas or make leave according to
-	 * root/node formula and input tree depth.
-	 *
-	 * @param inRoot Node which will be added to or becomes leave
-	 * @param inDepth tree depth from user input
-	 */
-	private void fillRandomTree(karyTree inRoot, int inDepth) {
-
-		karyTree child;
-		karyTree child2;
-
-		if (inDepth >= 0) {
-			String wahlFormel;
-
-			if (FormulaOneVar.contains(inRoot.getFormula()) && inDepth > 0) {
-				wahlFormel = receiveRandomString(FormulaAll);
-				child = new karyTree(wahlFormel, null, null);
-				inRoot.setBothChilds(child, null);
-
-				fillRandomTree(child, inDepth - 1);
-			} else if (FormulaOneVar.contains(inRoot.getFormula()) && inDepth == 0) {
-				wahlFormel = receiveRandomString(FormulaOneVar);
-				child = new karyTree(wahlFormel, null, null);
-				inRoot.setBothChilds(child, null);
-
-				fillRandomTree(child, inDepth - 1);
+		// use user input seed
+		if (guiSideBar.usingFieldSeed()) {
+			// check if user input is integer range
+			try {
+				mySeededRandom = new Random(guiSideBar.getSeed());
+			} catch (Exception ne) {
+				showWarning("Randomness has to be in integer range. Now using random seed.");
+				// use random seed instead of user input one
+				generatedSeed = ThreadLocalRandom.current().nextInt(0, 2147483647);
+				guiSideBar.setSeedText(Integer.toString(generatedSeed));
+				mySeededRandom = new Random(generatedSeed);
 			}
 
-			if (FormulaTwoVar.contains(inRoot.getFormula()) && inDepth > 0) {
-				wahlFormel = receiveRandomString(FormulaAll);
-				child = new karyTree(wahlFormel, null, null);
-
-				wahlFormel = receiveRandomString(FormulaAll);
-				child2 = new karyTree(wahlFormel, null, null);
-				inRoot.setBothChilds(child, child2);
-
-				fillRandomTree(child, inDepth - 1);
-				fillRandomTree(child2, inDepth - 1);
-			} else if (FormulaTwoVar.contains(inRoot.getFormula()) && inDepth == 0) {
-				wahlFormel = receiveRandomString(FormulaOneVar);
-
-				child = new karyTree(wahlFormel, null, null);
-				wahlFormel = receiveRandomString(FormulaOneVar);
-
-				child2 = new karyTree(wahlFormel, null, null);
-				inRoot.setBothChilds(child, child2);
-			}
+		} else {// use newly generated random seed
+			generatedSeed = ThreadLocalRandom.current().nextInt(0, 2147483647);
+			guiSideBar.setSeedText(Integer.toString(generatedSeed));
+			mySeededRandom = new Random(generatedSeed);
 		}
-	}
 
-	/**
-	 * Choose a random entry in a list and return.
-	 *
-	 * @param inList
-	 * @return String with one random formula
-	 */
-	private String receiveRandomString(List<String> inList) {
-		int randomNum;
-		randomNum = mySeededRandom.nextInt(inList.size());
-		String randomFormula = inList.get(randomNum);
-		return randomFormula;
-	}
+		guiSideBar.setButtonsCalculating();
 
-	@Override
-	public void createSideBarGUI() {
-		PanelSidebar.add(guiSideBar.getSideBarPnl(), BorderLayout.CENTER);
-	}
+		try {
+			Thread.sleep(50);
 
-	@Override
-	public void stopGenerator() {
-		guiSideBar.setStopped();
-		this.status = IGenerator.Status.STOP;
-	}
+			maxXPixel = guiSideBar.getWidth();
+			maxYPixel = guiSideBar.getHeight();
 
-	@Override
-	public String getFilePath() {
-		// generate name for image with generator values to save into name
-		String seperator = "_";
-		StringBuilder outPath = new StringBuilder();
-		outPath.append("RTree_");
-		outPath.append("W");
-		outPath.append(guiSideBar.getWidth());
-		outPath.append(seperator);
-		outPath.append("H");
-		outPath.append(guiSideBar.getHeight());
-		outPath.append(seperator);
-		outPath.append("S");
-		outPath.append(guiSideBar.getSeed());
-		outPath.append(seperator);
-		outPath.append("G");
-		outPath.append(guiSideBar.getGenerations());
-		// outPath.append("]");
-		outPath.append(seperator);
-		outPath.append(".png");
-		return outPath.toString();
+			createRandomKaryTree();
+			updateScreenPanel();
+
+		} catch (OutOfMemoryError e) {
+			setErrorMsgText("OutOfMemory");
+			updateStatus(IGenerator.Status.ERROR);
+			guiSideBar.setButtonsReady();
+		} catch (InterruptedException ex) {
+			Logger.getLogger(RandomTreeArt.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		guiSideBar.setButtonsReady();
+		endCalcTime();
+		updateStatus(IGenerator.Status.FINISHED);
+
 	}
 
 	@Override
@@ -503,6 +473,32 @@ public class RandomTreeArt extends AGenerator {
 					+ "\n ");
 		}
 
+	}
+
+	@Override
+	public void stopGenerator() {
+		guiSideBar.setStopped();
+		setGenStatus(IGenerator.Status.STOP);
+	}
+
+	/**
+	 * Prepares and updates mainCanvas with calculated color value for each xy
+	 * coordinate.
+	 *
+	 */
+	private void updateScreenPanel() {
+
+		BufferedImage image = new BufferedImage(guiSideBar.getWidth(), guiSideBar.getHeight(),
+				BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2d = image.createGraphics();
+		g2d.setColor(new Color(0, 0, 0));
+		g2d.fillRect(0, 0, guiSideBar.getWidth(), guiSideBar.getHeight());
+		g2d.setColor(guiSideBar.getColor());
+
+		drawPicture(g2d);
+
+		g2d.dispose();
+		this.setMainCanvasToImage(image);
 	}
 
 }

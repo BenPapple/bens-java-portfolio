@@ -3,7 +3,6 @@ package generator;
 import data.GlobalSettings;
 import gui.MainCanvasPanel;
 import gui.SideBarShapes;
-import java.awt.BorderLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +10,6 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
-import javax.swing.JPanel;
 
 /**
  * Implementation of a simple generator that creates a blue circle for a given
@@ -30,12 +28,11 @@ public class TestShapes extends AGenerator {
 	 * @param name Name for this generator
 	 */
 	public TestShapes(MainCanvasPanel mainCanvas, String name) {
-		this.generatorName = name;
-		this.myMnemonicKey = 'S';
-		this.myCanvas = mainCanvas;
-		this.PanelSidebar = new JPanel();
-		this.generatorDescr = "Wolfram";
-		this.generatorType = GlobalSettings.GeneratorType.TEST;
+		this.setName(name);
+		this.setMnemonicChar('S');
+		this.setMainCanvas(mainCanvas);
+		initSideBarPanel();
+		this.setGenType(GlobalSettings.GeneratorType.TEST);
 
 		guiSideBar = new SideBarShapes(new ActionListener() {
 			@Override
@@ -53,36 +50,7 @@ public class TestShapes extends AGenerator {
 	 */
 	@Override
 	public void createSideBarGUI() {
-
-		PanelSidebar.add(guiSideBar.getSideBarPnl(), BorderLayout.CENTER);
-
-	}
-
-	@Override
-	public void run() {
-		startCalcTime();
-		updateStatus(IGenerator.Status.CALCULATING);
-
-		try {
-			Thread.sleep(50);
-		} catch (Exception e) {
-
-		}
-
-		BufferedImage image = new BufferedImage(guiSideBar.getWidth(), guiSideBar.getHeight(),
-				BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g2d = image.createGraphics();
-
-		g2d.setColor(guiSideBar.getBGColor());
-		g2d.fillRect(0, 0, guiSideBar.getWidth(), guiSideBar.getHeight());
-
-		drawShape(g2d, image);
-
-		g2d.dispose();
-
-		this.myCanvas.setImage(image);
-		endCalcTime();
-		updateStatus(IGenerator.Status.FINISHED);
+		this.addToSidebar(guiSideBar.getSideBarPnl());
 	}
 
 	private void drawShape(Graphics2D g2d, BufferedImage image) {
@@ -113,9 +81,36 @@ public class TestShapes extends AGenerator {
 	}
 
 	@Override
+	public void run() {
+		startCalcTime();
+		updateStatus(IGenerator.Status.CALCULATING);
+
+		try {
+			Thread.sleep(50);
+		} catch (Exception e) {
+
+		}
+
+		BufferedImage image = new BufferedImage(guiSideBar.getWidth(), guiSideBar.getHeight(),
+				BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2d = image.createGraphics();
+
+		g2d.setColor(guiSideBar.getBGColor());
+		g2d.fillRect(0, 0, guiSideBar.getWidth(), guiSideBar.getHeight());
+
+		drawShape(g2d, image);
+
+		g2d.dispose();
+
+		this.setMainCanvasToImage(image);
+		endCalcTime();
+		updateStatus(IGenerator.Status.FINISHED);
+	}
+
+	@Override
 	public void stopGenerator() {
 		guiSideBar.setStopped();
-		this.status = IGenerator.Status.STOP;
+		setGenStatus(IGenerator.Status.STOP);
 	}
 
 }

@@ -51,6 +51,51 @@ public class SideBarLSystem extends ASideBar {
 		super(e);
 	}
 
+	/**
+	 * Returns user input allowed alphabet as string.
+	 *
+	 * @return string of allowed Letters
+	 */
+	public String getAlphabet() {
+		return tfAlphabet.getText();
+	}
+
+	/**
+	 * Gets angle as int from user input.
+	 *
+	 * @return int value of user input angle
+	 */
+	public int getAngle() {
+		return (int) jsAngle.getValue();
+	}
+
+	/**
+	 * Gets generations as int from user input.
+	 *
+	 * @return int value of user input generations
+	 */
+	public int getGenerations() {
+		return (int) jsGenerations.getValue();
+	}
+
+	/**
+	 * Returns user input of LSystem rules as string.
+	 *
+	 * @return string of rules for LSystem
+	 */
+	public String getProductionRules() {
+		return tfProductionRules.getText();
+	}
+
+	/**
+	 * Returns user input starting sequence as string.
+	 *
+	 * @return string of Starting sequence
+	 */
+	public String getStartingSequence() {
+		return tfStartingSequence.getText();
+	}
+
 	@Override
 	public JPanel initGeneratorPnl() {
 
@@ -233,51 +278,6 @@ public class SideBarLSystem extends ASideBar {
 		super.setTaDescriptionText("<b>Lindenmayer-system</b>"
 				+ "<br><br>Implements a Lindenmayer-system."
 				+ "<br>Allowed symbols: A B C D E F + - [ ]");
-	}
-
-	/**
-	 * Gets angle as int from user input.
-	 *
-	 * @return int value of user input angle
-	 */
-	public int getAngle() {
-		return (int) jsAngle.getValue();
-	}
-
-	/**
-	 * Gets generations as int from user input.
-	 *
-	 * @return int value of user input generations
-	 */
-	public int getGenerations() {
-		return (int) jsGenerations.getValue();
-	}
-
-	/**
-	 * Returns user input starting sequence as string.
-	 *
-	 * @return string of Starting sequence
-	 */
-	public String getStartingSequence() {
-		return tfStartingSequence.getText();
-	}
-
-	/**
-	 * Returns user input allowed alphabet as string.
-	 *
-	 * @return string of allowed Letters
-	 */
-	public String getAlphabet() {
-		return tfAlphabet.getText();
-	}
-
-	/**
-	 * Returns user input of LSystem rules as string.
-	 *
-	 * @return string of rules for LSystem
-	 */
-	public String getProductionRules() {
-		return tfProductionRules.getText();
 	}
 
 }

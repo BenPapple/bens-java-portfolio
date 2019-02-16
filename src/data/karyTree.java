@@ -42,12 +42,63 @@ public class karyTree {
 	}
 
 	/**
+	 * Returns the center child node of parent node.
+	 *
+	 * @return center child node
+	 */
+	public karyTree getCenterChild() {
+		return center;
+	}
+
+	/**
 	 * Returns the name of a math formula as a string.
 	 *
 	 * @return name of math formula
 	 */
 	public String getFormula() {
 		return cargoFormula;
+	}
+
+	/**
+	 * Returns the left child node of parent node.
+	 *
+	 * @return left child node
+	 */
+	public karyTree getLeftChild() {
+		return left;
+	}
+
+	/**
+	 * Returns the right child node of parent node.
+	 *
+	 * @return right child node
+	 */
+	public karyTree getRightChild() {
+		return right;
+	}
+
+	/**
+	 * Returns true if node has no childs.
+	 *
+	 * @return true if node is leaf
+	 */
+	public boolean isBinaryLeaf() {
+		if (left == null && right == null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Adds two different nodes as childs of parent node.
+	 *
+	 * @param left is first new child node
+	 * @param right is second new child node
+	 */
+	public void setBothChilds(karyTree left, karyTree right) {
+		this.right = right;
+		this.left = left;
 	}
 
 	/**
@@ -78,17 +129,6 @@ public class karyTree {
 	}
 
 	/**
-	 * Adds two different nodes as childs of parent node.
-	 *
-	 * @param left is first new child node
-	 * @param right is second new child node
-	 */
-	public void setBothChilds(karyTree left, karyTree right) {
-		this.right = right;
-		this.left = left;
-	}
-
-	/**
 	 * Adds three different nodes as childs of parent node.
 	 *
 	 * @param left is first new child node
@@ -99,46 +139,6 @@ public class karyTree {
 		this.right = right;
 		this.center = center;
 		this.left = left;
-	}
-
-	/**
-	 * Returns the left child node of parent node.
-	 *
-	 * @return left child node
-	 */
-	public karyTree getLeftChild() {
-		return left;
-	}
-
-	/**
-	 * Returns the right child node of parent node.
-	 *
-	 * @return right child node
-	 */
-	public karyTree getRightChild() {
-		return right;
-	}
-
-	/**
-	 * Returns the center child node of parent node.
-	 *
-	 * @return center child node
-	 */
-	public karyTree getCenterChild() {
-		return center;
-	}
-
-	/**
-	 * Returns true if node has no childs.
-	 *
-	 * @return true if node is leaf
-	 */
-	public boolean isBinaryLeaf() {
-		if (left == null && right == null) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 }

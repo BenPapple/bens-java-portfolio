@@ -27,7 +27,8 @@ public class SideBarRTree extends ASideBar {
 	private static SpinnerModel smGenerations = new SpinnerNumberModel(7, 0, 15, 1);
 	private static JSpinner jsGenerations = new JSpinner(smGenerations);
 	private static JLabel lblcbPresets = new JLabel("Color Model:");
-	private static String comboBoxList[] = { "Preview All", "Monochrome", "Monochrome Noise", "RGB", "RGB White Noise" };
+	private static String comboBoxList[] = { "Preview All", "Monochrome", "Monochrome Noise", "RGB",
+			"RGB White Noise" };
 	private static JComboBox<Object> cbColorPresets = new JComboBox<Object>(comboBoxList);
 	private static JLabel lblSeed = new JLabel("Random Seed:");
 	private static JTextField tfSeed = new JTextField();
@@ -43,6 +44,42 @@ public class SideBarRTree extends ASideBar {
 	 */
 	public SideBarRTree(ActionListener e) {
 		super(e);
+	}
+
+	/**
+	 * Returns user choosen color model as int position in combobox.
+	 *
+	 * @return int of selected index
+	 */
+	public int getColorModelIndex() {
+		return SideBarRTree.cbColorPresets.getSelectedIndex();
+	}
+
+	/**
+	 * Returns user choosen color model as string.
+	 *
+	 * @return string of color calculation model
+	 */
+	public String getColorModelName() {
+		return SideBarRTree.cbColorPresets.getSelectedItem().toString();
+	}
+
+	/**
+	 * Get user input generations value.
+	 *
+	 * @return int of num generations
+	 */
+	public int getGenerations() {
+		return (int) jsGenerations.getValue();
+	}
+
+	/**
+	 * Get the user input seed as int value.
+	 *
+	 * @return int of random seed
+	 */
+	public int getSeed() {
+		return Integer.parseInt(tfSeed.getText());
 	}
 
 	@Override
@@ -120,35 +157,12 @@ public class SideBarRTree extends ASideBar {
 		return GeneratorPnl;
 	}
 
-	@Override
-	public void setStdValues() {
-		super.setWidth(1080);
-		super.setHeight(720);
-		super.setColor(Color.CYAN);
-		super.setBGColor(Color.BLACK);
-		super.setbtnBGColorVisible(false);
-		super.setbtnColorVisible(false);
-		super.setlblColorVisible(false);
-		super.setLblBGColorVisible(false);
-		super.setLblWidthText("Enter Width:");
-		super.setLblHeightText("Enter Height");
-		cbColorPresets.setSelectedIndex(2);		
-		super.setTaDescriptionText(
-				"<b>Random-tree Art</b>"
-						+ "<br><br>Creates a random binary tree. Each node has a math "
-						+ "formula with one or two variables. The variables "
-						+ "get filled with the result of a childrens node math "
-						+ "function or if they are a leave with the xy coordinate. "
-						+ "This creates a color value for every xy coordinate.");
-	}
-
 	/**
-	 * Get user input generations value.
-	 *
-	 * @return int of num generations
+	 * Make cbSeed true.
+	 * 
 	 */
-	public int getGenerations() {
-		return (int) jsGenerations.getValue();
+	public void setCbSeed() {
+		cbSeed.setSelected(true);
 	}
 
 	/**
@@ -161,21 +175,33 @@ public class SideBarRTree extends ASideBar {
 	}
 
 	/**
-	 * Returns user choosen color model as string.
+	 * Sets tfSeed to input string.
 	 *
-	 * @return string of color calculation model
 	 */
-	public String getColorModelName() {
-		return SideBarRTree.cbColorPresets.getSelectedItem().toString();
+	public void setSeedText(String inSeed) {
+		tfSeed.setText(inSeed);
 	}
 
-	/**
-	 * Returns user choosen color model as int position in combobox.
-	 *
-	 * @return int of selected index
-	 */
-	public int getColorModelIndex() {
-		return SideBarRTree.cbColorPresets.getSelectedIndex();
+	@Override
+	public void setStdValues() {
+		super.setWidth(1080);
+		super.setHeight(720);
+		super.setColor(Color.CYAN);
+		super.setBGColor(Color.BLACK);
+		super.setbtnBGColorVisible(false);
+		super.setbtnColorVisible(false);
+		super.setlblColorVisible(false);
+		super.setLblBGColorVisible(false);
+		super.setLblWidthText("Enter Width:");
+		super.setLblHeightText("Enter Height");
+		cbColorPresets.setSelectedIndex(2);
+		super.setTaDescriptionText(
+				"<b>Random-tree Art</b>"
+						+ "<br><br>Creates a random binary tree. Each node has a math "
+						+ "formula with one or two variables. The variables "
+						+ "get filled with the result of a childrens node math "
+						+ "function or if they are a leave with the xy coordinate. "
+						+ "This creates a color value for every xy coordinate.");
 	}
 
 	/**
@@ -185,31 +211,6 @@ public class SideBarRTree extends ASideBar {
 	 */
 	public Boolean usingFieldSeed() {
 		return cbSeed.isSelected();
-	}
-
-	/**
-	 * Make cbSeed true.
-	 * 
-	 */
-	public void setCbSeed() {
-		cbSeed.setSelected(true);
-	}
-
-	/**
-	 * Get the user input seed as int value.
-	 *
-	 * @return int of random seed
-	 */
-	public int getSeed() {
-		return Integer.parseInt(tfSeed.getText());
-	}
-
-	/**
-	 * Sets tfSeed to input string.
-	 *
-	 */
-	public void setSeedText(String inSeed) {
-		tfSeed.setText(inSeed);
 	}
 
 }

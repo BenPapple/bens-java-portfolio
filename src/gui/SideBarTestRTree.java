@@ -40,6 +40,21 @@ public class SideBarTestRTree extends SideBarRTree {
 	}
 
 	@Override
+	public int getColorModelIndex() {
+		return SideBarTestRTree.cbColorPresets.getSelectedIndex();
+	}
+
+	@Override
+	public String getColorModelName() {
+		return SideBarTestRTree.cbColorPresets.getSelectedItem().toString();
+	}
+
+	@Override
+	public int getGenerations() {
+		return (int) jsGenerations.getValue();
+	}
+
+	@Override
 	public JPanel initGeneratorPnl() {
 
 		GeneratorPnl = new JPanel();
@@ -99,21 +114,6 @@ public class SideBarTestRTree extends SideBarRTree {
 		cbColorPresets.setSelectedIndex(2);
 		super.setTaDescriptionText("<b>Alternative Random-tree Art Generator</b>"
 				+ "<br><br>Has different formulas. ");
-	}
-
-	@Override
-	public int getGenerations() {
-		return (int) jsGenerations.getValue();
-	}
-
-	@Override
-	public String getColorModelName() {
-		return SideBarTestRTree.cbColorPresets.getSelectedItem().toString();
-	}
-
-	@Override
-	public int getColorModelIndex() {
-		return SideBarTestRTree.cbColorPresets.getSelectedIndex();
 	}
 
 }

@@ -39,6 +39,24 @@ public class SideBarGOL extends ASideBar {
 		super(e);
 	}
 
+	/**
+	 * Return randomness as string.
+	 *
+	 * @return string user input text
+	 */
+	public String getRandomness() {
+		return tfRandomness.getText();
+	}
+
+	/**
+	 * Get wait time in ms for pausing between generations.
+	 *
+	 * @return int wait time in ms
+	 */
+	public int getSpeed() {
+		return (int) sliderSpeed.getValue();
+	}
+
 	@Override
 	public JPanel initGeneratorPnl() {
 
@@ -100,6 +118,16 @@ public class SideBarGOL extends ASideBar {
 		return GeneratorPnl;
 	}
 
+	/**
+	 * Is true if selected and signals edge of array wraps around to opposite
+	 * edge.
+	 *
+	 * @return bool true if selected
+	 */
+	public Boolean isEdgeWrapAround() {
+		return cbEdgeWrapAround.isSelected();
+	}
+
 	@Override
 	public void setStdValues() {
 		cbEdgeWrapAround.setSelected(true);
@@ -119,34 +147,6 @@ public class SideBarGOL extends ASideBar {
 		super.setHeight(150);
 		super.setColor(Color.decode("#CC00CC"));
 		super.setBGColor(Color.BLACK);
-	}
-
-	/**
-	 * Get wait time in ms for pausing between generations.
-	 *
-	 * @return int wait time in ms
-	 */
-	public int getSpeed() {
-		return (int) sliderSpeed.getValue();
-	}
-
-	/**
-	 * Is true if selected and signals edge of array wraps around to opposite
-	 * edge.
-	 *
-	 * @return bool true if selected
-	 */
-	public Boolean isEdgeWrapAround() {
-		return cbEdgeWrapAround.isSelected();
-	}
-
-	/**
-	 * Return randomness as string.
-	 *
-	 * @return string user input text
-	 */
-	public String getRandomness() {
-		return tfRandomness.getText();
 	}
 
 }

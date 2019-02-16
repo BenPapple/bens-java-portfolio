@@ -3,12 +3,10 @@ package generator;
 import data.GlobalSettings;
 import gui.MainCanvasPanel;
 import gui.SideBarGOL;
-import java.awt.BorderLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import javax.swing.JPanel;
 
 /**
  * Implementation of Conway's Game of Life cellular automata.
@@ -31,12 +29,11 @@ public class GameOfLife extends AGeneratorCellular {
 	 * @param name Name of generator
 	 */
 	public GameOfLife(MainCanvasPanel mainCanvas, String name) {
-		this.generatorName = name;
-		this.myMnemonicKey = 'C';
-		this.myCanvas = mainCanvas;
-		this.PanelSidebar = new JPanel();
-		this.generatorDescr = "Game of Live";
-		this.generatorType = GlobalSettings.GeneratorType.CELLULAR;
+		this.setName(name);
+		this.setMnemonicChar('C');
+		this.setMainCanvas(mainCanvas);
+		initSideBarPanel();
+		this.setGenType(GlobalSettings.GeneratorType.CELLULAR);
 
 		guiSideBar = new SideBarGOL(new ActionListener() {
 			@Override
@@ -48,75 +45,21 @@ public class GameOfLife extends AGeneratorCellular {
 		createSideBarGUI();
 	}
 
-	@Override
-	public void run() {
-		try {
-			// check input double range
-			if (Double.parseDouble(guiSideBar.getRandomness()) >= 0.0
-					&& Double.parseDouble(guiSideBar.getRandomness()) <= 1.0) {
-				startCalcTime();
-				updateStatus(IGenerator.Status.CALCULATING);
-				guiSideBar.setButtonsCalculating();
-				init2DField();
-
-				while (!guiSideBar.isStopped()) {
-
-					try {
-						Thread.sleep(guiSideBar.getSpeed());
-					} catch (Exception e) {
-
-					}
-
-					updateScreenPanel();
-					nextGenField();
-
-					while (guiSideBar.isPaused()) {
-						updateStatus(IGenerator.Status.PAUSED);
-						if (guiSideBar.isStopped()) {
-							break;
-						}
-					}
-					updateStatus(IGenerator.Status.CALCULATING);
-				}
-				guiSideBar.setButtonsReady();
-				endCalcTime();
-				updateStatus(IGenerator.Status.FINISHED);
-			} else {
-				showWarning("Randomness has to be in 0.0 to 1.0 range.");
+	/**
+	 * Copies array CalcGridWorld with new results into old array Gridworld.
+	 *
+	 */
+	private void copyGridworld() {
+		for (int y = 0; y < GridWorld[0].length; y++) {
+			for (int x = 0; x < GridWorld.length; x++) {
+				GridWorld[x][y] = CalcGridWorld[x][y];
 			}
-		} catch (Exception ne) {
-			showWarning("Randomness has to be in 0.0 to 1.0 range.");
 		}
 	}
 
-	/**
-	 * Draw dead/alive values from array into color squares on myCanvas.
-	 *
-	 */
-	private void updateScreenPanel() {
-		BufferedImage image = new BufferedImage((guiSideBar.getWidth() * (MAXFIELDPIXEL + pixelGap)),
-				(guiSideBar.getHeight() * (MAXFIELDPIXEL + pixelGap)), BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g2d = image.createGraphics();
-		g2d.setColor(guiSideBar.getBGColor());
-		g2d.fillRect(0, 0, guiSideBar.getWidth() * (MAXFIELDPIXEL + pixelGap),
-				guiSideBar.getHeight() * (MAXFIELDPIXEL + pixelGap));
-		g2d.setColor(guiSideBar.getColor());
-
-		for (int y = 0; y < GridWorld[0].length; y++) {
-			for (int x = 0; x < GridWorld.length; x++) {
-				if (GridWorld[x][y] == true) {
-					g2d.setColor(guiSideBar.getColor());
-					g2d.fillRect((MAXFIELDPIXEL + pixelGap) * x, (MAXFIELDPIXEL + pixelGap) * y, MAXFIELDPIXEL,
-							MAXFIELDPIXEL);
-				} else {
-					g2d.setColor(guiSideBar.getBGColor());
-					g2d.fillRect((MAXFIELDPIXEL + pixelGap) * x, (MAXFIELDPIXEL + pixelGap) * y, MAXFIELDPIXEL,
-							MAXFIELDPIXEL);
-				}
-			}
-		}
-		g2d.dispose();
-		this.myCanvas.setImage(image);
+	@Override
+	public void createSideBarGUI() {
+		this.addToSidebar(guiSideBar.getSideBarPnl());
 	}
 
 	@Override
@@ -439,15 +382,44 @@ public class GameOfLife extends AGeneratorCellular {
 		copyGridworld();
 	}
 
-	/**
-	 * Copies array CalcGridWorld with new results into old array Gridworld.
-	 *
-	 */
-	private void copyGridworld() {
-		for (int y = 0; y < GridWorld[0].length; y++) {
-			for (int x = 0; x < GridWorld.length; x++) {
-				GridWorld[x][y] = CalcGridWorld[x][y];
+	@Override
+	public void run() {
+		try {
+			// check input double range
+			if (Double.parseDouble(guiSideBar.getRandomness()) >= 0.0
+					&& Double.parseDouble(guiSideBar.getRandomness()) <= 1.0) {
+				startCalcTime();
+				updateStatus(IGenerator.Status.CALCULATING);
+				guiSideBar.setButtonsCalculating();
+				init2DField();
+
+				while (!guiSideBar.isStopped()) {
+
+					try {
+						Thread.sleep(guiSideBar.getSpeed());
+					} catch (Exception e) {
+
+					}
+
+					updateScreenPanel();
+					nextGenField();
+
+					while (guiSideBar.isPaused()) {
+						updateStatus(IGenerator.Status.PAUSED);
+						if (guiSideBar.isStopped()) {
+							break;
+						}
+					}
+					updateStatus(IGenerator.Status.CALCULATING);
+				}
+				guiSideBar.setButtonsReady();
+				endCalcTime();
+				updateStatus(IGenerator.Status.FINISHED);
+			} else {
+				showWarning("Randomness has to be in 0.0 to 1.0 range.");
 			}
+		} catch (Exception ne) {
+			showWarning("Randomness has to be in 0.0 to 1.0 range.");
 		}
 	}
 
@@ -480,16 +452,39 @@ public class GameOfLife extends AGeneratorCellular {
 	}
 
 	@Override
-	public void createSideBarGUI() {
-
-		PanelSidebar.add(guiSideBar.getSideBarPnl(), BorderLayout.CENTER);
-
-	}
-
-	@Override
 	public void stopGenerator() {
 		guiSideBar.setStopped();
-		this.status = IGenerator.Status.STOP;
+		setGenStatus(IGenerator.Status.STOP);
+	}
+
+	/**
+	 * Draw dead/alive values from array into color squares on myCanvas.
+	 *
+	 */
+	private void updateScreenPanel() {
+		BufferedImage image = new BufferedImage((guiSideBar.getWidth() * (MAXFIELDPIXEL + pixelGap)),
+				(guiSideBar.getHeight() * (MAXFIELDPIXEL + pixelGap)), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2d = image.createGraphics();
+		g2d.setColor(guiSideBar.getBGColor());
+		g2d.fillRect(0, 0, guiSideBar.getWidth() * (MAXFIELDPIXEL + pixelGap),
+				guiSideBar.getHeight() * (MAXFIELDPIXEL + pixelGap));
+		g2d.setColor(guiSideBar.getColor());
+
+		for (int y = 0; y < GridWorld[0].length; y++) {
+			for (int x = 0; x < GridWorld.length; x++) {
+				if (GridWorld[x][y] == true) {
+					g2d.setColor(guiSideBar.getColor());
+					g2d.fillRect((MAXFIELDPIXEL + pixelGap) * x, (MAXFIELDPIXEL + pixelGap) * y, MAXFIELDPIXEL,
+							MAXFIELDPIXEL);
+				} else {
+					g2d.setColor(guiSideBar.getBGColor());
+					g2d.fillRect((MAXFIELDPIXEL + pixelGap) * x, (MAXFIELDPIXEL + pixelGap) * y, MAXFIELDPIXEL,
+							MAXFIELDPIXEL);
+				}
+			}
+		}
+		g2d.dispose();
+		this.setMainCanvasToImage(image);
 	}
 
 }

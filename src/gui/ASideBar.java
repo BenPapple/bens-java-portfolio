@@ -28,7 +28,6 @@ import javax.swing.border.Border;
 public abstract class ASideBar {
 
 	private JPanel PanelSidebar;
-
 	private JButton btnColor = new JButton("Choose Color");
 	private JButton btnBGColor = new JButton("Choose BG Color");
 	private JTextPane taDescription;

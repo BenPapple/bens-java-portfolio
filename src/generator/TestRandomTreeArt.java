@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-import javax.swing.JPanel;
 
 /**
  * Implements a random tree art generator by putting math formulas into a random
@@ -27,14 +26,13 @@ public class TestRandomTreeArt extends RandomTreeArt {
 	 */
 	public TestRandomTreeArt(MainCanvasPanel mainCanvas, String name) {
 		super(mainCanvas, name);
-		generatorType = GlobalSettings.GeneratorType.TEST;
+		setGenType(GlobalSettings.GeneratorType.TEST);
 		FormulaOneVar = new ArrayList<>(Arrays.asList("FUNKTIONEINS1", "FUNKTIONEINS2"));
 		FormulaTwoVar = new ArrayList<>(Arrays.asList("FUNKTIONZWEI1", "FUNKTIONZWEI2"));
 
-		this.generatorName = name;
-		this.myCanvas = mainCanvas;
-		this.PanelSidebar = new JPanel();
-		this.generatorDescr = "Lindenmayer system";
+		this.setName(name);
+		this.setMainCanvas(mainCanvas);
+		initSideBarPanel();
 		this.rand = new Random();
 		guiSideBar = new SideBarTestRTree(new ActionListener() {
 			@Override
