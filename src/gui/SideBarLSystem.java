@@ -24,7 +24,6 @@ import javax.swing.border.Border;
  */
 public class SideBarLSystem extends ASideBar {
 
-	private static JLabel lblAlphabet = new JLabel("Alphabet:");
 	private static JLabel lblStartingSequence = new JLabel("Enter Starting Sequence:");
 	private static JLabel lblGenerations = new JLabel("Enter Iterations:");
 	private static SpinnerModel smGenerations = new SpinnerNumberModel(7, 0, 15, 1);
@@ -32,7 +31,6 @@ public class SideBarLSystem extends ASideBar {
 	private static JLabel lblAngle = new JLabel("Angle:");
 	private static SpinnerModel smAngle = new SpinnerNumberModel(120, 1, 360, 1);
 	private static JSpinner jsAngle = new JSpinner(smAngle);
-	private static JTextField tfAlphabet = new JTextField("A,B,+,-");
 	private static JTextField tfStartingSequence = new JTextField("A+A+B");
 	private static JLabel lblProductionRules = new JLabel("Enter Production Rules:");
 	private static JTextField tfProductionRules = new JTextField("(A,AA),(B,B+A-B-A+B)");
@@ -49,15 +47,6 @@ public class SideBarLSystem extends ASideBar {
 	 */
 	public SideBarLSystem(ActionListener e) {
 		super(e);
-	}
-
-	/**
-	 * Returns user input allowed alphabet as string.
-	 *
-	 * @return string of allowed Letters
-	 */
-	public String getAlphabet() {
-		return tfAlphabet.getText();
 	}
 
 	/**
@@ -111,76 +100,63 @@ public class SideBarLSystem extends ASideBar {
 		gbConstraints.gridx = 0;
 		gbConstraints.gridy = 0;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
-		GeneratorPnl.add(SideBarLSystem.lblAlphabet, gbConstraints);
-		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gbConstraints.weightx = 0.8;
-		gbConstraints.gridx = 1;
-		gbConstraints.gridy = 0;
-		gbConstraints.insets = new Insets(10, 10, 10, 10);
-		GeneratorPnl.add(SideBarLSystem.tfAlphabet, gbConstraints);
-		//
-		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gbConstraints.weightx = 0.2;
-		gbConstraints.gridx = 0;
-		gbConstraints.gridy = 1;
-		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.lblStartingSequence, gbConstraints);
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gbConstraints.weightx = 0.8;
 		gbConstraints.gridx = 1;
-		gbConstraints.gridy = 1;
+		gbConstraints.gridy = 0;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.tfStartingSequence, gbConstraints);
 		//
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gbConstraints.weightx = 0.2;
 		gbConstraints.gridx = 0;
-		gbConstraints.gridy = 2;
+		gbConstraints.gridy = 1;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.lblProductionRules, gbConstraints);
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gbConstraints.weightx = 0.8;
 		gbConstraints.gridx = 1;
-		gbConstraints.gridy = 2;
+		gbConstraints.gridy = 1;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.tfProductionRules, gbConstraints);
 		//
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gbConstraints.weightx = 0.2;
 		gbConstraints.gridx = 0;
-		gbConstraints.gridy = 3;
+		gbConstraints.gridy = 2;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.lblAngle, gbConstraints);
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gbConstraints.weightx = 0.8;
 		gbConstraints.gridx = 1;
-		gbConstraints.gridy = 3;
+		gbConstraints.gridy = 2;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.jsAngle, gbConstraints);
 		//
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gbConstraints.weightx = 0.2;
 		gbConstraints.gridx = 0;
-		gbConstraints.gridy = 4;
+		gbConstraints.gridy = 3;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.lblGenerations, gbConstraints);
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gbConstraints.weightx = 0.8;
 		gbConstraints.gridx = 1;
-		gbConstraints.gridy = 4;
+		gbConstraints.gridy = 3;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.jsGenerations, gbConstraints);
 		//
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gbConstraints.weightx = 0.2;
 		gbConstraints.gridx = 0;
-		gbConstraints.gridy = 5;
+		gbConstraints.gridy = 4;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.lblcbPresets, gbConstraints);
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gbConstraints.weightx = 0.8;
 		gbConstraints.gridx = 1;
-		gbConstraints.gridy = 5;
+		gbConstraints.gridy = 4;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.cbPresets, gbConstraints);
 		cbPresets.addItemListener(new ItemListener() {
@@ -213,49 +189,42 @@ public class SideBarLSystem extends ASideBar {
 			break;
 		case "Sierpinski triangle":
 			jsGenerations.setValue(6);
-			tfAlphabet.setText("A,B,+,-");
 			tfStartingSequence.setText("A+A+B");
 			tfProductionRules.setText("(A,AA),(B,B+A-B-A+B)");
 			jsAngle.setValue(120);
 			break;
 		case "Koch snowflake":
 			jsGenerations.setValue(5);
-			tfAlphabet.setText("F,+,-");
 			tfStartingSequence.setText("F++F++F");
 			tfProductionRules.setText("(F,F-F++F-F)");
 			jsAngle.setValue(60);
 			break;
 		case "Koch edge":
 			jsGenerations.setValue(4);
-			tfAlphabet.setText("F,+,-");
 			tfStartingSequence.setText("F");
 			tfProductionRules.setText("(F,F-F++F-F)");
 			jsAngle.setValue(60);
 			break;
 		case "Dragon curve":
 			jsGenerations.setValue(12);
-			tfAlphabet.setText("C,D,E,+,-");
 			tfStartingSequence.setText("CD");
 			tfProductionRules.setText("(E,-CD-E),(D,D+EC+)");
 			jsAngle.setValue(90);
 			break;
 		case "Fuzzy weed":
 			jsGenerations.setValue(6);
-			tfAlphabet.setText("E,F,+,-,[,]");
 			tfStartingSequence.setText("A");
 			tfProductionRules.setText("(F,FF),(A,F-[[A]+A]+F[+FA]-A)");
 			jsAngle.setValue(22);
 			break;
 		case "Tall seaweed":
 			jsGenerations.setValue(4);
-			tfAlphabet.setText("F,+,-,[,]");
 			tfStartingSequence.setText("F");
 			tfProductionRules.setText("(F,F[+F]F[-F]F)");
 			jsAngle.setValue(25);
 			break;
 		case "Wavy seaweed":
 			jsGenerations.setValue(5);
-			tfAlphabet.setText("F,+,-,[,]");
 			tfStartingSequence.setText("F");
 			tfProductionRules.setText("(F,FF-[-F+F+F]+[+F-F-F])");
 			jsAngle.setValue(22);

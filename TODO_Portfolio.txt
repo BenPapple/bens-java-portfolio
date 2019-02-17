@@ -2,7 +2,6 @@
 ** TODO Portfolio 2019 **
 *************************
 
-- - LSystem Alphabet textfield unnecessary
 -f- GOL generation label counter
 - - Update all html description text of generators with helpful howto
 - - MVC split MC further
@@ -17,6 +16,7 @@
 - - L-system drawing function take 4 inputs
 -f- custom color panel
 /////////////////DONE//////////////////////////////////
++ - LSystem Alphabet textfield unnecessary
 +f- class with math formulas for RandomTreeArt
 + - change protected vars in abstract to private with getter/setter
 +b- LSystem What if letter occurs more than 1 time rules?
