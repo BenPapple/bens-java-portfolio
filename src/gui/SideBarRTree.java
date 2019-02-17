@@ -24,7 +24,7 @@ import javax.swing.border.Border;
 public class SideBarRTree extends ASideBar {
 
 	private static JLabel lblGenerations = new JLabel("Tree Depth:");
-	private static SpinnerModel smGenerations = new SpinnerNumberModel(7, 0, 15, 1);
+	private static SpinnerModel smGenerations = new SpinnerNumberModel(5, 0, 15, 1);
 	private static JSpinner jsGenerations = new JSpinner(smGenerations);
 	private static JLabel lblcbPresets = new JLabel("Color Model:");
 	private static String comboBoxList[] = { "Preview All", "Monochrome", "Monochrome Noise", "RGB",
@@ -184,8 +184,8 @@ public class SideBarRTree extends ASideBar {
 
 	@Override
 	public void setStdValues() {
-		super.setWidth(1080);
-		super.setHeight(720);
+		super.setWidth(800);
+		super.setHeight(600);
 		super.setColor(Color.CYAN);
 		super.setBGColor(Color.BLACK);
 		super.setbtnBGColorVisible(false);
@@ -194,7 +194,7 @@ public class SideBarRTree extends ASideBar {
 		super.setLblBGColorVisible(false);
 		super.setLblWidthText("Enter Width:");
 		super.setLblHeightText("Enter Height");
-		cbColorPresets.setSelectedIndex(2);
+		cbColorPresets.setSelectedIndex(3);
 		super.setTaDescriptionText(
 				"<b>Random-tree Art</b>"
 						+ "<br><br>Creates a random binary tree. Each node has a math "

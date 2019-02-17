@@ -2,11 +2,12 @@
 ** TODO Portfolio 2019 **
 *************************
 
-- - MVC split MC further
--f- GOL generation label counter
-- - split turtle drawer from LSystem
 - - LSystem Alphabet textfield unnecessary
+-f- GOL generation label counter
 - - Update all html description text of generators with helpful howto
+- - MVC split MC further
+- - split turtle drawer from LSystem
+
 -f- RTree choose math formula in gui
 -f- GOL make calculations methods top left etc
 -f- multi-threaded calculations
