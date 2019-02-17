@@ -2,7 +2,6 @@
 ** TODO Portfolio 2019 **
 *************************
 
--f- GOL generation label counter
 - - Update all html description text of generators with helpful howto
 - - MVC split MC further(GOL, Wolfram, NaSch)
 - - split turtle drawer from LSystem
@@ -16,6 +15,7 @@
 - - L-system drawing function take 4 inputs
 -f- custom color panel
 /////////////////DONE//////////////////////////////////
++f- GOL generation label counter
 + - LSystem Alphabet textfield unnecessary
 +f- class with math formulas for RandomTreeArt
 + - change protected vars in abstract to private with getter/setter

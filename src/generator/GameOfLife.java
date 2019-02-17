@@ -21,6 +21,7 @@ public class GameOfLife extends AGeneratorCellular {
 	private boolean[][] GridWorld;
 	private boolean[][] CalcGridWorld;
 	private int pixelGap = 1;
+	private int genCounter;
 
 	/**
 	 * Constructor
@@ -392,6 +393,7 @@ public class GameOfLife extends AGeneratorCellular {
 				updateStatus(GlobalSettings.Status.CALCULATING);
 				guiSideBar.setButtonsCalculating();
 				init2DField();
+				genCounter = 0;
 
 				while (!guiSideBar.isStopped()) {
 
@@ -402,6 +404,8 @@ public class GameOfLife extends AGeneratorCellular {
 					}
 
 					updateScreenPanel();
+					genCounter += 1;
+					guiSideBar.setGenCounter(String.valueOf(genCounter));
 					nextGenField();
 
 					while (guiSideBar.isPaused()) {

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
@@ -28,6 +29,7 @@ public class SideBarGOL extends ASideBar {
 	private static JSlider sliderSpeed = new JSlider();
 	private static JCheckBox cbEdgeDead = new JCheckBox("Dead Cells Edge", true);
 	private static JCheckBox cbEdgeWrapAround = new JCheckBox("Wraparound Edge");
+	private static JLabel lblNumGens = new JLabel("0");
 	private JPanel GeneratorPnl;
 
 	/**
@@ -109,6 +111,19 @@ public class SideBarGOL extends ASideBar {
 		gbConstraints.gridy = 2;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarGOL.cbEdgeDead, gbConstraints);
+		//
+		JPanel pnlWolframRules = new JPanel(new GridLayout(2, 8));
+		Border border2 = BorderFactory.createTitledBorder("Generation Counter");
+		pnlWolframRules.setBorder(border2);
+		pnlWolframRules.add(lblNumGens);
+		lblNumGens.setHorizontalAlignment(JLabel.CENTER);
+		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gbConstraints.weightx = 1;
+		gbConstraints.gridx = 0;
+		gbConstraints.gridy = 3;
+		gbConstraints.gridwidth = 2;
+		gbConstraints.insets = new Insets(10, 10, 10, 10);
+		GeneratorPnl.add(pnlWolframRules, gbConstraints);
 
 		Border border = BorderFactory.createTitledBorder("Generator settings:");
 		GeneratorPnl.setBorder(border);
@@ -126,6 +141,15 @@ public class SideBarGOL extends ASideBar {
 	 */
 	public Boolean isEdgeWrapAround() {
 		return cbEdgeWrapAround.isSelected();
+	}
+	
+	/**
+	 * Set number of generations into label.
+	 * 
+	 * @param inString generation number
+	 */
+	public void setGenCounter(String inString) {
+		lblNumGens.setText(inString);
 	}
 
 	@Override
