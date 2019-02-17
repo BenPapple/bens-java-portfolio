@@ -2,6 +2,8 @@
 ** TODO Portfolio 2019 **
 *************************
 
+
+- - split turtle drawer from LSystem
 - - LSystem Alphabet textfield unnecessary
 - - Update all html description text of generators with helpful howto
 

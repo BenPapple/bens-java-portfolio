@@ -40,7 +40,6 @@ public class RandomTreeArt extends AGenerator {
 	 */
 	protected Random rand;
 
-	
 	/**
 	 * 
 	 */
@@ -58,7 +57,7 @@ public class RandomTreeArt extends AGenerator {
 	 * 
 	 */
 	protected List<String> FormulaTwoVar = new ArrayList<>(
-			Arrays.asList("SINXPLUSY", "COSXPLUSY", "XMALY", "SINCOSXPLUSY"));
+			Arrays.asList("SINXPLUSY", "COSXPLUSY", "XTIMESY", "SINCOSXPLUSY", "XTOTHEPOWEROFY", "XSQUAREPLUSYSQUARE", "XSQUARETIMESYSQUARE"));
 	/**
 	 * 
 	 */
@@ -143,9 +142,12 @@ public class RandomTreeArt extends AGenerator {
 
 				if (colorDouble > 1.0) {
 					colorDouble = 1.0;
+					System.out.println("is Bigger 1");
+					
 				}
 				if (colorDouble < 0) {
 					colorDouble = 0.0;
+					System.out.println("is Negative");
 				}
 
 				rgbVal = (int) (colorDouble * 16777215.0);
@@ -301,14 +303,15 @@ public class RandomTreeArt extends AGenerator {
 	/**
 	 * Calculation of pixel color by recursive RTree traversal.
 	 *
-	 * @param x x-pixel coordinate
-	 * @param y y-pixel coordinate
+	 * @param inX x-pixel coordinate
+	 * @param inY y-pixel coordinate
 	 * @param inFormula math formula to process
 	 * @param TreeDepth current tree depth
 	 * @param myKaryTree k-ary tree for calculations
 	 * @return Double color value
 	 */
-	public double recursiveColorValCalc(double x, double y, String inFormula, Integer TreeDepth, karyTree myKaryTree) {
+	public double recursiveColorValCalc(double inX, double inY, String inFormula, Integer TreeDepth,
+			karyTree myKaryTree) {
 
 		int TreeDepthNew = TreeDepth;
 
@@ -317,16 +320,16 @@ public class RandomTreeArt extends AGenerator {
 			switch (inFormula) {
 			// Einwert
 			case "SINX":
-				return Math.sin(recursiveColorValCalc(x, y, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
+				return Math.sin(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
 						myKaryTree.getLeftChild()));
 			case "SINY":
-				return Math.sin(recursiveColorValCalc(x, y, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
+				return Math.sin(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
 						myKaryTree.getLeftChild()));
 			case "COSX":
-				return Math.cos(recursiveColorValCalc(x, y, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
+				return Math.cos(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
 						myKaryTree.getLeftChild()));
 			case "COSY":
-				return Math.cos(recursiveColorValCalc(x, y, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
+				return Math.cos(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
 						myKaryTree.getLeftChild()));
 
 			default:
@@ -338,39 +341,65 @@ public class RandomTreeArt extends AGenerator {
 				switch (inFormula) {
 				// One value formula
 				case "SINX":
-					return Math.sin(recursiveColorValCalc(x, y, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-							myKaryTree.getLeftChild()));
+					return Math
+							.sin(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
+									myKaryTree.getLeftChild()));
 				case "SINY":
-					return Math.sin(recursiveColorValCalc(x, y, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-							myKaryTree.getLeftChild()));
+					return Math
+							.sin(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
+									myKaryTree.getLeftChild()));
 				case "COSX":
-					return Math.cos(recursiveColorValCalc(x, y, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-							myKaryTree.getLeftChild()));
+					return Math
+							.cos(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
+									myKaryTree.getLeftChild()));
 				case "COSY":
-					return Math.cos(recursiveColorValCalc(x, y, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-							myKaryTree.getLeftChild()));
+					return Math
+							.cos(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
+									myKaryTree.getLeftChild()));
 
 				// Two value formula
-				case "XMALY":
-					return (recursiveColorValCalc(x, y, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
+				case "XTIMESY":
+					return (recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
 							myKaryTree.getLeftChild())
-							* recursiveColorValCalc(x, y, myKaryTree.getRightChild().getFormula(), TreeDepth,
+							* recursiveColorValCalc(inX, inY, myKaryTree.getRightChild().getFormula(), TreeDepth,
 									myKaryTree.getRightChild()));
 				case "COSXPLUSY":
-					return Math.cos(recursiveColorValCalc(x, y, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-							myKaryTree.getLeftChild())
-							+ recursiveColorValCalc(x, y, myKaryTree.getRightChild().getFormula(), TreeDepth,
-									myKaryTree.getRightChild()) / 2);
+					return Math
+							.cos(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
+									myKaryTree.getLeftChild())
+									+ recursiveColorValCalc(inX, inY, myKaryTree.getRightChild().getFormula(),
+											TreeDepth,
+											myKaryTree.getRightChild()) / 2);
 				case "SINXPLUSY":
-					return Math.sin(recursiveColorValCalc(x, y, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-							myKaryTree.getLeftChild())
-							+ recursiveColorValCalc(x, y, myKaryTree.getRightChild().getFormula(), TreeDepth,
-									myKaryTree.getRightChild()) / 2);
+					return Math
+							.sin(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
+									myKaryTree.getLeftChild())
+									+ recursiveColorValCalc(inX, inY, myKaryTree.getRightChild().getFormula(),
+											TreeDepth,
+											myKaryTree.getRightChild()) / 2);
 				case "SINCOSXPLUSY":
-					return Math.sin(Math.cos(recursiveColorValCalc(x, y, myKaryTree.getLeftChild().getFormula(),
+					return Math.sin(Math.cos(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(),
 							TreeDepthNew, myKaryTree.getLeftChild())
-							+ recursiveColorValCalc(x, y, myKaryTree.getRightChild().getFormula(), TreeDepth,
+							+ recursiveColorValCalc(inX, inY, myKaryTree.getRightChild().getFormula(), TreeDepth,
 									myKaryTree.getRightChild())));
+				case "XTOTHEPOWEROFY":
+					return (Math
+							.pow(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
+									myKaryTree.getLeftChild()),
+									recursiveColorValCalc(inX, inY, myKaryTree.getRightChild().getFormula(),
+											TreeDepthNew, myKaryTree.getRightChild())));
+				case "XSQUAREPLUSYSQUARE":
+					return (Math
+							.pow(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
+									myKaryTree.getLeftChild()), 2)
+							+ Math.pow(recursiveColorValCalc(inX, inY, myKaryTree.getRightChild().getFormula(),
+									TreeDepthNew, myKaryTree.getRightChild()), 2));
+				case "XSQUARETIMESYSQUARE":
+					return (Math
+							.pow(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
+									myKaryTree.getLeftChild()), 2)
+							* Math.pow(recursiveColorValCalc(inX, inY, myKaryTree.getRightChild().getFormula(),
+									TreeDepthNew, myKaryTree.getRightChild()), 2));
 
 				default:
 					throw new AssertionError();
@@ -380,9 +409,9 @@ public class RandomTreeArt extends AGenerator {
 
 		if ((myKaryTree.getLeftChild() == null) && (myKaryTree.getRightChild() == null)) {
 			if (inFormula.equals("SINX") || inFormula.equals("COSX")) {
-				return (x / maxXPixel);
+				return (inX / maxXPixel);
 			} else {
-				return (y / maxYPixel);
+				return (inY / maxYPixel);
 			}
 		} else {
 
