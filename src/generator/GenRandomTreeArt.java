@@ -91,13 +91,12 @@ public class GenRandomTreeArt extends AGenerator {
 
 				double colorDouble = myMathRTreeArt.startRecCalc(xDouble, yDouble);
 
+				colorDouble = Math.abs(colorDouble);
 				if (colorDouble > 1.0) {
 					colorDouble = 1.0;
 
 				}
-				if (colorDouble < 0) {
-					colorDouble = 0.0;
-				}
+				
 
 				rgbVal = (int) (colorDouble * 16777215.0);
 				rgbCalc = new Color(rgbVal);
