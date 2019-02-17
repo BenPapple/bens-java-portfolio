@@ -1,7 +1,7 @@
 package generator;
 
 import data.GlobalSettings;
-import data.karyTree;
+import data.MathRTreeArt;
 import gui.MainCanvasPanel;
 import gui.SideBarRTree;
 import java.awt.Color;
@@ -9,9 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
@@ -28,40 +26,10 @@ import java.util.regex.Pattern;
 public class GenRandomTreeArt extends AGenerator {
 	private Random mySeededRandom;
 	private int generatedSeed;
-	private karyTree myRandomTree;
-
-	/**
-	 * 
-	 */
-	protected SideBarRTree guiSideBar;
-
-	/**
-	 * 
-	 */
-	protected Random rand;
-
-	/**
-	 * 
-	 */
-	protected int maxXPixel;
-	/**
-	 * 
-	 */
-	protected int maxYPixel;
-
-	/**
-	 * 
-	 */
-	protected List<String> FormulaOneVar = new ArrayList<>(Arrays.asList("SINX", "COSX", "SINY", "COSY"));
-	/**
-	 * 
-	 */
-	protected List<String> FormulaTwoVar = new ArrayList<>(
-			Arrays.asList("SINXPLUSY", "COSXPLUSY", "XTIMESY", "SINCOSXPLUSY", "XTOTHEPOWEROFY", "XSQUAREPLUSYSQUARE", "XSQUARETIMESYSQUARE"));
-	/**
-	 * 
-	 */
-	protected List<String> FormulaAll = new ArrayList<>();
+	private SideBarRTree guiSideBar;
+	private int maxXPixel;
+	private int maxYPixel;
+	private MathRTreeArt myMathRTreeArt;
 
 	/**
 	 * Constructor for a random tree art generator.
@@ -74,7 +42,6 @@ public class GenRandomTreeArt extends AGenerator {
 		this.setMnemonicChar('R');
 		this.setMainCanvas(mainCanvas);
 		initSideBarPanel();
-		this.rand = new Random();
 		this.setGenType(GlobalSettings.GeneratorType.RTREE);
 
 		guiSideBar = new SideBarRTree(new ActionListener() {
@@ -84,22 +51,7 @@ public class GenRandomTreeArt extends AGenerator {
 			}
 		});
 
-		FormulaAll.addAll(FormulaOneVar);
-		FormulaAll.addAll(FormulaTwoVar);
-
 		createSideBarGUI();
-	}
-
-	/**
-	 * Create kary tree with random formula in tree root, then call method to
-	 * fill tree.
-	 *
-	 */
-	private void createRandomKaryTree() {
-		int treeDepth = guiSideBar.getGenerations();
-		String randomFormula = receiveRandomString(FormulaAll);
-		myRandomTree = new karyTree(randomFormula, null, null);
-		fillRandomTree(myRandomTree, treeDepth - 1);
 	}
 
 	@Override
@@ -137,17 +89,14 @@ public class GenRandomTreeArt extends AGenerator {
 				double yDouble = y;
 				Color rgbCalc;
 
-				double colorDouble = recursiveColorValCalc(xDouble, yDouble, myRandomTree.getFormula(),
-						guiSideBar.getGenerations(), myRandomTree);
+				double colorDouble = myMathRTreeArt.startRecCalc(xDouble, yDouble);
 
 				if (colorDouble > 1.0) {
 					colorDouble = 1.0;
-					System.out.println("is Bigger 1");
-					
+
 				}
 				if (colorDouble < 0) {
 					colorDouble = 0.0;
-					System.out.println("is Negative");
 				}
 
 				rgbVal = (int) (colorDouble * 16777215.0);
@@ -213,57 +162,6 @@ public class GenRandomTreeArt extends AGenerator {
 
 	}
 
-	/**
-	 * Fill kary tree nodes with math formulas or make leave according to
-	 * root/node formula and input tree depth.
-	 *
-	 * @param inRoot Node which will be added to or becomes leave
-	 * @param inDepth tree depth from user input
-	 */
-	private void fillRandomTree(karyTree inRoot, int inDepth) {
-
-		karyTree child;
-		karyTree child2;
-
-		if (inDepth >= 0) {
-			String wahlFormel;
-
-			if (FormulaOneVar.contains(inRoot.getFormula()) && inDepth > 0) {
-				wahlFormel = receiveRandomString(FormulaAll);
-				child = new karyTree(wahlFormel, null, null);
-				inRoot.setBothChilds(child, null);
-
-				fillRandomTree(child, inDepth - 1);
-			} else if (FormulaOneVar.contains(inRoot.getFormula()) && inDepth == 0) {
-				wahlFormel = receiveRandomString(FormulaOneVar);
-				child = new karyTree(wahlFormel, null, null);
-				inRoot.setBothChilds(child, null);
-
-				fillRandomTree(child, inDepth - 1);
-			}
-
-			if (FormulaTwoVar.contains(inRoot.getFormula()) && inDepth > 0) {
-				wahlFormel = receiveRandomString(FormulaAll);
-				child = new karyTree(wahlFormel, null, null);
-
-				wahlFormel = receiveRandomString(FormulaAll);
-				child2 = new karyTree(wahlFormel, null, null);
-				inRoot.setBothChilds(child, child2);
-
-				fillRandomTree(child, inDepth - 1);
-				fillRandomTree(child2, inDepth - 1);
-			} else if (FormulaTwoVar.contains(inRoot.getFormula()) && inDepth == 0) {
-				wahlFormel = receiveRandomString(FormulaOneVar);
-
-				child = new karyTree(wahlFormel, null, null);
-				wahlFormel = receiveRandomString(FormulaOneVar);
-
-				child2 = new karyTree(wahlFormel, null, null);
-				inRoot.setBothChilds(child, child2);
-			}
-		}
-	}
-
 	@Override
 	public String getFilePath() {
 		// generate name for image with generator values to save into name
@@ -285,139 +183,6 @@ public class GenRandomTreeArt extends AGenerator {
 		outPath.append(seperator);
 		outPath.append(".png");
 		return outPath.toString();
-	}
-
-	/**
-	 * Choose a random entry in a list and return.
-	 *
-	 * @param inList
-	 * @return String with one random formula
-	 */
-	private String receiveRandomString(List<String> inList) {
-		int randomNum;
-		randomNum = mySeededRandom.nextInt(inList.size());
-		String randomFormula = inList.get(randomNum);
-		return randomFormula;
-	}
-
-	/**
-	 * Calculation of pixel color by recursive RTree traversal.
-	 *
-	 * @param inX x-pixel coordinate
-	 * @param inY y-pixel coordinate
-	 * @param inFormula math formula to process
-	 * @param TreeDepth current tree depth
-	 * @param myKaryTree k-ary tree for calculations
-	 * @return Double color value
-	 */
-	public double recursiveColorValCalc(double inX, double inY, String inFormula, Integer TreeDepth,
-			karyTree myKaryTree) {
-
-		int TreeDepthNew = TreeDepth;
-
-		if ((myKaryTree.getLeftChild() != null) && (FormulaOneVar.contains(inFormula))) {
-
-			switch (inFormula) {
-			// Einwert
-			case "SINX":
-				return Math.sin(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-						myKaryTree.getLeftChild()));
-			case "SINY":
-				return Math.sin(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-						myKaryTree.getLeftChild()));
-			case "COSX":
-				return Math.cos(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-						myKaryTree.getLeftChild()));
-			case "COSY":
-				return Math.cos(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-						myKaryTree.getLeftChild()));
-
-			default:
-				throw new AssertionError();
-			}
-		} else {
-			if ((myKaryTree.getLeftChild() != null) && (myKaryTree.getRightChild() != null)) {
-
-				switch (inFormula) {
-				// One value formula
-				case "SINX":
-					return Math
-							.sin(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-									myKaryTree.getLeftChild()));
-				case "SINY":
-					return Math
-							.sin(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-									myKaryTree.getLeftChild()));
-				case "COSX":
-					return Math
-							.cos(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-									myKaryTree.getLeftChild()));
-				case "COSY":
-					return Math
-							.cos(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-									myKaryTree.getLeftChild()));
-
-				// Two value formula
-				case "XTIMESY":
-					return (recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-							myKaryTree.getLeftChild())
-							* recursiveColorValCalc(inX, inY, myKaryTree.getRightChild().getFormula(), TreeDepth,
-									myKaryTree.getRightChild()));
-				case "COSXPLUSY":
-					return Math
-							.cos(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-									myKaryTree.getLeftChild())
-									+ recursiveColorValCalc(inX, inY, myKaryTree.getRightChild().getFormula(),
-											TreeDepth,
-											myKaryTree.getRightChild()) / 2);
-				case "SINXPLUSY":
-					return Math
-							.sin(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-									myKaryTree.getLeftChild())
-									+ recursiveColorValCalc(inX, inY, myKaryTree.getRightChild().getFormula(),
-											TreeDepth,
-											myKaryTree.getRightChild()) / 2);
-				case "SINCOSXPLUSY":
-					return Math.sin(Math.cos(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(),
-							TreeDepthNew, myKaryTree.getLeftChild())
-							+ recursiveColorValCalc(inX, inY, myKaryTree.getRightChild().getFormula(), TreeDepth,
-									myKaryTree.getRightChild())));
-				case "XTOTHEPOWEROFY":
-					return (Math
-							.pow(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-									myKaryTree.getLeftChild()),
-									recursiveColorValCalc(inX, inY, myKaryTree.getRightChild().getFormula(),
-											TreeDepthNew, myKaryTree.getRightChild())));
-				case "XSQUAREPLUSYSQUARE":
-					return (Math
-							.pow(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-									myKaryTree.getLeftChild()), 2)
-							+ Math.pow(recursiveColorValCalc(inX, inY, myKaryTree.getRightChild().getFormula(),
-									TreeDepthNew, myKaryTree.getRightChild()), 2));
-				case "XSQUARETIMESYSQUARE":
-					return (Math
-							.pow(recursiveColorValCalc(inX, inY, myKaryTree.getLeftChild().getFormula(), TreeDepthNew,
-									myKaryTree.getLeftChild()), 2)
-							* Math.pow(recursiveColorValCalc(inX, inY, myKaryTree.getRightChild().getFormula(),
-									TreeDepthNew, myKaryTree.getRightChild()), 2));
-
-				default:
-					throw new AssertionError();
-				}
-			}
-		}
-
-		if ((myKaryTree.getLeftChild() == null) && (myKaryTree.getRightChild() == null)) {
-			if (inFormula.equals("SINX") || inFormula.equals("COSX")) {
-				return (inX / maxXPixel);
-			} else {
-				return (inY / maxYPixel);
-			}
-		} else {
-
-			return 1.0;
-		}
-
 	}
 
 	@Override
@@ -452,7 +217,8 @@ public class GenRandomTreeArt extends AGenerator {
 			maxXPixel = guiSideBar.getWidth();
 			maxYPixel = guiSideBar.getHeight();
 
-			createRandomKaryTree();
+			myMathRTreeArt = new MathRTreeArt(mySeededRandom, guiSideBar.getGenerations(), maxXPixel, maxYPixel);
+
 			updateScreenPanel();
 
 		} catch (OutOfMemoryError e) {

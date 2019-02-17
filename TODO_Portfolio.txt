@@ -2,13 +2,12 @@
 ** TODO Portfolio 2019 **
 *************************
 
-
+- - MVC split MC further
+-f- GOL generation label counter
 - - split turtle drawer from LSystem
 - - LSystem Alphabet textfield unnecessary
 - - Update all html description text of generators with helpful howto
-
 -f- RTree choose math formula in gui
--f- class with math formulas for RandomTreeArt
 -f- GOL make calculations methods top left etc
 -f- multi-threaded calculations
 
@@ -16,8 +15,8 @@
 - - L-system split scale factor into own method
 - - L-system drawing function take 4 inputs
 -f- custom color panel
-- - MVC split MC further
 /////////////////DONE//////////////////////////////////
++f- class with math formulas for RandomTreeArt
 + - change protected vars in abstract to private with getter/setter
 +b- LSystem What if letter occurs more than 1 time rules?
 +b- LSystem check "[]" order and even number for productionRules

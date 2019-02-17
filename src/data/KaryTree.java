@@ -6,12 +6,12 @@ package data;
  *
  * @author BenGe47
  */
-public class karyTree {
+public class KaryTree {
 
 	private String cargoFormula;
-	private karyTree left;
-	private karyTree center;
-	private karyTree right;
+	private KaryTree left;
+	private KaryTree center;
+	private KaryTree right;
 
 	/**
 	 * Constructor for a binary tree.
@@ -20,7 +20,7 @@ public class karyTree {
 	 * @param left first child node
 	 * @param right second child node
 	 */
-	public karyTree(String cargo, karyTree left, karyTree right) {
+	public KaryTree(String cargo, KaryTree left, KaryTree right) {
 		this.cargoFormula = cargo;
 		this.left = left;
 		this.right = right;
@@ -34,7 +34,7 @@ public class karyTree {
 	 * @param right third child node
 	 * @param center second child node
 	 */
-	public karyTree(String cargo, karyTree left, karyTree right, karyTree center) {
+	public KaryTree(String cargo, KaryTree left, KaryTree right, KaryTree center) {
 		this.cargoFormula = cargo;
 		this.left = left;
 		this.center = center;
@@ -46,7 +46,7 @@ public class karyTree {
 	 *
 	 * @return center child node
 	 */
-	public karyTree getCenterChild() {
+	public KaryTree getCenterChild() {
 		return center;
 	}
 
@@ -64,7 +64,7 @@ public class karyTree {
 	 *
 	 * @return left child node
 	 */
-	public karyTree getLeftChild() {
+	public KaryTree getLeftChild() {
 		return left;
 	}
 
@@ -73,7 +73,7 @@ public class karyTree {
 	 *
 	 * @return right child node
 	 */
-	public karyTree getRightChild() {
+	public KaryTree getRightChild() {
 		return right;
 	}
 
@@ -96,7 +96,7 @@ public class karyTree {
 	 * @param left is first new child node
 	 * @param right is second new child node
 	 */
-	public void setBothChilds(karyTree left, karyTree right) {
+	public void setBothChilds(KaryTree left, KaryTree right) {
 		this.right = right;
 		this.left = left;
 	}
@@ -115,7 +115,7 @@ public class karyTree {
 	 *
 	 * @param left is new child node
 	 */
-	public void setLeftChild(karyTree left) {
+	public void setLeftChild(KaryTree left) {
 		this.left = left;
 	}
 
@@ -124,7 +124,7 @@ public class karyTree {
 	 *
 	 * @param right is new child node
 	 */
-	public void setRightChild(karyTree right) {
+	public void setRightChild(KaryTree right) {
 		this.right = right;
 	}
 
@@ -135,7 +135,7 @@ public class karyTree {
 	 * @param center is third new child node
 	 * @param right is second new child node
 	 */
-	public void setThreeChilds(karyTree left, karyTree center, karyTree right) {
+	public void setThreeChilds(KaryTree left, KaryTree center, KaryTree right) {
 		this.right = right;
 		this.center = center;
 		this.left = left;
