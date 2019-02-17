@@ -4,7 +4,7 @@ import generator.GameOfLife;
 import generator.IGenerator;
 import generator.GenLSystem;
 import generator.NagelSchreckenberg;
-import generator.RandomTreeArt;
+import generator.GenRandomTreeArt;
 import generator.TestShapes;
 import generator.Wolfram;
 import gui.MainCanvasPanel;
@@ -43,7 +43,7 @@ public class ProgramStart {
 		generators.add(new NagelSchreckenberg(centerImagePanel, "Nagel-Schreckenberg"));
 		generators.add(new Wolfram(centerImagePanel, "Wolfram's Rule 30 "));
 		generators.add(new TestShapes(centerImagePanel, "Shapes Generator"));
-		generators.add(new RandomTreeArt(centerImagePanel, "Random-Tree Art (2-Leaf)"));
+		generators.add(new GenRandomTreeArt(centerImagePanel, "Random-Tree Art (2-Leaf)"));
 		generators.add(new GenLSystem(centerImagePanel, "Lindenmayer system"));
 		generators.add(new GameOfLife(centerImagePanel, "Conway's Game of Life"));
 

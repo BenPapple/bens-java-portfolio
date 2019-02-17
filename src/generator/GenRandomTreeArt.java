@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  *
  * @author BenGe47
  */
-public class RandomTreeArt extends AGenerator {
+public class GenRandomTreeArt extends AGenerator {
 	private Random mySeededRandom;
 	private int generatedSeed;
 	private karyTree myRandomTree;
@@ -69,7 +69,7 @@ public class RandomTreeArt extends AGenerator {
 	 * @param mainCanvas Inject MainCanvasPanel
 	 * @param name Name of this generator
 	 */
-	public RandomTreeArt(MainCanvasPanel mainCanvas, String name) {
+	public GenRandomTreeArt(MainCanvasPanel mainCanvas, String name) {
 		this.setName(name);
 		this.setMnemonicChar('R');
 		this.setMainCanvas(mainCanvas);
@@ -460,7 +460,7 @@ public class RandomTreeArt extends AGenerator {
 			updateStatus(GlobalSettings.Status.ERROR);
 			guiSideBar.setButtonsReady();
 		} catch (InterruptedException ex) {
-			Logger.getLogger(RandomTreeArt.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(GenRandomTreeArt.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
 		guiSideBar.setButtonsReady();
