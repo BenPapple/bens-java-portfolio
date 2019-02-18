@@ -1,5 +1,8 @@
 # Read Me Ben's Portfolio
-Portfolio java collection of graphical generators in an uniform swing GUI.
+**Portfolio java** collection of graphical generators in an uniform **swing** GUI. The structure mostly follows the **model-view-controller** pattern. 
+Package **gui** is the view, package **data** the model and package **generator** and **program** the model.
+
+Following generators are implemented:
 + Wolfram cellular automaton
 + Conway's Game of Life
 + Nagel-Schreckenberg model
@@ -7,8 +10,7 @@ Portfolio java collection of graphical generators in an uniform swing GUI.
 + Random-Tree art
 
 ## Getting Started
-+ Run in Netbeans directly or as imported zip.
-+ Run PortfolioMenuTest.jar directly.
++ Run as imported zip.
 
 ### Prerequisites
 + JRE 1.8+
