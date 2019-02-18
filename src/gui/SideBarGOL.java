@@ -142,7 +142,7 @@ public class SideBarGOL extends ASideBar {
 	public Boolean isEdgeWrapAround() {
 		return cbEdgeWrapAround.isSelected();
 	}
-	
+
 	/**
 	 * Set number of generations into label.
 	 * 
@@ -166,7 +166,16 @@ public class SideBarGOL extends ASideBar {
 		sliderSpeed.setPreferredSize(new Dimension(150, 80));
 		super.setTaDescriptionText(
 				"<b>Conway's Game of Life</b>"
-						+ "<br><br>Implements Conway's Game of Life cellular automaton.");
+						+ "<br><br>Implements  John Horton Conway's Game of Life cellular automaton."
+						+ "<br><i>Randomness</i> determines how many <b>cells</b> are <b>alive</b> in the first generation,"
+						+ " it can be set in the 0.0 to 1.0 range(equal to 0 to 100%)."
+						+ "<br>The amount of living and dead cells from it's <b>8 neighbours</b> determines if a cell dies or "
+						+ "stays alive in a <b>new generation</b>:"
+						+ "<ul><li>A dead cell with 3 living neighbors becomes alive.</li>"
+						+ "<li>Alive cells with less than two living neighbouring cells die.</li>"
+						+ "<li>Alive cells with two or three living neighbouring cells stays alive.</li>"
+						+ "<li>An alive cell with more than 3 living neighbors dies.</li>"
+						+ "</ul>");
 		super.setWidth(150);
 		super.setHeight(150);
 		super.setColor(Color.decode("#CC00CC"));

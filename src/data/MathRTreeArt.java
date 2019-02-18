@@ -16,17 +16,18 @@ public class MathRTreeArt {
 
 	private int maxXPixel;
 	private int maxYPixel;
-	// private List<String> FormulaOneVar = new
-	// ArrayList<>(Arrays.asList("SINX", "COSX", "ABSCOSX", "ABSSINX",
-	// "SQUARE"));
-	// private List<String> FormulaTwoVar = new ArrayList<>(
-	// Arrays.asList("SINXPLUSY", "COSXPLUSY", "XTIMESY", "SINCOSXPLUSY",
-	// "XTOTHEPOWEROFY", "XSQUAREPLUSYSQUARE",
-	// "XSQUARETIMESYSQUARE", "XPLUSYPLUSDMOD1", "MAXXY", "MINXY", "MAXXPLUSY" ,
-	// "AVGXY"));
-	private List<String> FormulaOneVar = new ArrayList<>(Arrays.asList( "SINX", "SQUARE"));
+	private List<String> FormulaOneVar = new ArrayList<>(Arrays.asList("SINX", "COSX", "ABSCOSX", "ABSSINX",
+			"SQUARE"));
 	private List<String> FormulaTwoVar = new ArrayList<>(
-			Arrays.asList("XPLUSYPLUSDMOD1", "MAXXY", "MINXY", "MAXXPLUSY", "AVGXY", "XTIMESYTIMESD"));
+			Arrays.asList("SINXPLUSY", "COSXPLUSY", "XTIMESY", "SINCOSXPLUSY",
+					"XTOTHEPOWEROFY", "XSQUAREPLUSYSQUARE",
+					"XSQUARETIMESYSQUARE", "XPLUSYPLUSDMOD1", "MAXXY", "MINXY", "MAXXPLUSY",
+					"AVGXY", "XTIMESYTIMESD"));
+	// private List<String> FormulaOneVar = new ArrayList<>(Arrays.asList(
+	// "SINX", "SQUARE"));
+	// private List<String> FormulaTwoVar = new ArrayList<>(
+	// Arrays.asList("XPLUSYPLUSDMOD1", "MAXXY", "MINXY", "MAXXPLUSY", "AVGXY",
+	// "XTIMESYTIMESD"));
 
 	private List<String> FormulaAll = new ArrayList<>();
 	private KaryTree myRandomTree;

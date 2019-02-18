@@ -245,8 +245,18 @@ public class SideBarLSystem extends ASideBar {
 		super.setColor(Color.YELLOW);
 		super.setBGColor(Color.BLACK);
 		super.setTaDescriptionText("<b>Lindenmayer-system</b>"
-				+ "<br><br>Implements a Lindenmayer-system."
-				+ "<br>Allowed symbols: A B C D E F + - [ ]");
+				+ "<br><br>Allowed symbols: <b>A to Z, +, -, [, ]</b>"
+				+ "<br>A letter can be assigned a <i>production rule</i>. <b>(A,A+B)</b> assigns the letter "
+				+ "A the production rule <i>A+B</i>"
+				+ "<br>The letters in the <i>Starting Sequences</i> can then by user input <i>Iterations</i> times be "
+				+ "replaced again and again with their corresponding production rules.</i>"
+				+ "<br>Every <b>letter</b> draws a line. The <b>plus sign</b> adds the user input <i>Angle</i> "
+				+ "and the <b>minus sign</b> substracts it from the line angle."
+				+ "<b>[</b> pushes xy and current angle onto stack and <b>]</b> pops them from a stack and restores "
+				+ "them into current angle and xy."
+				+ "<br>This is then used by a drawing turtle to draw on a screen with xy coordinates and an angle "
+				+ "for the line. The ending of the line "
+				+ "becomes the new xy coordinate.");
 	}
 
 }

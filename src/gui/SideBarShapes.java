@@ -81,8 +81,9 @@ public class SideBarShapes extends ASideBar {
 		super.setLblHeightText("Enter Pixel Height");
 		super.setTaDescriptionText(
 				"<b>Simple shape generator</b>"
-						+ "<br><br>" + "Most simple generator to easily understand how classes "
-						+ "(generator and gui) interact to create generators.");
+						+ "<br><br>" + "Most <b>simple generator</b> to easily understand how classes "
+						+ "(generator and gui) interact to <b>create generators</b>."
+						+ "<br>Aside from that it does nothing useful. Except drawing some simple boring shapes.");
 
 		super.setWidth(300);
 		super.setHeight(200);

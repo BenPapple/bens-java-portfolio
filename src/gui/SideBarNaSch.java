@@ -137,7 +137,25 @@ public class SideBarNaSch extends ASideBar {
 		sliderSpeed1.setPreferredSize(new Dimension(150, 80));
 		super.setTaDescriptionText("<b>Nagel-Schreckenberg Cellular Automaton</b>"
 				+ "<br><br>"
-				+ "Implements Nagel-Schreckenberg's cellular automaton.");
+				+ "This CA <b>simulates traffic</b> on a ring street(<b>pixel row</b>). "
+				+ "The car speed is shown with following colors:"
+				+ "<br>"
+				+ "<font color=\"red\">Car speed 0</font>"
+				+ "<br>"
+				+ "<font color=\"orange\">Car speed 1</font>"
+				+ "<br>"
+				+ "<font color=\"yellow\">Car speed 2</font>"
+				+ "<br>"
+				+ "<font color=\"green\">Car speed 3</font>"
+				+ "<br>"
+				+ "<font color=\"blue\">Car speed 4</font>"
+				+ "<br>"
+				+ "<font color=\"purple\">Car speed 5</font>"
+				+ "<br>"
+				+ "Every new row:<ul> <li>Every car gets accelerated by 1 to a max speed of 5.</li> <li>If the new speed is "
+				+ "higher than the distance to the next car the speed is set to be equal to the distance.</li> <li>Last "
+				+ "every car can be decelerated by 1, this is determined by user input <i>Brake Randomness</i> chance.</li></ul>"
+		);
 
 		super.setWidth(500);
 		super.setHeight(300);

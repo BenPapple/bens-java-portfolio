@@ -303,7 +303,14 @@ public class SideBarWolfram extends ASideBar implements ActionListener {
 		// taDescription.setPreferredSize(new Dimension(310, 150));
 		super.setTaDescriptionText("<b>Wolfram Cellular Automaton</b>"
 				+ "<br><br>"
-				+ "Implements Stephen Wolfram's cellular automaton<br> with all 256 rules.");
+				+ "Implemented with all <b>256 possible rules</b>. "
+				+ "Rules can be set by the <b>8bits</b> under <i>Wolfram Rules</i>."
+				+ "<br>The check mark determines if a cell is <b>alive(checked)</b> or <b>dead(unchecked)</b> when following"
+				+ " 3 predecessors(topleft, top, topright) are alive(1) or dead(0)."
+				+ "<br>Bit7: 111 -- Bit6: 110 -- Bit5: 101 -- Bit4: 100	<br>Bit3: 011 -- Bit2: 010 -- Bit1: 001 -- Bit0: 000"
+				+ "<br><i>Initial randomness</i> determines how many set pixels get spawned in the first row."
+
+		);
 
 		super.setWidth(850);
 		super.setHeight(450);
