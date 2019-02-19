@@ -2,7 +2,7 @@
 ** TODO Portfolio 2019 **
 *************************
 
-- - MVC split MC further(GOL, Wolfram, NaSch)
+- - MVC split MC further(Wolfram, NaSch)
 - - split turtle drawer from LSystem
 * * release 1.0
 - - fill abstract CA generator classes with more vars and methods
@@ -15,6 +15,7 @@
 - - L-system drawing function take 4 inputs
 -f- custom color panel
 /////////////////DONE//////////////////////////////////
++ - MVC split MC further(GOL)
 + - placeholder games
 + - Update all html description text of generators with helpful howto
 +f- GOL generation label counter

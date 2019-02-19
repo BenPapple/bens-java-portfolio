@@ -51,7 +51,10 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 		this.addToSidebar(guiSideBar.getSideBarPnl());
 	}
 
-	@Override
+	/**
+	 * Fill field with starting values.
+	 * 
+	 */
 	public void init2DField() {
 
 		Double rand;
@@ -102,7 +105,10 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 		}
 	}
 
-	@Override
+	/**
+	 * Calculate next iteration of field.
+	 * 
+	 */
 	public void nextGenField() {
 		int newSpeed;
 		int nextCarDistance;

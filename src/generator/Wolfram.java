@@ -95,7 +95,10 @@ public final class Wolfram extends AGeneratorCellular {
 		this.addToSidebar(guiSideBar.getSideBarPnl());
 	}
 
-	@Override
+	/**
+	 * Fill field with starting values.
+	 * 
+	 */
 	public void init2DField() {
 
 		Double rand;
@@ -123,7 +126,10 @@ public final class Wolfram extends AGeneratorCellular {
 		}
 	}
 
-	@Override
+	/**
+	 * Calculate next iteration of field.
+	 * 
+	 */
 	public void nextGenField() {
 
 		if (guiSideBar.isEdgeWrapAround()) {

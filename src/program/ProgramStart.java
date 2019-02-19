@@ -1,6 +1,6 @@
 package program;
 
-import generator.GameOfLife;
+import generator.GenGameOfLife;
 import generator.IGenerator;
 import generator.GenLSystem;
 import generator.NagelSchreckenberg;
@@ -45,7 +45,7 @@ public class ProgramStart {
 		generators.add(new TestShapes(centerImagePanel, "Shapes Generator"));
 		generators.add(new GenRandomTreeArt(centerImagePanel, "Random-Tree Art (2-Leaf)"));
 		generators.add(new GenLSystem(centerImagePanel, "Lindenmayer system"));
-		generators.add(new GameOfLife(centerImagePanel, "Conway's Game of Life"));
+		generators.add(new GenGameOfLife(centerImagePanel, "Conway's Game of Life"));
 
 		// Show GUI and construct it with ArrayList generators
 		SwingUtilities.invokeLater(() -> {
