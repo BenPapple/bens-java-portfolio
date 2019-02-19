@@ -309,7 +309,7 @@ public class MainWindow extends JFrame implements Observer {
 
 		JTextPane taAbout = new JTextPane();
 		taAbout.setContentType("text/html");
-		taAbout.setText("\n <b>Version 19.037</b> " + "<br><br>Author: BenGe47" + "<br>E-Mail: @googlemail.com"
+		taAbout.setText("\n <b>Version v1.0.19.050</b> " + "<br><br>Author: BenGe47" + "<br>E-Mail: -/-"
 				+ "<br><br>Copyright 2019");
 		taAbout.setOpaque(false);
 		taAbout.setEditable(false);

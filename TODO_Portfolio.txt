@@ -2,9 +2,7 @@
 ** TODO Portfolio 2019 **
 *************************
 
-- - MVC split MC further(NaSch)
 - - split turtle drawer from LSystem
-* * release 1.0
 
 -f- RTree choose math formula in gui
 -f- multi-threaded calculations
@@ -14,6 +12,8 @@
 - - L-system drawing function take 4 inputs
 -f- custom color panel
 /////////////////DONE//////////////////////////////////
+* * release 1.0
++ - MVC split MC further(NaSch)
 + - MVC split MC further(Wolfram)
 + - fill abstract CA generator classes with more vars and methods, or remove
 + - MVC split MC further(GOL)

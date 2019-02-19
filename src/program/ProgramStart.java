@@ -20,7 +20,7 @@ import javax.swing.SwingUtilities;
  * automatons, L-systems and generative art programs in a GUI environment.
  *
  * @author BenGe47
- * @version %I%, %G% 19.057
+ * @version 1.0.19.050
  */
 public class ProgramStart {
 

@@ -25,7 +25,7 @@ import javax.swing.border.Border;
 public class SideBarWolfram extends ASideBar implements ActionListener {
 
 	private static JLabel lblRandomness1 = new JLabel("Enter Randomness:");
-	private static JTextField tfRandomness1 = new JTextField("0.33");
+	private static JTextField tfRandomness1 = new JTextField("0.01");
 	private static JLabel lblSpeed1 = new JLabel("Speed(in ms wait):");
 	private static JSlider sliderSpeed1 = new JSlider();
 	private static JCheckBox cbEdgeDead1 = new JCheckBox("Dead Cells Edge", true);
