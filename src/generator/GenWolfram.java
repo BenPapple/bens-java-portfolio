@@ -1,12 +1,14 @@
 package generator;
 
 import data.GlobalSettings;
+import data.Wolfram;
 import gui.MainCanvasPanel;
 import gui.SideBarWolfram;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.BitSet;
 import java.util.Random;
 
 /**
@@ -20,7 +22,8 @@ public final class GenWolfram extends AGenerator {
 	private SideBarWolfram guiSideBar;
 	private boolean[][] GridWorld;
 	private int pixelGap = 0;
-	private int currentRow;
+	private BitSet myWolframBits = new BitSet(8);
+	private Wolfram myWolfram;
 
 	/**
 	 * Constructor.
@@ -48,174 +51,9 @@ public final class GenWolfram extends AGenerator {
 		guiSideBar.clickRules();
 	}
 
-	/**
-	 * Calculates next generation of values for all lines except the edge value
-	 * on both sides.
-	 */
-	private void calculateInnerField() {
-		for (int x = 1; x < GridWorld.length - 1; x++) {
-			if ((GridWorld[x - 1][currentRow - 1] == true) && (GridWorld[x][currentRow - 1] == true)
-					&& (GridWorld[x + 1][currentRow - 1] == true)) {
-				GridWorld[x][currentRow] = guiSideBar.isCB0();
-			}
-			if ((GridWorld[x - 1][currentRow - 1] == true) && (GridWorld[x][currentRow - 1] == true)
-					&& (GridWorld[x + 1][currentRow - 1] == false)) {
-				GridWorld[x][currentRow] = guiSideBar.isCB1();
-			}
-			if ((GridWorld[x - 1][currentRow - 1] == true) && (GridWorld[x][currentRow - 1] == false)
-					&& (GridWorld[x + 1][currentRow - 1] == true)) {
-				GridWorld[x][currentRow] = guiSideBar.isCB2();
-			}
-			if ((GridWorld[x - 1][currentRow - 1] == true) && (GridWorld[x][currentRow - 1] == false)
-					&& (GridWorld[x + 1][currentRow - 1] == false)) {
-				GridWorld[x][currentRow] = guiSideBar.isCB3();
-			}
-			if ((GridWorld[x - 1][currentRow - 1] == false) && (GridWorld[x][currentRow - 1] == true)
-					&& (GridWorld[x + 1][currentRow - 1] == true)) {
-				GridWorld[x][currentRow] = guiSideBar.isCB4();
-			}
-			if ((GridWorld[x - 1][currentRow - 1] == false) && (GridWorld[x][currentRow - 1] == true)
-					&& (GridWorld[x + 1][currentRow - 1] == false)) {
-				GridWorld[x][currentRow] = guiSideBar.isCB5();
-			}
-			if ((GridWorld[x - 1][currentRow - 1] == false) && (GridWorld[x][currentRow - 1] == false)
-					&& (GridWorld[x + 1][currentRow - 1] == true)) {
-				GridWorld[x][currentRow] = guiSideBar.isCB6();
-			}
-			if ((GridWorld[x - 1][currentRow - 1] == false) && (GridWorld[x][currentRow - 1] == false)
-					&& (GridWorld[x + 1][currentRow - 1] == false)) {
-				GridWorld[x][currentRow] = guiSideBar.isCB7();
-			}
-		}
-		currentRow += 1;
-	}
-
 	@Override
 	public void createSideBarGUI() {
 		this.addToSidebar(guiSideBar.getSideBarPnl());
-	}
-
-	/**
-	 * Fill field with starting values.
-	 * 
-	 */
-	public void init2DField() {
-
-		Double rand;
-		currentRow = 1;
-		GridWorld = new boolean[guiSideBar.getWidth()][guiSideBar.getHeight()];
-		try {
-			rand = Double.parseDouble((guiSideBar.getRandomness()));
-
-			if (((rand < 0) || ((rand > 1.0)))) {
-				throw new NumberFormatException();
-			}
-
-			if (!guiSideBar.isEdgeWrapAround()) {
-				for (int x = 1; x < GridWorld.length - 1; x++) {
-					GridWorld[x][0] = Math.random() <= rand;
-				}
-			} else {
-				for (int x = 0; x < GridWorld.length; x++) {
-					GridWorld[x][0] = Math.random() <= rand;
-				}
-			}
-
-		} catch (NumberFormatException ne) {
-			updateStatus(GlobalSettings.Status.ERROR);
-		}
-	}
-
-	/**
-	 * Calculate next iteration of field.
-	 * 
-	 */
-	public void nextGenField() {
-
-		if (guiSideBar.isEdgeWrapAround()) {
-
-			// Left Edge
-			if ((GridWorld[GridWorld.length - 1][currentRow - 1] == true) && (GridWorld[0][currentRow - 1] == true)
-					&& (GridWorld[0 + 1][currentRow - 1] == true)) {
-				GridWorld[0][currentRow] = (Boolean) guiSideBar.isCB0();
-			}
-			if ((GridWorld[GridWorld.length - 1][currentRow - 1] == true) && (GridWorld[0][currentRow - 1] == true)
-					&& (GridWorld[0 + 1][currentRow - 1] == false)) {
-				GridWorld[0][currentRow] = (Boolean) guiSideBar.isCB1();
-			}
-			if ((GridWorld[GridWorld.length - 1][currentRow - 1] == true) && (GridWorld[0][currentRow - 1] == false)
-					&& (GridWorld[0 + 1][currentRow - 1] == true)) {
-				GridWorld[0][currentRow] = (Boolean) guiSideBar.isCB2();
-			}
-			if ((GridWorld[GridWorld.length - 1][currentRow - 1] == true) && (GridWorld[0][currentRow - 1] == false)
-					&& (GridWorld[0 + 1][currentRow - 1] == false)) {
-				GridWorld[0][currentRow] = (Boolean) guiSideBar.isCB3();
-			}
-			if ((GridWorld[GridWorld.length - 1][currentRow - 1] == false) && (GridWorld[0][currentRow - 1] == true)
-					&& (GridWorld[0 + 1][currentRow - 1] == true)) {
-				GridWorld[0][currentRow] = (Boolean) guiSideBar.isCB4();
-			}
-			if ((GridWorld[GridWorld.length - 1][currentRow - 1] == false) && (GridWorld[0][currentRow - 1] == true)
-					&& (GridWorld[0 + 1][currentRow - 1] == false)) {
-				GridWorld[0][currentRow] = (Boolean) guiSideBar.isCB5();
-			}
-			if ((GridWorld[GridWorld.length - 1][currentRow - 1] == false) && (GridWorld[0][currentRow - 1] == false)
-					&& (GridWorld[0 + 1][currentRow - 1] == true)) {
-				GridWorld[0][currentRow] = (Boolean) guiSideBar.isCB6();
-			}
-			if ((GridWorld[GridWorld.length - 1][currentRow - 1] == false) && (GridWorld[0][currentRow - 1] == false)
-					&& (GridWorld[0 + 1][currentRow - 1] == false)) {
-				GridWorld[0][currentRow] = (Boolean) guiSideBar.isCB7();
-			}
-
-			// Right Edge
-			if ((GridWorld[GridWorld.length - 2][currentRow - 1] == true)
-					&& (GridWorld[GridWorld.length - 1][currentRow - 1] == true)
-					&& (GridWorld[0][currentRow - 1] == true)) {
-				GridWorld[GridWorld.length - 1][currentRow] = guiSideBar.isCB0();
-			}
-			if ((GridWorld[GridWorld.length - 2][currentRow - 1] == true)
-					&& (GridWorld[GridWorld.length - 1][currentRow - 1] == true)
-					&& (GridWorld[0][currentRow - 1] == false)) {
-				GridWorld[GridWorld.length - 1][currentRow] = guiSideBar.isCB1();
-			}
-			if ((GridWorld[GridWorld.length - 2][currentRow - 1] == true)
-					&& (GridWorld[GridWorld.length - 1][currentRow - 1] == false)
-					&& (GridWorld[0][currentRow - 1] == true)) {
-				GridWorld[GridWorld.length - 1][currentRow] = guiSideBar.isCB2();
-			}
-			if ((GridWorld[GridWorld.length - 2][currentRow - 1] == true)
-					&& (GridWorld[GridWorld.length - 1][currentRow - 1] == false)
-					&& (GridWorld[0][currentRow - 1] == false)) {
-				GridWorld[GridWorld.length - 1][currentRow] = guiSideBar.isCB3();
-			}
-			if ((GridWorld[GridWorld.length - 2][currentRow - 1] == false)
-					&& (GridWorld[GridWorld.length - 1][currentRow - 1] == true)
-					&& (GridWorld[0][currentRow - 1] == true)) {
-				GridWorld[GridWorld.length - 1][currentRow] = guiSideBar.isCB4();
-			}
-			if ((GridWorld[GridWorld.length - 2][currentRow - 1] == false)
-					&& (GridWorld[GridWorld.length - 1][currentRow - 1] == true)
-					&& (GridWorld[0][currentRow - 1] == false)) {
-				GridWorld[GridWorld.length - 1][currentRow] = guiSideBar.isCB5();
-			}
-			if ((GridWorld[GridWorld.length - 2][currentRow - 1] == false)
-					&& (GridWorld[GridWorld.length - 1][currentRow - 1] == false)
-					&& (GridWorld[0][currentRow - 1] == true)) {
-				GridWorld[GridWorld.length - 1][currentRow] = guiSideBar.isCB6();
-			}
-			if ((GridWorld[GridWorld.length - 2][currentRow - 1] == false)
-					&& (GridWorld[GridWorld.length - 1][currentRow - 1] == false)
-					&& (GridWorld[0][currentRow - 1] == false)) {
-				GridWorld[GridWorld.length - 1][currentRow] = guiSideBar.isCB7();
-			}
-
-			calculateInnerField();
-
-		} else {
-			calculateInnerField();
-
-		}
 	}
 
 	@Override
@@ -229,7 +67,11 @@ public final class GenWolfram extends AGenerator {
 			if (Double.parseDouble(guiSideBar.getRandomness()) >= 0.0
 					&& Double.parseDouble(guiSideBar.getRandomness()) <= 1.0) {
 
-				init2DField();
+				setWolframBits();
+				myWolfram = new Wolfram(guiSideBar.getWidth(), guiSideBar.getHeight(),
+						Double.parseDouble(guiSideBar.getRandomness()), guiSideBar.isEdgeWrapAround(), myWolframBits);
+
+				GridWorld = myWolfram.getGridWorld();
 
 				while (!guiSideBar.isStopped()) {
 
@@ -240,9 +82,10 @@ public final class GenWolfram extends AGenerator {
 					}
 
 					updateScreenPanel();
+					setWolframBits();
 
-					if (currentRow < GridWorld[0].length) {
-						nextGenField();
+					if (myWolfram.getCurrentRow() < GridWorld[0].length) {
+						myWolfram.calcNextGenField();
 					} else {
 						break;
 
@@ -271,6 +114,21 @@ public final class GenWolfram extends AGenerator {
 		}
 	}
 
+	/**
+	 * Convert 8 checkboxes for Wolfram rules into a bitset.
+	 * 
+	 */
+	private void setWolframBits() {
+		myWolframBits.set(0, guiSideBar.isCB0());
+		myWolframBits.set(1, guiSideBar.isCB1());
+		myWolframBits.set(2, guiSideBar.isCB2());
+		myWolframBits.set(3, guiSideBar.isCB3());
+		myWolframBits.set(4, guiSideBar.isCB4());
+		myWolframBits.set(5, guiSideBar.isCB5());
+		myWolframBits.set(6, guiSideBar.isCB6());
+		myWolframBits.set(7, guiSideBar.isCB7());
+	}
+
 	@Override
 	public void stopGenerator() {
 		guiSideBar.setStopped();
@@ -281,8 +139,8 @@ public final class GenWolfram extends AGenerator {
 	 * Draw dead/alive values from array into color squares on myCanvas.
 	 */
 	private void updateScreenPanel() {
-		BufferedImage image = new BufferedImage((guiSideBar.getWidth() * (MAXFIELDPIXEL + pixelGap)),
-				(guiSideBar.getHeight() * (MAXFIELDPIXEL + pixelGap)), BufferedImage.TYPE_INT_ARGB);
+		BufferedImage image = new BufferedImage((GridWorld.length * (MAXFIELDPIXEL + pixelGap)),
+				(GridWorld[0].length * (MAXFIELDPIXEL + pixelGap)), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = image.createGraphics();
 		g2d.setColor(guiSideBar.getColor());
 		for (int y = 0; y < GridWorld[0].length; y++) {

@@ -100,7 +100,7 @@ public final class NagelSchreckenberg extends AGenerator {
 		} catch (NumberFormatException ne) {
 			setErrorMsgText("InputError");
 			updateStatus(GlobalSettings.Status.ERROR);
-			 guiSideBar.setButtonsReady();
+			guiSideBar.setButtonsReady();
 
 		}
 	}

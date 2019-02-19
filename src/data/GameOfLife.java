@@ -5,9 +5,9 @@ public class GameOfLife {
 	private boolean[][] GridWorld;
 	private boolean[][] CalcGridWorld;
 	private Boolean isWrapEdge;
-	int cellWidth;
-	int cellHeight;
-	Double randomness;
+	private int cellWidth;
+	private int cellHeight;
+	private Double randomness;
 
 	/**
 	 * Constructor.

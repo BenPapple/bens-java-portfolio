@@ -82,6 +82,7 @@ public class GenGameOfLife extends AGenerator {
 					guiSideBar.setGenCounter(String.valueOf(genCounter));
 
 					myGOL.calcNextGenField();
+					// GridWorld = myGOL.getGridWorld();
 
 					while (guiSideBar.isPaused()) {
 						updateStatus(GlobalSettings.Status.PAUSED);
