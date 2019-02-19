@@ -2,7 +2,6 @@
 ** TODO Portfolio 2019 **
 *************************
 
-- - precalc postcalc method AGenerator
 - - MVC split MC further(GOL, Wolfram, NaSch)
 - - split turtle drawer from LSystem
 * * release 1.0
@@ -10,6 +9,7 @@
 
 -f- RTree choose math formula in gui
 -f- multi-threaded calculations
+- - precalc postcalc method AGenerator, but howto make guiSideBar in super class accessible?
 -f- GOL make calculations methods top left etc
 - - L-system split scale factor into own method
 - - L-system drawing function take 4 inputs

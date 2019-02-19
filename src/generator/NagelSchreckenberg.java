@@ -97,7 +97,7 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 		} catch (NumberFormatException ne) {
 			setErrorMsgText("InputError");
 			updateStatus(GlobalSettings.Status.ERROR);
-			// guiSideBar.setButtonsReady();
+			 guiSideBar.setButtonsReady();
 
 		}
 	}
@@ -151,15 +151,17 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 
 	@Override
 	public void run() {
+		startCalcTime();
+		updateStatus(GlobalSettings.Status.CALCULATING);
+		guiSideBar.setButtonsCalculating();
+
 		// check input double range
 		try {
 			if (Double.parseDouble(guiSideBar.getRandomness()) >= 0.0
 					&& Double.parseDouble(guiSideBar.getRandomness()) <= 1.0
 					&& Double.parseDouble(guiSideBar.getBrakeRandomness()) >= 0.0
 					&& Double.parseDouble(guiSideBar.getBrakeRandomness()) <= 1.0) {
-				startCalcTime();
-				updateStatus(GlobalSettings.Status.CALCULATING);
-				guiSideBar.setButtonsCalculating();
+
 				init2DField();
 
 				MAXFIELDPIXEL = guiSideBar.getSpeed();
@@ -190,14 +192,16 @@ public final class NagelSchreckenberg extends AGeneratorCellular {
 
 				}
 
-				guiSideBar.setButtonsReady();
 				endCalcTime();
+				guiSideBar.setButtonsReady();
 				updateStatus(GlobalSettings.Status.FINISHED);
 			} else {
 				showWarning("Randomness has to be in 0.0 to 1.0 range.");
+				guiSideBar.setButtonsReady();
 			}
 		} catch (Exception ne) {
 			showWarning("Randomness has to be in 0.0 to 1.0 range.");
+			guiSideBar.setButtonsReady();
 		}
 	}
 

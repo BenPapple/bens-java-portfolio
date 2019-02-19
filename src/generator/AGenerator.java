@@ -24,14 +24,14 @@ public abstract class AGenerator extends Observable implements IGenerator, Runna
 
 	private String generatorName;
 	private JPanel PanelSidebar;
-	private MainCanvasPanel myCanvas;	
+	private MainCanvasPanel myCanvas;
 	private GeneratorType generatorType;
 	private char myMnemonicKey;
 	private Instant startCalc, endCalc;
 	private long timeBetween = 0;
 	private GlobalSettings.Status status;
 	private String errorMsg;
-	
+
 	/**
 	 * Add inPanel to PanelSideBar.
 	 * 
@@ -40,7 +40,7 @@ public abstract class AGenerator extends Observable implements IGenerator, Runna
 	public void addToSidebar(JPanel inPanel) {
 		PanelSidebar.add(inPanel, BorderLayout.CENTER);
 	}
-	
+
 	/**
 	 * Initializes the GUI from another class in gui package that implements GUI
 	 * elements.

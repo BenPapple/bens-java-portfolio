@@ -96,7 +96,6 @@ public class GenRandomTreeArt extends AGenerator {
 					colorDouble = 1.0;
 
 				}
-				
 
 				rgbVal = (int) (colorDouble * 16777215.0);
 				rgbCalc = new Color(rgbVal);
@@ -188,6 +187,7 @@ public class GenRandomTreeArt extends AGenerator {
 	public void run() {
 		startCalcTime();
 		updateStatus(GlobalSettings.Status.CALCULATING);
+		guiSideBar.setButtonsCalculating();
 
 		// use user input seed
 		if (guiSideBar.usingFieldSeed()) {
@@ -208,8 +208,6 @@ public class GenRandomTreeArt extends AGenerator {
 			mySeededRandom = new Random(generatedSeed);
 		}
 
-		guiSideBar.setButtonsCalculating();
-
 		try {
 			Thread.sleep(50);
 
@@ -228,8 +226,8 @@ public class GenRandomTreeArt extends AGenerator {
 			Logger.getLogger(GenRandomTreeArt.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-		guiSideBar.setButtonsReady();
 		endCalcTime();
+		guiSideBar.setButtonsReady();
 		updateStatus(GlobalSettings.Status.FINISHED);
 
 	}

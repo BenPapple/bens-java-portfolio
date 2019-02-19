@@ -13,7 +13,7 @@ import java.util.List;
  *
  */
 public class LSystem {
-	
+
 	private HashMap<String, String> formulaMap = new HashMap<String, String>();
 	private String tempStartingSeq;
 	private int tempGenerations;

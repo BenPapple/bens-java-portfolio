@@ -84,6 +84,7 @@ public class TestShapes extends AGenerator {
 	public void run() {
 		startCalcTime();
 		updateStatus(GlobalSettings.Status.CALCULATING);
+		guiSideBar.setButtonsCalculating();
 
 		try {
 			Thread.sleep(50);
@@ -104,6 +105,7 @@ public class TestShapes extends AGenerator {
 
 		this.setMainCanvasToImage(image);
 		endCalcTime();
+		guiSideBar.setButtonsReady();
 		updateStatus(GlobalSettings.Status.FINISHED);
 	}
 

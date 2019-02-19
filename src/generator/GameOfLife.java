@@ -385,13 +385,15 @@ public class GameOfLife extends AGeneratorCellular {
 
 	@Override
 	public void run() {
+		startCalcTime();
+		updateStatus(GlobalSettings.Status.CALCULATING);
+		guiSideBar.setButtonsCalculating();
+
 		try {
 			// check input double range
 			if (Double.parseDouble(guiSideBar.getRandomness()) >= 0.0
 					&& Double.parseDouble(guiSideBar.getRandomness()) <= 1.0) {
-				startCalcTime();
-				updateStatus(GlobalSettings.Status.CALCULATING);
-				guiSideBar.setButtonsCalculating();
+
 				init2DField();
 				genCounter = 0;
 
@@ -416,14 +418,16 @@ public class GameOfLife extends AGeneratorCellular {
 					}
 					updateStatus(GlobalSettings.Status.CALCULATING);
 				}
-				guiSideBar.setButtonsReady();
 				endCalcTime();
+				guiSideBar.setButtonsReady();
 				updateStatus(GlobalSettings.Status.FINISHED);
 			} else {
 				showWarning("Randomness has to be in 0.0 to 1.0 range.");
+				guiSideBar.setButtonsReady();
 			}
 		} catch (Exception ne) {
 			showWarning("Randomness has to be in 0.0 to 1.0 range.");
+			guiSideBar.setButtonsReady();
 		}
 	}
 

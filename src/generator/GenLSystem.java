@@ -282,8 +282,8 @@ public class GenLSystem extends AGenerator {
 				}
 			}
 
-			guiSideBar.setButtonsReady();
 			endCalcTime();
+			guiSideBar.setButtonsReady();
 			updateStatus(GlobalSettings.Status.FINISHED);
 
 		} catch (OutOfMemoryError e) {
