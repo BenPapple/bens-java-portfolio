@@ -154,7 +154,7 @@ public class MathRTreeArt {
 	 * 
 	 * @return Double color value
 	 */
-	public double recursiveColorValCalc(double inX, double inY, String inFormula, Integer inTreeDepth,
+	private double recursiveColorValCalc(double inX, double inY, String inFormula, Integer inTreeDepth,
 			KaryTree inKaryTree) {
 
 		int TreeDepthNew = inTreeDepth;

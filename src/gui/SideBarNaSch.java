@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 /**
- * Sidebar for Wolfram generator class.
+ * Sidebar for NaSch generator class.
  *
  * @author BenGe47
  */
@@ -61,7 +61,7 @@ public class SideBarNaSch extends ASideBar {
 	 *
 	 * @return int of speed value
 	 */
-	public int getSpeed() {
+	public int getZoomFactor() {
 		return (int) sliderSpeed1.getValue();
 	}
 

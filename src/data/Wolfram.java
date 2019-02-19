@@ -2,6 +2,12 @@ package data;
 
 import java.util.BitSet;
 
+/**
+ * Creates a Wolfram cellular automaton from user input as an array.
+ * 
+ * @author BenGe47
+ *
+ */
 public class Wolfram {
 	private boolean[][] GridWorld;
 	private int currentRow;
@@ -77,7 +83,7 @@ public class Wolfram {
 	 * Fill field with starting values.
 	 * 
 	 */
-	public void init2DField() {
+	private void init2DField() {
 
 		Double rand;
 		currentRow = 1;

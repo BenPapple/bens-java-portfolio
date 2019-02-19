@@ -1,5 +1,11 @@
 package data;
 
+/**
+ * Creates Conway's Game of Life cellular automaton from user input as an array.
+ * 
+ * @author BenGe47
+ *
+ */
 public class GameOfLife {
 
 	private boolean[][] GridWorld;
@@ -40,7 +46,7 @@ public class GameOfLife {
 	 * Init field with starting values.
 	 * 
 	 */
-	public void init2DField() {
+	private void init2DField() {
 
 		Double rand;
 		GridWorld = new boolean[cellWidth][cellHeight];

@@ -116,8 +116,8 @@ public class GenGameOfLife extends AGenerator {
 	 *
 	 */
 	private void updateScreenPanel() {
-		BufferedImage image = new BufferedImage((guiSideBar.getWidth() * (MAXFIELDPIXEL + pixelGap)),
-				(guiSideBar.getHeight() * (MAXFIELDPIXEL + pixelGap)), BufferedImage.TYPE_INT_ARGB);
+		BufferedImage image = new BufferedImage((GridWorld.length * (MAXFIELDPIXEL + pixelGap)),
+				(GridWorld[0].length * (MAXFIELDPIXEL + pixelGap)), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = image.createGraphics();
 		g2d.setColor(guiSideBar.getBGColor());
 		g2d.fillRect(0, 0, guiSideBar.getWidth() * (MAXFIELDPIXEL + pixelGap),
