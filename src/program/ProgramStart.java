@@ -6,7 +6,7 @@ import generator.GenLSystem;
 import generator.NagelSchreckenberg;
 import generator.GenRandomTreeArt;
 import generator.TestShapes;
-import generator.Wolfram;
+import generator.GenWolfram;
 import gui.MainCanvasPanel;
 import gui.MainWindow;
 import gui.SaveMainCanvasToImage;
@@ -41,7 +41,7 @@ public class ProgramStart {
 		ArrayList<IGenerator> generators = new ArrayList<>();
 
 		generators.add(new NagelSchreckenberg(centerImagePanel, "Nagel-Schreckenberg"));
-		generators.add(new Wolfram(centerImagePanel, "Wolfram's Rule 30 "));
+		generators.add(new GenWolfram(centerImagePanel, "Wolfram's Rule 30 "));
 		generators.add(new TestShapes(centerImagePanel, "Shapes Generator"));
 		generators.add(new GenRandomTreeArt(centerImagePanel, "Random-Tree Art (2-Leaf)"));
 		generators.add(new GenLSystem(centerImagePanel, "Lindenmayer system"));

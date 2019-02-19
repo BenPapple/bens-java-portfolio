@@ -14,7 +14,7 @@ import java.util.Random;
  *
  * @author BenGe47
  */
-public final class Wolfram extends AGenerator {
+public final class GenWolfram extends AGenerator {
 
 	private final static int MAXFIELDPIXEL = 1;
 	private SideBarWolfram guiSideBar;
@@ -28,7 +28,7 @@ public final class Wolfram extends AGenerator {
 	 * @param MainCanvas Inject MainCanvasPanel
 	 * @param name Name for this generator
 	 */
-	public Wolfram(MainCanvasPanel mainCanvas, String name) {
+	public GenWolfram(MainCanvasPanel mainCanvas, String name) {
 		this.setName(name);
 		this.setMnemonicChar('W');
 		this.setMainCanvas(mainCanvas);
