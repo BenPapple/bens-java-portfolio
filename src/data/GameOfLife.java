@@ -9,10 +9,6 @@ public class GameOfLife {
 	int cellHeight;
 	Double randomness;
 
-	public boolean[][] getGridWorld() {
-		return GridWorld;
-	}
-
 	/**
 	 * Constructor.
 	 * 
@@ -29,6 +25,15 @@ public class GameOfLife {
 
 		init2DField();
 
+	}
+
+	/**
+	 * Return GOL field Gridworld.
+	 * 
+	 * @return boolean[][] of GridWorld
+	 */
+	public boolean[][] getGridWorld() {
+		return GridWorld;
 	}
 
 	/**

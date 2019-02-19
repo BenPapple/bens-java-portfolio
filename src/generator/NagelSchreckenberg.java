@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * @author BenGe47
  */
-public final class NagelSchreckenberg extends AGeneratorCellular {
+public final class NagelSchreckenberg extends AGenerator {
 
 	private static int MAXFIELDPIXEL = 1;
 	private SideBarNaSch guiSideBar;

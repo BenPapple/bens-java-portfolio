@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
  *
  * @author BenGe47
  */
-public class GenGameOfLife extends AGeneratorCellular {
+public class GenGameOfLife extends AGenerator {
 
 	private final static int MAXFIELDPIXEL = 4;
 	private SideBarGOL guiSideBar;

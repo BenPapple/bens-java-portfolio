@@ -14,7 +14,7 @@ import java.util.Random;
  *
  * @author BenGe47
  */
-public final class Wolfram extends AGeneratorCellular {
+public final class Wolfram extends AGenerator {
 
 	private final static int MAXFIELDPIXEL = 1;
 	private SideBarWolfram guiSideBar;
