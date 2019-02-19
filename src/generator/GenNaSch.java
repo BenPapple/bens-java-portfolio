@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * @author BenGe47
  */
-public final class NagelSchreckenberg extends AGenerator {
+public final class GenNaSch extends AGenerator {
 
 	private static int MAXFIELDPIXEL = 1;
 	private SideBarNaSch guiSideBar;
@@ -29,7 +29,7 @@ public final class NagelSchreckenberg extends AGenerator {
 	 * @param MainCanvas Inject MainCanvasPanel
 	 * @param name Name for this generator
 	 */
-	public NagelSchreckenberg(MainCanvasPanel mainCanvas, String name) {
+	public GenNaSch(MainCanvasPanel mainCanvas, String name) {
 		this.setName(name);
 		this.setMnemonicChar('N');
 		this.setMainCanvas(mainCanvas);

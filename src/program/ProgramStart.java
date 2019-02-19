@@ -3,7 +3,7 @@ package program;
 import generator.GenGameOfLife;
 import generator.IGenerator;
 import generator.GenLSystem;
-import generator.NagelSchreckenberg;
+import generator.GenNaSch;
 import generator.GenRandomTreeArt;
 import generator.TestShapes;
 import generator.GenWolfram;
@@ -40,7 +40,7 @@ public class ProgramStart {
 		// Register Generators in ArrayList
 		ArrayList<IGenerator> generators = new ArrayList<>();
 
-		generators.add(new NagelSchreckenberg(centerImagePanel, "Nagel-Schreckenberg"));
+		generators.add(new GenNaSch(centerImagePanel, "Nagel-Schreckenberg"));
 		generators.add(new GenWolfram(centerImagePanel, "Wolfram's Rule 30 "));
 		generators.add(new TestShapes(centerImagePanel, "Shapes Generator"));
 		generators.add(new GenRandomTreeArt(centerImagePanel, "Random-Tree Art (2-Leaf)"));
