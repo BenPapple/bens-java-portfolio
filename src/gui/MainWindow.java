@@ -185,6 +185,10 @@ public class MainWindow extends JFrame implements Observer {
 		spSideBar.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		spSideBar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		this.add(spSideBar, BorderLayout.WEST);
+		
+		menuItem = new JMenuItem("coming soon");
+		menuItem.setEnabled(false);
+		menuGames.add(menuItem);
 
 		// Add Generator Entries from ArrayList
 		for (IGenerator generator : generators) {

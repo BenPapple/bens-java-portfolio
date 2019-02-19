@@ -2,19 +2,21 @@
 ** TODO Portfolio 2019 **
 *************************
 
-- - Update all html description text of generators with helpful howto
+- - precalc postcalc method AGenerator
 - - MVC split MC further(GOL, Wolfram, NaSch)
 - - split turtle drawer from LSystem
+* * release 1.0
+- - fill abstract CA generator classes with more vars and methods
 
 -f- RTree choose math formula in gui
--f- GOL make calculations methods top left etc
 -f- multi-threaded calculations
-
-- - fill abstract CA generator classes with more vars and methods
+-f- GOL make calculations methods top left etc
 - - L-system split scale factor into own method
 - - L-system drawing function take 4 inputs
 -f- custom color panel
 /////////////////DONE//////////////////////////////////
++ - placeholder games
++ - Update all html description text of generators with helpful howto
 +f- GOL generation label counter
 + - LSystem Alphabet textfield unnecessary
 +f- class with math formulas for RandomTreeArt
@@ -49,9 +51,9 @@
 Additional future Generators:
 -------------------------------------------------------
 - Game: Tetris
+- Cellular: Gas Fluids: FHP-Modell
 - Cellular: Langton's loops
 - Cellular: Brian's Brain / Star Wars
-- Cellular: Gas Fluids: FHP-Modell
 - 3D: Toomre Model for Galaxy Collisions 
 + Traffic science: Nagel-Schreckenberg
 
