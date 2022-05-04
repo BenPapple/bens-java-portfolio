@@ -22,11 +22,11 @@ Following generators are implemented:
 
 ## Authors
 
-BenGe47
+BenPapple
 
 ## License
 
-Copyright BenGe47
+Copyright BenPapple
 
 ## Acknowledgments
 
