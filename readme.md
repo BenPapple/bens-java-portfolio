@@ -2,6 +2,15 @@
 **Portfolio java** collection of graphical generators in an uniform **swing** GUI. The structure mostly follows the **model-view-controller** pattern. 
 Package **gui** is the view, package **data** the model and package **generator** and **program** the model.
 
+<img src="https://github.com/BenPapple/bens-portfolio-2020/blob/master/pics/conway.png" width="400">
+
+<img src="https://github.com/BenPapple/bens-portfolio-2020/blob/master/pics/lindenmayer.png" width="400">
+
+<img src="https://github.com/BenPapple/bens-portfolio-2020/blob/master/pics/nagel.png" width="400">
+
+<img src="https://github.com/BenPapple/bens-portfolio-2020/blob/master/pics/randomtree.png" width="400">
+
+
 Following generators are implemented:
 + Wolfram cellular automaton
 + Conway's Game of Life
