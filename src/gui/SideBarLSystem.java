@@ -24,7 +24,7 @@ import javax.swing.border.Border;
  */
 public class SideBarLSystem extends ASideBar {
 
-	private static JLabel lblStartingSequence = new JLabel("Enter Starting Sequence:");
+	private static JLabel lblStartingSequence = new JLabel("Start Sequence:");
 	private static JLabel lblGenerations = new JLabel("Enter Iterations:");
 	private static SpinnerModel smGenerations = new SpinnerNumberModel(7, 0, 15, 1);
 	private static JSpinner jsGenerations = new JSpinner(smGenerations);
@@ -32,7 +32,7 @@ public class SideBarLSystem extends ASideBar {
 	private static SpinnerModel smAngle = new SpinnerNumberModel(120, 1, 360, 1);
 	private static JSpinner jsAngle = new JSpinner(smAngle);
 	private static JTextField tfStartingSequence = new JTextField("A+A+B");
-	private static JLabel lblProductionRules = new JLabel("Enter Production Rules:");
+	private static JLabel lblProductionRules = new JLabel("Production Rules:");
 	private static JTextField tfProductionRules = new JTextField("(A,AA),(B,B+A-B-A+B)");
 	private static JLabel lblcbPresets = new JLabel("Load Preset:");
 	private static String comboBoxList[] = { "*** choose preset ***", "Koch edge", "Koch snowflake",
@@ -96,65 +96,65 @@ public class SideBarLSystem extends ASideBar {
 		GeneratorPnl.setLayout(layout);
 
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gbConstraints.weightx = 0.2;
+		gbConstraints.weightx = 0.5;
 		gbConstraints.gridx = 0;
 		gbConstraints.gridy = 0;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.lblStartingSequence, gbConstraints);
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gbConstraints.weightx = 0.8;
+		gbConstraints.weightx = 0.5;
 		gbConstraints.gridx = 1;
 		gbConstraints.gridy = 0;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.tfStartingSequence, gbConstraints);
 		//
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gbConstraints.weightx = 0.2;
+		gbConstraints.weightx = 0.5;
 		gbConstraints.gridx = 0;
 		gbConstraints.gridy = 1;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.lblProductionRules, gbConstraints);
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gbConstraints.weightx = 0.8;
+		gbConstraints.weightx = 0.5;
 		gbConstraints.gridx = 1;
 		gbConstraints.gridy = 1;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.tfProductionRules, gbConstraints);
 		//
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gbConstraints.weightx = 0.2;
+		gbConstraints.weightx = 0.5;
 		gbConstraints.gridx = 0;
 		gbConstraints.gridy = 2;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.lblAngle, gbConstraints);
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gbConstraints.weightx = 0.8;
+		gbConstraints.weightx = 0.5;
 		gbConstraints.gridx = 1;
 		gbConstraints.gridy = 2;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.jsAngle, gbConstraints);
 		//
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gbConstraints.weightx = 0.2;
+		gbConstraints.weightx = 0.5;
 		gbConstraints.gridx = 0;
 		gbConstraints.gridy = 3;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.lblGenerations, gbConstraints);
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gbConstraints.weightx = 0.8;
+		gbConstraints.weightx = 0.5;
 		gbConstraints.gridx = 1;
 		gbConstraints.gridy = 3;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.jsGenerations, gbConstraints);
 		//
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gbConstraints.weightx = 0.2;
+		gbConstraints.weightx = 0.5;
 		gbConstraints.gridx = 0;
 		gbConstraints.gridy = 4;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
 		GeneratorPnl.add(SideBarLSystem.lblcbPresets, gbConstraints);
 		gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gbConstraints.weightx = 0.8;
+		gbConstraints.weightx = 0.5;
 		gbConstraints.gridx = 1;
 		gbConstraints.gridy = 4;
 		gbConstraints.insets = new Insets(10, 10, 10, 10);
@@ -240,8 +240,8 @@ public class SideBarLSystem extends ASideBar {
 	public void setStdValues() {
 		super.setLblWidthText("Enter Width:");
 		super.setLblHeightText("Enter Height");
-		super.setWidth(1280);
-		super.setHeight(720);
+		super.setWidth(600);
+		super.setHeight(600);
 		super.setColor(Color.YELLOW);
 		super.setBGColor(Color.BLACK);
 		super.setTaDescriptionText("<b>Lindenmayer-system</b>"

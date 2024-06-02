@@ -77,7 +77,7 @@ public class MainWindow extends JFrame implements Observer {
 	 *
 	 */
 	private void initUI() {
-		setTitle("Ben´s Portfolio");
+		setTitle("Ben's Portfolio");
 		setSize(1024, 768);
 		setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
 		setLocationRelativeTo(null);
